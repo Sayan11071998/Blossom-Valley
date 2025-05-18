@@ -2,15 +2,25 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    [SerializeField] private float interactionDistance = 2f;
+
     private Land selectedLand = null;
 
     private void Update()
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, interactionDistance))
         {
             OnInteractableHit(hit);
+        }
+        else
+        {
+            if (selectedLand != null)
+            {
+                selectedLand.Select(false);
+                selectedLand = null;
+            }
         }
     }
 
@@ -18,7 +28,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         Collider other = hit.collider;
 
-        if (other.tag == "Land")
+        if (other.CompareTag("Land"))
         {
             Land land = other.GetComponent<Land>();
             SelectLand(land);
