@@ -17,10 +17,10 @@ public class InventoryManager : MonoBehaviour
     }
 
     [Header("Tools")]
-    [SerializeField] private ItemData[] tools = new ItemData[8];
+    [SerializeField] public ItemData[] tools = new ItemData[8];
     public ItemData equippedTool = null;
 
     [Header("Items")]
-    [SerializeField] private ItemData[] items = new ItemData[8];
+    [SerializeField] public ItemData[] items = new ItemData[8];
     public ItemData equippedItem = null;
 }
