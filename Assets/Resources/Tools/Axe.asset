@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   description: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: -485355718, guid: b692d7161e82cde4e95547bc453028d3, type: 3}
   gameModel: {fileID: 0}
   toolType: 2

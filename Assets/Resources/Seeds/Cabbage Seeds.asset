@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f85ef74aa4c3454493793c7a198fc27, type: 3}
-  m_Name: Watering Can
+  m_Script: {fileID: 11500000, guid: dd0bc02a8110f1f4589e4cd37ba9ea7f, type: 3}
+  m_Name: Cabbage Seeds
   m_EditorClassIdentifier: 
-  description: 
-  thumbnail: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  description: Seeds to grow cabbage
+  thumbnail: {fileID: 1780971858, guid: b692d7161e82cde4e95547bc453028d3, type: 3}
   gameModel: {fileID: 0}
-  toolType: 1
+  daysToGrow: 3
+  cropToYield: {fileID: 11400000, guid: 117c7c7a848f4df419f082b1e7c4cbca, type: 2}
