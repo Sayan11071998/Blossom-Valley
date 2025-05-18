@@ -2,24 +2,37 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement System")]
     [SerializeField] private float walkSpeed = 4f;
     [SerializeField] private float runSpeed = 8f;
 
-    private float moveSpeed;
-
     private CharacterController controller;
     private Animator animator;
+    private PlayerInteraction playerInteraction;
+
+    private float moveSpeed = 4f;
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        playerInteraction = GetComponentInChildren<PlayerInteraction>();
     }
 
     private void Update()
     {
         Move();
+        Interact();
     }
+
+    public void Interact()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            playerInteraction.Interact();
+        }
+    }
+
 
     public void Move()
     {
@@ -44,6 +57,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(dir);
             controller.Move(velocity);
+
         }
 
         animator.SetFloat("Speed", velocity.magnitude);
