@@ -2,42 +2,36 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private float interactionDistance = 2f;
-
-    private Land selectedLand = null;
-
+    PlayerController playerController;
+    Land selectedLand = null;
     InteractableObject selectedInteractable = null;
 
-    private void Update()
+    void Start()
+    {
+        playerController = transform.parent.GetComponent<PlayerController>();
+    }
+
+    void Update()
     {
         RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, interactionDistance))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1))
         {
             OnInteractableHit(hit);
         }
-        else
-        {
-            if (selectedLand != null)
-            {
-                selectedLand.Select(false);
-                selectedLand = null;
-            }
-        }
     }
 
-    private void OnInteractableHit(RaycastHit hit)
+    void OnInteractableHit(RaycastHit hit)
     {
         Collider other = hit.collider;
 
-        if (other.CompareTag("Land"))
+        if (other.tag == "Land")
         {
             Land land = other.GetComponent<Land>();
             SelectLand(land);
             return;
         }
 
-        if (other.CompareTag("Item"))
+        if (other.tag == "Item")
         {
             selectedInteractable = other.GetComponent<InteractableObject>();
             return;
@@ -55,7 +49,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void SelectLand(Land land)
+    void SelectLand(Land land)
     {
         if (selectedLand != null)
         {
@@ -68,6 +62,11 @@ public class PlayerInteraction : MonoBehaviour
 
     public void Interact()
     {
+        if (InventoryManager.Instance.equippedItem != null)
+        {
+            return;
+        }
+
         if (selectedLand != null)
         {
             selectedLand.Interact();

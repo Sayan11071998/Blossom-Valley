@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class GameTimeStamp
+public class GameTimestamp
 {
     public int year;
 
@@ -30,7 +30,7 @@ public class GameTimeStamp
     public int hour;
     public int minute;
 
-    public GameTimeStamp(int year, Season season, int day, int hour, int minute)
+    public GameTimestamp(int year, Season season, int day, int hour, int minute)
     {
         this.year = year;
         this.season = season;
@@ -39,7 +39,7 @@ public class GameTimeStamp
         this.minute = minute;
     }
 
-    public GameTimeStamp(GameTimeStamp timeStamp)
+    public GameTimestamp(GameTimestamp timeStamp)
     {
         this.year = timeStamp.year;
         this.season = timeStamp.season;
@@ -108,7 +108,7 @@ public class GameTimeStamp
         return years * 4 * 30;
     }
 
-    public static int CompareTimestamp(GameTimeStamp timeStamp1, GameTimeStamp timeStamp2)
+    public static int CompareTimestamps(GameTimestamp timeStamp1, GameTimestamp timeStamp2)
     {
         int timeStamp1Hours = DaysToHours(YearsToDays(timeStamp1.year)) + DaysToHours(SeasonsToDays(timeStamp1.season)) + DaysToHours(timeStamp1.day) + timeStamp1.hour;
         int timeStamp2Hours = DaysToHours(YearsToDays(timeStamp2.year)) + DaysToHours(SeasonsToDays(timeStamp2.season)) + DaysToHours(timeStamp2.day) + timeStamp2.hour;

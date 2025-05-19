@@ -17,13 +17,12 @@ public class InventoryManager : MonoBehaviour
     }
 
     [Header("Tools")]
-    [SerializeField] public ItemData[] tools = new ItemData[8];
+    public ItemData[] tools = new ItemData[8];
     public ItemData equippedTool = null;
 
     [Header("Items")]
-    [SerializeField] public ItemData[] items = new ItemData[8];
+    public ItemData[] items = new ItemData[8];
     public ItemData equippedItem = null;
-
     public Transform handPoint;
 
     public void InventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType)
@@ -34,6 +33,7 @@ public class InventoryManager : MonoBehaviour
             items[slotIndex] = equippedItem;
             equippedItem = itemToEquip;
             RenderHand();
+
         }
         else
         {
@@ -72,6 +72,7 @@ public class InventoryManager : MonoBehaviour
                     break;
                 }
             }
+
         }
 
         UIManager.Instance.RenderInventory();

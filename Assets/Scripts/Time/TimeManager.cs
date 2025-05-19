@@ -6,7 +6,7 @@ public class TimeManager : MonoBehaviour
 {
     public static TimeManager Instance { get; private set; }
 
-    [SerializeField] private GameTimeStamp timeStamp;
+    [SerializeField] private GameTimestamp timeStamp;
     [SerializeField] private float timeScale = 1.0f;
 
     [Header("Day and Night Cycle")]
@@ -28,7 +28,7 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
-        timeStamp = new GameTimeStamp(0, GameTimeStamp.Season.Spring, 1, 6, 0);
+        timeStamp = new GameTimestamp(0, GameTimestamp.Season.Spring, 1, 6, 0);
         StartCoroutine(TimeUpdate());
     }
 
@@ -55,14 +55,14 @@ public class TimeManager : MonoBehaviour
 
     private void UpdateSunMovement()
     {
-        int timeInMinutes = GameTimeStamp.HoursToMinutes(timeStamp.hour) + timeStamp.minute;
+        int timeInMinutes = GameTimestamp.HoursToMinutes(timeStamp.hour) + timeStamp.minute;
         float sunAngle = 0.25f * timeInMinutes - 90;
         sunTransform.eulerAngles = new Vector3(sunAngle, 0, 0);
     }
 
-    public GameTimeStamp GetGameTimeStamp()
+    public GameTimestamp GetGameTimeStamp()
     {
-        return new GameTimeStamp(timeStamp);
+        return new GameTimestamp(timeStamp);
     }
 
     public void RegisterTracker(ITimeTracker listener)

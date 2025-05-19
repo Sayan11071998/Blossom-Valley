@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
         itemDescriptionText.text = data.description;
     }
 
-    public void ClockUpdate(GameTimeStamp timeStamp)
+    public void ClockUpdate(GameTimestamp timeStamp)
     {
         int hours = timeStamp.hour;
         int minutes = timeStamp.minute;

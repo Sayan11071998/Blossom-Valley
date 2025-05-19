@@ -11,25 +11,22 @@ public class Land : MonoBehaviour, ITimeTracker
 
     public LandStatus landStatus;
 
-    [SerializeField] private Material soilMat;
-    [SerializeField] private Material farmlandMat;
-    [SerializeField] private Material wateredMat;
-    [SerializeField] private GameObject select;
+    public Material soilMat, farmlandMat, wateredMat;
+    new Renderer renderer;
+    public GameObject select;
 
-    private new Renderer renderer;
-    private GameTimeStamp timeWatered;
+    GameTimestamp timeWatered;
 
     [Header("Crops")]
     public GameObject cropPrefab;
-    private CropBehaviour cropPlanted = null;
 
-    private void Start()
+    CropBehaviour cropPlanted = null;
+
+    void Start()
     {
         renderer = GetComponent<Renderer>();
-
         SwitchLandStatus(LandStatus.Soil);
         Select(false);
-
         TimeManager.Instance.RegisterTracker(this);
     }
 
@@ -94,24 +91,25 @@ public class Land : MonoBehaviour, ITimeTracker
         {
             GameObject cropObject = Instantiate(cropPrefab, transform);
             cropObject.transform.position = new Vector3(transform.position.x, 0.51f, transform.position.z);
-
             cropPlanted = cropObject.GetComponent<CropBehaviour>();
             cropPlanted.Plant(seedTool);
+
         }
     }
 
-    public void ClockUpdate(GameTimeStamp timeStamp)
+    public void ClockUpdate(GameTimestamp timestamp)
     {
         if (landStatus == LandStatus.Watered)
         {
-            int hoursElasped = GameTimeStamp.CompareTimestamp(timeWatered, timeStamp);
+            int hoursElapsed = GameTimestamp.CompareTimestamps(timeWatered, timestamp);
+            Debug.Log(hoursElapsed + " hours since this was watered");
 
             if (cropPlanted != null)
             {
                 cropPlanted.Grow();
             }
 
-            if (hoursElasped > 24)
+            if (hoursElapsed > 24)
             {
                 SwitchLandStatus(LandStatus.Farmland);
             }

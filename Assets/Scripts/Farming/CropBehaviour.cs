@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class CropBehaviour : MonoBehaviour
 {
+    SeedData seedToGrow;
+
+    [Header("Stages of Life")]
     public GameObject seed;
     private GameObject seedling;
     private GameObject harvestable;
 
-    private int growth;
-    private int maxGrowth;
+    int growth;
+    int maxGrowth;
 
     public enum CropState
     {
@@ -18,28 +21,21 @@ public class CropBehaviour : MonoBehaviour
 
     public CropState cropState;
 
-    private SeedData seedToGrow;
-
     public void Plant(SeedData seedToGrow)
     {
         this.seedToGrow = seedToGrow;
-
         seedling = Instantiate(seedToGrow.seedling, transform);
-
         ItemData cropToYield = seedToGrow.cropToYield;
-
         harvestable = Instantiate(cropToYield.gameModel, transform);
-
-        int hoursToGrow = GameTimeStamp.DaysToHours(seedToGrow.daysToGrow);
-        maxGrowth = GameTimeStamp.HoursToMinutes(hoursToGrow);
-
+        int hoursToGrow = GameTimestamp.DaysToHours(seedToGrow.daysToGrow);
+        maxGrowth = GameTimestamp.HoursToMinutes(hoursToGrow);
         SwitchState(CropState.Seed);
+
     }
 
     public void Grow()
     {
         growth++;
-
         if (growth >= maxGrowth / 2 && cropState == CropState.Seed)
         {
             SwitchState(CropState.Seedling);
@@ -51,7 +47,7 @@ public class CropBehaviour : MonoBehaviour
         }
     }
 
-    private void SwitchState(CropState stateToSwitch)
+    void SwitchState(CropState stateToSwitch)
     {
         seed.SetActive(false);
         seedling.SetActive(false);
@@ -68,6 +64,7 @@ public class CropBehaviour : MonoBehaviour
             case CropState.Harvestable:
                 harvestable.SetActive(true);
                 harvestable.transform.parent = null;
+
                 Destroy(gameObject);
                 break;
         }
