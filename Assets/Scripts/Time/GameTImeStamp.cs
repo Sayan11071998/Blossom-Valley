@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class GameTImeStamp
+[System.Serializable]
+public class GameTimeStamp
 {
     public int year;
 
@@ -29,7 +30,7 @@ public class GameTImeStamp
     public int hour;
     public int minute;
 
-    public GameTImeStamp(int year, Season season, int day, int hour, int minute)
+    public GameTimeStamp(int year, Season season, int day, int hour, int minute)
     {
         this.year = year;
         this.season = season;
