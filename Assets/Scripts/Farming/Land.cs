@@ -106,6 +106,11 @@ public class Land : MonoBehaviour, ITimeTracker
         {
             int hoursElasped = GameTimeStamp.CompareTimestamp(timeWatered, timeStamp);
 
+            if (cropPlanted != null)
+            {
+                cropPlanted.Grow();
+            }
+
             if (hoursElasped > 24)
             {
                 SwitchLandStatus(LandStatus.Farmland);

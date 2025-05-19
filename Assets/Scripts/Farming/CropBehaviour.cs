@@ -6,6 +6,9 @@ public class CropBehaviour : MonoBehaviour
     private GameObject seedling;
     private GameObject harvestable;
 
+    private int growth;
+    private int maxGrowth;
+
     public enum CropState
     {
         Seed,
@@ -27,12 +30,25 @@ public class CropBehaviour : MonoBehaviour
 
         harvestable = Instantiate(cropToYield.gameModel, transform);
 
+        int hoursToGrow = GameTimeStamp.DaysToHours(seedToGrow.daysToGrow);
+        maxGrowth = GameTimeStamp.HoursToMinutes(hoursToGrow);
+
         SwitchState(CropState.Seed);
     }
 
     public void Grow()
     {
+        growth++;
 
+        if (growth >= maxGrowth / 2 && cropState == CropState.Seed)
+        {
+            SwitchState(CropState.Seedling);
+        }
+
+        if (growth >= maxGrowth && cropState == CropState.Seedling)
+        {
+            SwitchState(CropState.Harvestable);
+        }
     }
 
     private void SwitchState(CropState stateToSwitch)
@@ -51,6 +67,8 @@ public class CropBehaviour : MonoBehaviour
                 break;
             case CropState.Harvestable:
                 harvestable.SetActive(true);
+                harvestable.transform.parent = null;
+                Destroy(gameObject);
                 break;
         }
 
