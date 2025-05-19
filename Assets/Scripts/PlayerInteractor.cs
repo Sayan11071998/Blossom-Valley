@@ -6,6 +6,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private Land selectedLand = null;
 
+    InteractableObject selectedInteractable = null;
+
     private void Update()
     {
         RaycastHit hit;
@@ -35,6 +37,17 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
+        if (other.CompareTag("Item"))
+        {
+            selectedInteractable = other.GetComponent<InteractableObject>();
+            return;
+        }
+
+        if (selectedInteractable != null)
+        {
+            selectedInteractable = null;
+        }
+
         if (selectedLand != null)
         {
             selectedLand.Select(false);
@@ -62,5 +75,19 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         Debug.Log("Not on any land!");
+    }
+
+    public void ItemInteract()
+    {
+        if (InventoryManager.Instance.equippedItem != null)
+        {
+            InventoryManager.Instance.HandToInventory(InventorySlot.InventoryType.Item);
+            return;
+        }
+
+        if (selectedInteractable != null)
+        {
+            selectedInteractable.Pickup();
+        }
     }
 }
