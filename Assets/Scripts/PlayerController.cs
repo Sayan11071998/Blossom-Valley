@@ -23,6 +23,11 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Interact();
+
+        if (Input.GetKey(KeyCode.RightBracket))
+        {
+            TimeManager.Instance.Tick();
+        }
     }
 
     public void Interact()
@@ -32,7 +37,6 @@ public class PlayerController : MonoBehaviour
             playerInteraction.Interact();
         }
     }
-
 
     public void Move()
     {

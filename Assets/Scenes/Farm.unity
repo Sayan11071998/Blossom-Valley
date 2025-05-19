@@ -2430,6 +2430,8 @@ MonoBehaviour:
   itemNameText: {fileID: 1518049304}
   itemDescriptionText: {fileID: 1591096249}
   toolEquipSlot: {fileID: 776897792}
+  timeText: {fileID: 8884121}
+  dateText: {fileID: 1872533321}
 --- !u!114 &994009101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2442,6 +2444,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a543b1cc4c407d42ba88d8d5a75ddba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeStamp:
+    year: 0
+    season: 0
+    day: 0
+    hour: 0
+    minute: 0
+  timeScale: 1
+  sunTransform: {fileID: 410087041}
 --- !u!1 &1009007240
 GameObject:
   m_ObjectHideFlags: 0

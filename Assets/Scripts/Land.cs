@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Land : MonoBehaviour
+public class Land : MonoBehaviour, ITimeTracker
 {
     public enum LandStatus
     {
@@ -17,6 +17,7 @@ public class Land : MonoBehaviour
     [SerializeField] private GameObject select;
 
     private new Renderer renderer;
+    private GameTimeStamp timeWatered;
 
     private void Start()
     {
@@ -24,6 +25,8 @@ public class Land : MonoBehaviour
 
         SwitchLandStatus(LandStatus.Soil);
         Select(false);
+
+        TimeManager.Instance.RegisterTracker(this);
     }
 
     public void SwitchLandStatus(LandStatus statusToSwitch)
@@ -41,6 +44,7 @@ public class Land : MonoBehaviour
                 break;
             case LandStatus.Watered:
                 materialToSwitch = wateredMat;
+                timeWatered = TimeManager.Instance.GetGameTimeStamp();
                 break;
 
         }
@@ -71,6 +75,19 @@ public class Land : MonoBehaviour
                 case EquipmentData.ToolType.WateringCan:
                     SwitchLandStatus(LandStatus.Watered);
                     break;
+            }
+        }
+    }
+
+    public void ClockUpdate(GameTimeStamp timeStamp)
+    {
+        if (landStatus == LandStatus.Watered)
+        {
+            int hoursElasped = GameTimeStamp.CompareTimestamp(timeWatered, timeStamp);
+
+            if (hoursElasped > 24)
+            {
+                SwitchLandStatus(LandStatus.Farmland);
             }
         }
     }

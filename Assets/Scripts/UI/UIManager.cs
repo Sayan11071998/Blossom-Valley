@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, ITimeTracker
 {
     public static UIManager Instance { get; private set; }
 
@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Status Bar")]
     [SerializeField] private Image toolEquipSlot;
+    [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private TextMeshProUGUI dateText;
 
     private void Awake()
     {
@@ -34,6 +36,8 @@ public class UIManager : MonoBehaviour
     {
         RenderInventory();
         AssignSlotIndexes();
+
+        TimeManager.Instance.RegisterTracker(this);
     }
 
     public void AssignSlotIndexes()
@@ -93,5 +97,26 @@ public class UIManager : MonoBehaviour
 
         itemNameText.text = data.name;
         itemDescriptionText.text = data.description;
+    }
+
+    public void ClockUpdate(GameTimeStamp timeStamp)
+    {
+        int hours = timeStamp.hour;
+        int minutes = timeStamp.minute;
+        string prefix = "AM ";
+
+        if (hours > 12)
+        {
+            prefix = "PM ";
+            hours -= 12;
+        }
+
+        timeText.text = prefix + hours + ":" + minutes.ToString("00");
+
+        int day = timeStamp.day;
+        string season = timeStamp.season.ToString();
+        string dayOfTheWeek = timeStamp.GetDayOfTheWeek().ToString();
+
+        dateText.text = season + " " + day + " (" + dayOfTheWeek + ")";
     }
 }
