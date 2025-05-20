@@ -22,10 +22,36 @@ public class PlayerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit; 
-        if(Physics.Raycast(transform.position, Vector3.down,out hit,  1))
+        RaycastHit hit;
+        // Check if raycast hits anything
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, 1))
         {
             OnInteractableHit(hit);
+        }
+        else
+        {
+            // If raycast doesn't hit anything, deselect both land and interactable
+            DeselectLand();
+            DeselectInteractable();
+        }
+    }
+
+    // Helper method to deselect land
+    void DeselectLand()
+    {
+        if(selectedLand != null)
+        {
+            selectedLand.Select(false);
+            selectedLand = null;
+        }
+    }
+
+    // Helper method to deselect interactable
+    void DeselectInteractable()
+    {
+        if(selectedInteractable != null)
+        {
+            selectedInteractable = null; 
         }
     }
 
@@ -40,6 +66,8 @@ public class PlayerInteraction : MonoBehaviour
             //Get the land component
             Land land = other.GetComponent<Land>();
             SelectLand(land);
+            // Deselect any interactable when on land
+            DeselectInteractable();
             return; 
         }
 
@@ -48,21 +76,14 @@ public class PlayerInteraction : MonoBehaviour
         {
             //Set the interactable to the currently selected interactable
             selectedInteractable = other.GetComponent<InteractableObject>();
+            // Deselect any land when on an item
+            DeselectLand();
             return; 
         }
 
-        //Deselect the interactable if the player is not standing on anything at the moment
-        if(selectedInteractable != null)
-        {
-            selectedInteractable = null; 
-        }
-
-        //Deselect the land if the player is not standing on any land at the moment
-        if(selectedLand != null)
-        {
-            selectedLand.Select(false);
-            selectedLand = null;
-        }
+        // If we hit something that's not land or an item, deselect both
+        DeselectLand();
+        DeselectInteractable();
     }
 
     //Handles the selection process of the land
@@ -116,6 +137,5 @@ public class PlayerInteraction : MonoBehaviour
             //Pick it up
             selectedInteractable.Pickup();
         }
-
     }
 }
