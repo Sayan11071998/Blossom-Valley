@@ -13,13 +13,13 @@ public class Land : MonoBehaviour, ITimeTracker
 
     public Material soilMat, farmlandMat, wateredMat;
     new Renderer renderer;
+
     public GameObject select;
 
     GameTimestamp timeWatered;
 
     [Header("Crops")]
     public GameObject cropPrefab;
-
     CropBehaviour cropPlanted = null;
 
     void Start()
@@ -47,6 +47,7 @@ public class Land : MonoBehaviour, ITimeTracker
                 materialToSwitch = wateredMat;
                 timeWatered = TimeManager.Instance.GetGameTimeStamp();
                 break;
+
         }
 
         renderer.material = materialToSwitch;
@@ -80,6 +81,13 @@ public class Land : MonoBehaviour, ITimeTracker
                 case EquipmentData.ToolType.WateringCan:
                     SwitchLandStatus(LandStatus.Watered);
                     break;
+
+                case EquipmentData.ToolType.Shovel:
+                    if (cropPlanted != null)
+                    {
+                        Destroy(cropPlanted.gameObject);
+                    }
+                    break;
             }
 
             return;
@@ -112,6 +120,14 @@ public class Land : MonoBehaviour, ITimeTracker
             if (hoursElapsed > 24)
             {
                 SwitchLandStatus(LandStatus.Farmland);
+            }
+        }
+
+        if (landStatus != LandStatus.Watered && cropPlanted != null)
+        {
+            if (cropPlanted.cropState != CropBehaviour.CropState.Seed)
+            {
+                cropPlanted.Wither();
             }
         }
     }
