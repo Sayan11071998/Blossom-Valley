@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour, ITimeTracker
 {
@@ -11,18 +11,17 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Tool equip slot on the status bar
     public Image toolEquipSlot;
     //Tool Quantity text on the status bar 
-    public TextMeshProUGUI toolQuantityText; 
+    public TextMeshProUGUI toolQuantityText;
     //Time UI
     public TextMeshProUGUI timeText;
-    public TextMeshProUGUI dateText; 
-
+    public TextMeshProUGUI dateText;
 
     [Header("Inventory System")]
     //The inventory panel
     public GameObject inventoryPanel;
 
     //The tool equip slot UI on the Inventory panel
-    public HandInventorySlot toolHandSlot; 
+    public HandInventorySlot toolHandSlot;
 
     //The tool slot UIs
     public InventorySlot[] toolSlots;
@@ -35,8 +34,11 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     //Item info box
     public TextMeshProUGUI itemNameText;
-    public TextMeshProUGUI itemDescriptionText; 
+    public TextMeshProUGUI itemDescriptionText;
 
+    [Header("Screen Transitions")]
+    public GameObject fadeIn;
+    public GameObject fadeOut;
 
     private void Awake()
     {
@@ -58,13 +60,36 @@ public class UIManager : MonoBehaviour, ITimeTracker
         AssignSlotIndexes();
 
         //Add UIManager to the list of objects TimeManager will notify when the time updates
-        TimeManager.Instance.RegisterTracker(this); 
+        TimeManager.Instance.RegisterTracker(this);
+    }
+
+    public void FadeOutScreen()
+    {
+        fadeOut.SetActive(true);
+    }
+
+    public void FadeInScreen()
+    {
+        fadeIn.SetActive(true);
+    }
+
+    public void OnFadeInComplete()
+    {
+        //Disable Fade in Screen when animation is completed
+        fadeIn.SetActive(false);
+    }
+
+    //Reset the fadein fadeout screens to their default positions
+    public void ResetFadeDefaults()
+    {
+        fadeOut.SetActive(false);
+        fadeIn.SetActive(true);
     }
 
     //Iterate through the slot UI elements and assign it its reference slot index
     public void AssignSlotIndexes()
     {
-        for (int i =0; i<toolSlots.Length; i++)
+        for (int i = 0; i < toolSlots.Length; i++)
         {
             toolSlots[i].AssignIndex(i);
             itemSlots[i].AssignIndex(i);
@@ -135,7 +160,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public void DisplayItemInfo(ItemData data)
     {
         //If data is null, reset
-        if(data == null)
+        if (data == null)
         {
             itemNameText.text = "";
             itemDescriptionText.text = "";
@@ -144,7 +169,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
         }
 
         itemNameText.text = data.name;
-        itemDescriptionText.text = data.description; 
+        itemDescriptionText.text = data.description;
     }
 
     //Callback to handle the UI for time
@@ -153,11 +178,11 @@ public class UIManager : MonoBehaviour, ITimeTracker
         //Handle the time
         //Get the hours and minutes
         int hours = timestamp.hour;
-        int minutes = timestamp.minute; 
+        int minutes = timestamp.minute;
 
         //AM or PM
         string prefix = "AM ";
-        
+
         //Convert hours to 12 hour clock
         if (hours > 12)
         {
@@ -176,7 +201,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
         string dayOfTheWeek = timestamp.GetDayOfTheWeek().ToString();
 
         //Format it for the date text display
-        dateText.text = season + " " + day + " (" + dayOfTheWeek +")";
+        dateText.text = season + " " + day + " (" + dayOfTheWeek + ")";
 
     }
 }
