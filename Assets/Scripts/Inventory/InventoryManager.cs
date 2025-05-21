@@ -9,16 +9,18 @@ public class InventoryManager : MonoBehaviour
     private void Awake()
     {
         //If there is more than one instance, destroy the extra
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
         else
         {
             //Set the static instance to this instance
-            Instance = this; 
+            Instance = this;
         }
     }
+
+    public ItemIndex itemIndex;
 
     [Header("Tools")]
     //Tool Slots
@@ -26,7 +28,7 @@ public class InventoryManager : MonoBehaviour
     private ItemSlotData[] toolSlots = new ItemSlotData[8];
     //Tool in the player's hand
     [SerializeField]
-    private ItemSlotData equippedToolSlot = null; 
+    private ItemSlotData equippedToolSlot = null;
 
     [Header("Items")]
     //Item Slots
@@ -37,7 +39,7 @@ public class InventoryManager : MonoBehaviour
     private ItemSlotData equippedItemSlot = null;
 
     //The transform for the player to hold items in the scene
-    public Transform handPoint; 
+    public Transform handPoint;
 
     //Equipping
 
@@ -47,9 +49,9 @@ public class InventoryManager : MonoBehaviour
         //The slot to equip (Tool by default)
         ItemSlotData handToEquip = equippedToolSlot;
         //The array to change
-        ItemSlotData[] inventoryToAlter = toolSlots; 
-        
-        if(inventoryType == InventorySlot.InventoryType.Item)
+        ItemSlotData[] inventoryToAlter = toolSlots;
+
+        if (inventoryType == InventorySlot.InventoryType.Item)
         {
             //Change the slot to item
             handToEquip = equippedItemSlot;
@@ -68,7 +70,8 @@ public class InventoryManager : MonoBehaviour
             slotToAlter.Empty();
 
 
-        } else
+        }
+        else
         {
             //Not stackable
             //Cache the Inventory ItemSlotData
@@ -77,7 +80,7 @@ public class InventoryManager : MonoBehaviour
             //Change the inventory slot to the hands
             inventoryToAlter[slotIndex] = new ItemSlotData(handToEquip);
 
-            EquipHandSlot(slotToEquip); 
+            EquipHandSlot(slotToEquip);
         }
 
         //Update the changes in the scene
@@ -134,14 +137,14 @@ public class InventoryManager : MonoBehaviour
         //Update the changes to the UI
         UIManager.Instance.RenderInventory();
 
-       
+
     }
 
     //Iterate through each of the items in the inventory to see if it can be stacked
     //Will perform the operation if found, returns false if unsuccessful
     public bool StackItemToInventory(ItemSlotData itemSlot, ItemSlotData[] inventoryArray)
     {
-        
+
         for (int i = 0; i < inventoryArray.Length; i++)
         {
             if (inventoryArray[i].Stackable(itemSlot))
@@ -150,30 +153,30 @@ public class InventoryManager : MonoBehaviour
                 inventoryArray[i].AddQuantity(itemSlot.quantity);
                 //Empty the item slot
                 itemSlot.Empty();
-                return true; 
+                return true;
             }
         }
 
         //Can't find any slot that can be stacked
-        return false; 
+        return false;
     }
 
     //Render the player's equipped item in the scene
     public void RenderHand()
     {
         //Reset objects on the hand
-        if(handPoint.childCount > 0)
+        if (handPoint.childCount > 0)
         {
             Destroy(handPoint.GetChild(0).gameObject);
         }
 
         //Check if the player has anything equipped
-        if(SlotEquipped(InventorySlot.InventoryType.Item))
+        if (SlotEquipped(InventorySlot.InventoryType.Item))
         {
             //Instantiate the game model on the player's hand and put it on the scene
             Instantiate(GetEquippedSlotItem(InventorySlot.InventoryType.Item).gameModel, handPoint);
         }
-        
+
     }
 
     //Inventory Slot Data 
@@ -181,11 +184,11 @@ public class InventoryManager : MonoBehaviour
     //Get the slot item (ItemData) 
     public ItemData GetEquippedSlotItem(InventorySlot.InventoryType inventoryType)
     {
-        if(inventoryType == InventorySlot.InventoryType.Item)
+        if (inventoryType == InventorySlot.InventoryType.Item)
         {
             return equippedItemSlot.itemData;
         }
-        return equippedToolSlot.itemData; 
+        return equippedToolSlot.itemData;
     }
 
     //Get function for the slots (ItemSlotData)
@@ -224,16 +227,16 @@ public class InventoryManager : MonoBehaviour
         //Is it equipment? 
         //Try to cast it as equipment first
         EquipmentData equipment = item as EquipmentData;
-        if(equipment != null)
+        if (equipment != null)
         {
-            return true; 
+            return true;
         }
 
         //Is it a seed?
         //Try to cast it as a seed
         SeedData seed = item as SeedData;
         //If the seed is not null it is a seed 
-        return seed != null; 
+        return seed != null;
 
     }
 
@@ -244,10 +247,11 @@ public class InventoryManager : MonoBehaviour
     {
         if (IsTool(item))
         {
-            equippedToolSlot = new ItemSlotData(item); 
-        } else
+            equippedToolSlot = new ItemSlotData(item);
+        }
+        else
         {
-            equippedItemSlot = new ItemSlotData(item); 
+            equippedItemSlot = new ItemSlotData(item);
         }
 
     }
@@ -257,7 +261,7 @@ public class InventoryManager : MonoBehaviour
     {
         //Get the item data from the slot 
         ItemData item = itemSlot.itemData;
-        
+
         if (IsTool(item))
         {
             equippedToolSlot = new ItemSlotData(itemSlot);
@@ -273,14 +277,14 @@ public class InventoryManager : MonoBehaviour
         if (itemSlot.IsEmpty())
         {
             Debug.LogError("There is nothing to consume!");
-            return; 
+            return;
         }
 
         //Use up one of the item slots
         itemSlot.Remove();
         //Refresh inventory
         RenderHand();
-        UIManager.Instance.RenderInventory(); 
+        UIManager.Instance.RenderInventory();
     }
 
 
@@ -296,11 +300,11 @@ public class InventoryManager : MonoBehaviour
         ValidateInventorySlots(toolSlots);
 
     }
-    
+
     //When giving the itemData value in the inspector, automatically set the quantity to 1 
     void ValidateInventorySlot(ItemSlotData slot)
     {
-        if(slot.itemData != null && slot.quantity == 0)
+        if (slot.itemData != null && slot.quantity == 0)
         {
             slot.quantity = 1;
         }
@@ -319,12 +323,12 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

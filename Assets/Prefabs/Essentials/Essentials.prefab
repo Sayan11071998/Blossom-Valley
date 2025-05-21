@@ -920,6 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912b38d145aab8d46962bb2235ef6ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIndex: {fileID: 11400000, guid: 366d5b93318a22648b271e30eee4ea24, type: 2}
   toolSlots:
   - itemData: {fileID: 11400000, guid: aed6b2860ffcb7743a18f9fb145a5520, type: 2}
     quantity: 5
