@@ -9,8 +9,7 @@ public class SceneTransitionManager : MonoBehaviour
     public enum Location { Farm, PlayerHome, Town }
 
     public Location currentLocation;
-
-    Transform playerPoint;
+    public Location previousLocation;
 
     private void Awake()
     {
@@ -25,27 +24,65 @@ public class SceneTransitionManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnLocationLoad;
-        playerPoint = FindAnyObjectByType<PlayerController>().transform;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLocationLoad;
     }
 
     public void SwitchLocation(Location locationToSwitch)
     {
+        previousLocation = currentLocation;
         SceneManager.LoadScene(locationToSwitch.ToString());
     }
 
     public void OnLocationLoad(Scene scene, LoadSceneMode mode)
     {
-        Location oldLocation = currentLocation;
-        Location newLocation = (Location)Enum.Parse(typeof(Location), scene.name);
-
-        if (newLocation == currentLocation) return;
-
-        Transform startPoint = LocationManager.Instance.GetPlayerStartingPosition(oldLocation);
-        CharacterController playerCharacter = playerPoint.GetComponent<CharacterController>();
-        playerCharacter.enabled = false;
-        playerPoint.position = startPoint.position;
-        playerPoint.rotation = startPoint.rotation;
-        playerCharacter.enabled = true;
-        currentLocation = newLocation;
+        // Parse the new location from the scene name
+        Location newLocation;
+        if (Enum.TryParse(scene.name, out newLocation))
+        {
+            // Only process if we're actually changing location
+            if (newLocation != currentLocation)
+            {
+                // Find the player in the new scene
+                PlayerController player = FindAnyObjectByType<PlayerController>();
+                
+                if (player != null)
+                {
+                    // Get the starting position based on where we came from
+                    Transform startPoint = LocationManager.Instance?.GetPlayerStartingPosition(previousLocation);
+                    
+                    if (startPoint != null)
+                    {
+                        // Get the character controller and position the player
+                        CharacterController playerCharacter = player.GetComponent<CharacterController>();
+                        
+                        if (playerCharacter != null)
+                        {
+                            playerCharacter.enabled = false;
+                            player.transform.position = startPoint.position;
+                            player.transform.rotation = startPoint.rotation;
+                            playerCharacter.enabled = true;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"No start point found for previous location: {previousLocation}");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("PlayerController not found in the new scene!");
+                }
+                
+                currentLocation = newLocation;
+            }
+        }
+        else
+        {
+            Debug.LogError($"Could not parse scene name '{scene.name}' into a Location!");
+        }
     }
 }
