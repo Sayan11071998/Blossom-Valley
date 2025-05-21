@@ -11,4 +11,19 @@ public struct LandSaveState
         this.landStatus = landStatus;
         this.lastWatered = lastWatered;
     }
+
+    public void ClockUpdate(GameTimestamp timestamp)
+    {
+        //Checked if 24 hours has passed since last watered
+        if (landStatus == Land.LandStatus.Watered)
+        {
+            //Hours since the land was watered
+            int hoursElapsed = GameTimestamp.CompareTimestamps(lastWatered, timestamp);
+
+            if (hoursElapsed > 24)
+            {
+                landStatus = Land.LandStatus.Farmland;
+            }
+        }
+    }
 }

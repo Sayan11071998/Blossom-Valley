@@ -222,4 +222,9 @@ public class Land : MonoBehaviour, ITimeTracker
             }
         }
     }
+
+    private void OnDestroy()
+    {
+        TimeManager.Instance.UnregisterTracker(this);
+    }
 }
