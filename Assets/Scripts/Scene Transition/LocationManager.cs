@@ -21,7 +21,7 @@ public class LocationManager : MonoBehaviour
 
     public Transform GetPlayerStartingPosition(SceneTransitionManager.Location enteringFrom)
     {
-        StartPoint startingPoints = startPoints.Find(x => x.enteringFrom == enteringFrom);
-        return startingPoints.playerStart;
+        StartPoint startingPoint = startPoints.Find(x => x.enteringFrom == enteringFrom);
+        return startingPoint.playerStart;
     }
 }

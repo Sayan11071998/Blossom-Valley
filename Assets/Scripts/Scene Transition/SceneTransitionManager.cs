@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,83 +8,71 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance;
 
+    //The scenes the player can enter
     public enum Location { Farm, PlayerHome, Town }
-
     public Location currentLocation;
-    public Location previousLocation;
+
+    //The player's transform
+    Transform playerPoint;
+
 
     private void Awake()
     {
+        //If there is more than 1 instance, destroy GameObject
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
+            //Set the static instance to this instance
             Instance = this;
         }
 
+        //Make the gameobject persistent across scenes
         DontDestroyOnLoad(gameObject);
+
+        //OnLocationLoad will be called when the scene is loaded
         SceneManager.sceneLoaded += OnLocationLoad;
+
+        //Find the player's transform
+        playerPoint = FindFirstObjectByType<PlayerController>().transform;
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnLocationLoad;
-    }
-
+    //Switch the player to another scene
     public void SwitchLocation(Location locationToSwitch)
     {
-        previousLocation = currentLocation;
         SceneManager.LoadScene(locationToSwitch.ToString());
     }
 
+    //Called when a scene is loaded
+    //Called when a scene is loaded
     public void OnLocationLoad(Scene scene, LoadSceneMode mode)
     {
-        // Parse the new location from the scene name
-        Location newLocation;
-        if (Enum.TryParse(scene.name, out newLocation))
-        {
-            // Only process if we're actually changing location
-            if (newLocation != currentLocation)
-            {
-                // Find the player in the new scene
-                PlayerController player = FindAnyObjectByType<PlayerController>();
-                
-                if (player != null)
-                {
-                    // Get the starting position based on where we came from
-                    Transform startPoint = LocationManager.Instance?.GetPlayerStartingPosition(previousLocation);
-                    
-                    if (startPoint != null)
-                    {
-                        // Get the character controller and position the player
-                        CharacterController playerCharacter = player.GetComponent<CharacterController>();
-                        
-                        if (playerCharacter != null)
-                        {
-                            playerCharacter.enabled = false;
-                            player.transform.position = startPoint.position;
-                            player.transform.rotation = startPoint.rotation;
-                            playerCharacter.enabled = true;
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"No start point found for previous location: {previousLocation}");
-                    }
-                }
-                else
-                {
-                    Debug.LogError("PlayerController not found in the new scene!");
-                }
-                
-                currentLocation = newLocation;
-            }
-        }
-        else
-        {
-            Debug.LogError($"Could not parse scene name '{scene.name}' into a Location!");
-        }
+        //The location the player is coming from when the scene loads
+        Location oldLocation = currentLocation;
+
+        //Get the new location by converting the string of our current scene into a Location enum value
+        Location newLocation = (Location)Enum.Parse(typeof(Location), scene.name);
+
+        //If the player is not coming from any new place, stop executing the function
+        if (currentLocation == newLocation) return;
+
+        //Find the start point
+        Transform startPoint = LocationManager.Instance.GetPlayerStartingPosition(oldLocation);
+
+        //Disable the player's CharacterController component
+        CharacterController playerCharacter = playerPoint.GetComponent<CharacterController>();
+        playerCharacter.enabled = false;
+
+        //Change the player's position to the start point
+        playerPoint.position = startPoint.position;
+        playerPoint.rotation = startPoint.rotation;
+
+        //Re-enable player character controller so he can move
+        playerCharacter.enabled = true;
+
+        //Save the current location that we just switched to
+        currentLocation = newLocation;
     }
 }
