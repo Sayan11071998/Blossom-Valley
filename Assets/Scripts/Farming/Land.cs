@@ -1,11 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Land : MonoBehaviour, ITimeTracker
 {
-    public int id;
-
+    public int id; 
     public enum LandStatus
     {
         Soil, Farmland, Watered
@@ -69,10 +68,12 @@ public class Land : MonoBehaviour, ITimeTracker
                 //Switch to watered material
                 materialToSwitch = wateredMat;
                 break;
+
         }
 
         //Get the renderer to apply the changes
         renderer.material = materialToSwitch;
+
     }
 
     public void SwitchLandStatus(LandStatus statusToSwitch)
@@ -80,7 +81,7 @@ public class Land : MonoBehaviour, ITimeTracker
         //Set land status accordingly
         landStatus = statusToSwitch;
 
-        Material materialToSwitch = soilMat;
+        Material materialToSwitch = soilMat; 
 
         //Decide what material to switch to
         switch (statusToSwitch)
@@ -99,13 +100,14 @@ public class Land : MonoBehaviour, ITimeTracker
                 materialToSwitch = wateredMat;
 
                 //Cache the time it was watered
-                timeWatered = TimeManager.Instance.GetGameTimeStamp();
-                break;
+                timeWatered = TimeManager.Instance.GetGameTimestamp(); 
+                break; 
 
         }
 
         //Get the renderer to apply the changes
         renderer.material = materialToSwitch;
+
         LandManager.Instance.OnLandStateChange(id, landStatus, timeWatered);
     }
 
@@ -123,14 +125,14 @@ public class Land : MonoBehaviour, ITimeTracker
         //If there's nothing equipped, return
         if (!InventoryManager.Instance.SlotEquipped(InventorySlot.InventoryType.Tool))
         {
-            return;
+            return; 
         }
 
         //Try casting the itemdata in the toolslot as EquipmentData
-        EquipmentData equipmentTool = toolSlot as EquipmentData;
+        EquipmentData equipmentTool = toolSlot as EquipmentData; 
 
         //Check if it is of type EquipmentData 
-        if (equipmentTool != null)
+        if(equipmentTool != null)
         {
             //Get the tool type
             EquipmentData.ToolType toolType = equipmentTool.toolType;
@@ -141,35 +143,39 @@ public class Land : MonoBehaviour, ITimeTracker
                     SwitchLandStatus(LandStatus.Farmland);
                     break;
                 case EquipmentData.ToolType.WateringCan:
+                    //The land must be tilled first
                     if (landStatus != LandStatus.Soil)
                     {
                         SwitchLandStatus(LandStatus.Watered);
                     }
+                    
                     break;
+
                 case EquipmentData.ToolType.Shovel:
 
                     //Remove the crop from the land
-                    if (cropPlanted != null)
+                    if(cropPlanted != null)
                     {
-                        Destroy(cropPlanted.gameObject);
+                        cropPlanted.RemoveCrop();
                     }
-                    break;
+                    break; 
             }
 
             //We don't need to check for seeds if we have already confirmed the tool to be an equipment
-            return;
+            return; 
         }
 
         //Try casting the itemdata in the toolslot as SeedData
-        SeedData seedTool = toolSlot as SeedData;
+        SeedData seedTool = toolSlot as SeedData; 
 
         ///Conditions for the player to be able to plant a seed
         ///1: He is holding a tool of type SeedData
         ///2: The Land State must be either watered or farmland
         ///3. There isn't already a crop that has been planted
-        if (seedTool != null && landStatus != LandStatus.Soil && cropPlanted == null)
+        if(seedTool != null && landStatus != LandStatus.Soil && cropPlanted == null)
         {
             SpawnCrop();
+            //Plant it with the seed's information
             cropPlanted.Plant(id, seedTool);
 
             //Consume the item
@@ -183,29 +189,29 @@ public class Land : MonoBehaviour, ITimeTracker
         //Instantiate the crop object parented to the land
         GameObject cropObject = Instantiate(cropPrefab, transform);
         //Move the crop object to the top of the land gameobject
-        cropObject.transform.position = new Vector3(transform.position.x, 0.51f, transform.position.z);
+        cropObject.transform.position = new Vector3(transform.position.x, 0.1f, transform.position.z);
 
         //Access the CropBehaviour of the crop we're going to plant
         cropPlanted = cropObject.GetComponent<CropBehaviour>();
-        return cropPlanted;
+        return cropPlanted; 
     }
 
     public void ClockUpdate(GameTimestamp timestamp)
     {
         //Checked if 24 hours has passed since last watered
-        if (landStatus == LandStatus.Watered)
+        if(landStatus == LandStatus.Watered)
         {
             //Hours since the land was watered
             int hoursElapsed = GameTimestamp.CompareTimestamps(timeWatered, timestamp);
             Debug.Log(hoursElapsed + " hours since this was watered");
 
             //Grow the planted crop, if any
-            if (cropPlanted != null)
+            if(cropPlanted != null)
             {
                 cropPlanted.Grow();
             }
 
-            if (hoursElapsed > 24)
+            if(hoursElapsed > 24)
             {
                 //Dry up (Switch back to farmland)
                 SwitchLandStatus(LandStatus.Farmland);
@@ -213,7 +219,7 @@ public class Land : MonoBehaviour, ITimeTracker
         }
 
         //Handle the wilting of the plant when the land is not watered
-        if (landStatus != LandStatus.Watered && cropPlanted != null)
+        if(landStatus != LandStatus.Watered && cropPlanted != null)
         {
             //If the crop has already germinated, start the withering
             if (cropPlanted.cropState != CropBehaviour.CropState.Seed)
@@ -225,6 +231,7 @@ public class Land : MonoBehaviour, ITimeTracker
 
     private void OnDestroy()
     {
+        //Unsubscribe from the list on destroy
         TimeManager.Instance.UnregisterTracker(this);
     }
 }

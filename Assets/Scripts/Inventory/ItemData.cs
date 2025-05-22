@@ -1,9 +1,15 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item", menuName = "Items/Item")]
+[CreateAssetMenu(menuName ="Items/Item")]
 public class ItemData : ScriptableObject
 {
     public string description;
+
+    //Icon to be displayed in UI
     public Sprite thumbnail;
-    public GameObject gameModel;
+
+    //GameObject to be shown in the scene
+    public GameObject gameModel; 
 }

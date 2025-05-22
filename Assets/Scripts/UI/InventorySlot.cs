@@ -1,6 +1,5 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     int quantity; 
 
     public Image itemDisplayImage;
-    public TextMeshProUGUI quantityText; 
+    public Text quantityText; 
 
     public enum InventoryType
     {

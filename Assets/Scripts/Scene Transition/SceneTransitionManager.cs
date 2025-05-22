@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,25 +9,26 @@ public class SceneTransitionManager : MonoBehaviour
     public static SceneTransitionManager Instance;
 
     //The scenes the player can enter
-    public enum Location { Farm, PlayerHome, Town }
+    public enum Location { Farm, PlayerHome, Town}
     public Location currentLocation;
 
     //The player's transform
     Transform playerPoint;
-
-    bool screenFadedOut;
+    
+    //Check if the screen has finished fading out
+    bool screenFadedOut; 
 
     private void Awake()
     {
         //If there is more than 1 instance, destroy GameObject
-        if (Instance != null && Instance != this)
+        if(Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
             //Set the static instance to this instance
-            Instance = this;
+            Instance = this; 
         }
 
         //Make the gameobject persistent across scenes
@@ -37,7 +38,7 @@ public class SceneTransitionManager : MonoBehaviour
         SceneManager.sceneLoaded += OnLocationLoad;
 
         //Find the player's transform
-        playerPoint = FindFirstObjectByType<PlayerController>().transform;
+        playerPoint = FindObjectOfType<PlayerController>().transform;
     }
 
     //Switch the player to another scene
@@ -46,7 +47,7 @@ public class SceneTransitionManager : MonoBehaviour
         //Call a fadeout
         UIManager.Instance.FadeOutScreen();
         screenFadedOut = false;
-        StartCoroutine(ChangeScene(locationToSwitch));
+        StartCoroutine(ChangeScene(locationToSwitch)); 
     }
 
     IEnumerator ChangeScene(Location locationToSwitch)
@@ -57,24 +58,24 @@ public class SceneTransitionManager : MonoBehaviour
         //Wait for the scene to finish fading out before loading the next scene
         while (!screenFadedOut)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.1f); 
         }
 
         //Reset the boolean
         screenFadedOut = false;
         UIManager.Instance.ResetFadeDefaults();
         SceneManager.LoadScene(locationToSwitch.ToString());
-
+        
     }
 
     //Called when the screen has faded out
     public void OnFadeOutComplete()
     {
         screenFadedOut = true;
-
+        
     }
 
-    //Called when a scene is loaded
+    
     //Called when a scene is loaded
     public void OnLocationLoad(Scene scene, LoadSceneMode mode)
     {
@@ -82,17 +83,17 @@ public class SceneTransitionManager : MonoBehaviour
         Location oldLocation = currentLocation;
 
         //Get the new location by converting the string of our current scene into a Location enum value
-        Location newLocation = (Location)Enum.Parse(typeof(Location), scene.name);
+        Location newLocation = (Location) Enum.Parse(typeof(Location), scene.name);
 
         //If the player is not coming from any new place, stop executing the function
-        if (currentLocation == newLocation) return;
+        if (currentLocation == newLocation) return; 
 
         //Find the start point
         Transform startPoint = LocationManager.Instance.GetPlayerStartingPosition(oldLocation);
 
         //Disable the player's CharacterController component
         CharacterController playerCharacter = playerPoint.GetComponent<CharacterController>();
-        playerCharacter.enabled = false;
+        playerCharacter.enabled = false; 
 
         //Change the player's position to the start point
         playerPoint.position = startPoint.position;
@@ -102,6 +103,7 @@ public class SceneTransitionManager : MonoBehaviour
         playerCharacter.enabled = true;
 
         //Save the current location that we just switched to
-        currentLocation = newLocation;
+        currentLocation = newLocation; 
+
     }
 }
