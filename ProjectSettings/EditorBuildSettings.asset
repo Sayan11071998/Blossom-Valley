@@ -7,13 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Farm.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    guid: 538a8c54de509c240ab07b7e03d4e864
   - enabled: 1
     path: Assets/Scenes/PlayerHome.unity
-    guid: c2e4253bbe7d035468610ecc8ac6e88c
+    guid: 1e8972f28939f6c4fb939e51446cf54e
   - enabled: 1
     path: Assets/Scenes/Town.unity
-    guid: 441e3dfdcf0ba044eaf25b3b2e2c63c5
-  m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_UseUCBPForAssetBundles: 0
+    guid: 6e20bef7c02657c4ebc08af00c1cb9bc
+  m_configObjects: {}
