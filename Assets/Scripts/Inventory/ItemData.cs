@@ -11,5 +11,7 @@ public class ItemData : ScriptableObject
     public Sprite thumbnail;
 
     //GameObject to be shown in the scene
-    public GameObject gameModel; 
+    public GameObject gameModel;
+
+    public int cost; 
 }

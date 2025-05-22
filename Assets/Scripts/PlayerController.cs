@@ -64,6 +64,12 @@ public class PlayerController : MonoBehaviour
         {
             playerInteraction.ItemInteract();
         }
+
+        //Keep items 
+        if (Input.GetButtonDown("Fire3"))
+        {
+            playerInteraction.ItemKeep();
+        }
     }
 
     
