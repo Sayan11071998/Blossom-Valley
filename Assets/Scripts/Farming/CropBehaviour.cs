@@ -1,37 +1,46 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CropBehaviour : MonoBehaviour
 {
+    //The ID of the land the crop belongs to
     int landID;
 
+    //Information on what the crop will grow into 
     SeedData seedToGrow;
 
     [Header("Stages of Life")]
     public GameObject seed;
-    public GameObject wilted;
+    public GameObject wilted; 
     private GameObject seedling;
     private GameObject harvestable;
+    
 
+    //The growth points of the crop
     int growth;
+    //How many growth points it takes before it becomes harvestable
     int maxGrowth;
 
-    int maxHealth = GameTimestamp.HoursToMinutes(48);
+    //The crop can stay alive for 48 hours without water before it dies
+    int maxHealth = GameTimestamp.HoursToMinutes(48); 
+
     int health;
 
     public enum CropState
     {
-        Seed,
-        Seedling,
-        Harvestable,
-        Wilted
+        Seed, Seedling, Harvestable, Wilted
     }
-
+    //The current stage in the crop's growth
     public CropState cropState;
 
-    public void Plant(int landID, SeedData seedToGrow)
+    //Initialisation for the crop GameObject
+    //Called when the player plants a seed
+    public void Plant(int landID ,SeedData seedToGrow)
     {
         LoadCrop(landID, seedToGrow, CropState.Seed, 0, 0);
-        LandManager.Instance.RegisterCrop(landID, seedToGrow, cropState, growth, health);
+        LandManager.Instance.RegisterCrop(landID, seedToGrow, cropState, growth, health); 
+
     }
 
     public void LoadCrop(int landID, SeedData seedToGrow, CropState cropState, int growth, int health)
@@ -54,8 +63,9 @@ public class CropBehaviour : MonoBehaviour
         //Convert it to minutes
         maxGrowth = GameTimestamp.HoursToMinutes(hoursToGrow);
 
+        //Set the growth and health accordingly
         this.growth = growth;
-        this.health = health;
+        this.health = health; 
 
         //Check if it is regrowable
         if (seedToGrow.regrowable)
@@ -72,41 +82,52 @@ public class CropBehaviour : MonoBehaviour
 
     }
 
+    //The crop will grow when watered
     public void Grow()
     {
+        //Increase the growth point by 1
         growth++;
 
-        if (health < maxHealth)
+        //Restore the health of the plant when it is watered
+        if(health < maxHealth)
         {
             health++;
         }
 
-        if (growth >= maxGrowth / 2 && cropState == CropState.Seed)
+        //The seed will sprout into a seedling when the growth is at 50%
+        if(growth >= maxGrowth / 2 && cropState == CropState.Seed)
         {
-            SwitchState(CropState.Seedling);
+            SwitchState(CropState.Seedling); 
         }
 
-        if (growth >= maxGrowth && cropState == CropState.Seedling)
+        //Grow from seedling to harvestable
+        if(growth >= maxGrowth && cropState == CropState.Seedling)
         {
             SwitchState(CropState.Harvestable);
         }
 
+        //Inform LandManager on the changes
         LandManager.Instance.OnCropStateChange(landID, cropState, growth, health);
     }
 
+    //The crop will progressively wither when the soil is dry 
     public void Wither()
     {
         health--;
-        if (health <= 0 && cropState != CropState.Seed)
+        //If the health is below 0 and the crop has germinated, kill it
+        if(health <= 0 && cropState != CropState.Seed)
         {
             SwitchState(CropState.Wilted);
         }
 
+        //Inform LandManager on the changes
         LandManager.Instance.OnCropStateChange(landID, cropState, growth, health);
     }
 
+    //Function to handle the state changes 
     void SwitchState(CropState stateToSwitch)
     {
+        //Reset everything and set all GameObjects to inactive
         seed.SetActive(false);
         seedling.SetActive(false);
         harvestable.SetActive(false);
@@ -115,38 +136,58 @@ public class CropBehaviour : MonoBehaviour
         switch (stateToSwitch)
         {
             case CropState.Seed:
+                //Enable the Seed GameObject
                 seed.SetActive(true);
                 break;
             case CropState.Seedling:
+                //Enable the Seedling GameObject
                 seedling.SetActive(true);
-                health = maxHealth;
+
+                //Give the seed health 
+                health = maxHealth; 
+
                 break;
             case CropState.Harvestable:
+                //Enable the Harvestable GameObject
                 harvestable.SetActive(true);
+
+                //If the seed is not regrowable, detach the harvestable from this crop gameobject and destroy it. 
                 if (!seedToGrow.regrowable)
                 {
+                    //Unparent it to the crop
                     harvestable.transform.parent = null;
                     RemoveCrop();
                 }
+                
+                
                 break;
             case CropState.Wilted:
+                //Enable the wilted GameObject
                 wilted.SetActive(true);
                 break;
         }
 
-        cropState = stateToSwitch;
+        //Set the current crop state to the state we're switching to
+        cropState = stateToSwitch; 
     }
 
+    //Destroys and Deregisters the Crop
     public void RemoveCrop()
     {
         LandManager.Instance.DeregisterCrop(landID);
         Destroy(gameObject);
     }
 
+    //Called when the player harvests a regrowable crop. Resets the state to seedling 
     public void Regrow()
     {
+        //Reset the growth 
+        //Get the regrowth time in hours
         int hoursToRegrow = GameTimestamp.DaysToHours(seedToGrow.daysToRegrow);
         growth = maxGrowth - GameTimestamp.HoursToMinutes(hoursToRegrow);
-        SwitchState(CropState.Seedling);
+
+        //Switch the state back to seedling
+        SwitchState(CropState.Seedling); 
     }
+
 }

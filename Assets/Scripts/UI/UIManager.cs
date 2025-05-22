@@ -1,8 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; 
 
 public class UIManager : MonoBehaviour, ITimeTracker
 {
@@ -11,17 +10,18 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Tool equip slot on the status bar
     public Image toolEquipSlot;
     //Tool Quantity text on the status bar 
-    public TextMeshProUGUI toolQuantityText;
+    public Text toolQuantityText; 
     //Time UI
-    public TextMeshProUGUI timeText;
-    public TextMeshProUGUI dateText;
+    public Text timeText;
+    public Text dateText; 
+
 
     [Header("Inventory System")]
     //The inventory panel
     public GameObject inventoryPanel;
 
     //The tool equip slot UI on the Inventory panel
-    public HandInventorySlot toolHandSlot;
+    public HandInventorySlot toolHandSlot; 
 
     //The tool slot UIs
     public InventorySlot[] toolSlots;
@@ -33,12 +33,16 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public InventorySlot[] itemSlots;
 
     //Item info box
-    public TextMeshProUGUI itemNameText;
-    public TextMeshProUGUI itemDescriptionText;
+    public Text itemNameText;
+    public Text itemDescriptionText;
 
     [Header("Screen Transitions")]
     public GameObject fadeIn;
     public GameObject fadeOut;
+
+    [Header("Yes No Prompt")]
+    public YesNoPrompt yesNoPrompt; 
+
 
     private void Awake()
     {
@@ -60,8 +64,18 @@ public class UIManager : MonoBehaviour, ITimeTracker
         AssignSlotIndexes();
 
         //Add UIManager to the list of objects TimeManager will notify when the time updates
-        TimeManager.Instance.RegisterTracker(this);
+        TimeManager.Instance.RegisterTracker(this); 
     }
+
+    public void TriggerYesNoPrompt(string message, System.Action onYesCallback)
+    {
+        //Set active the gameobject of the Yes No Prompt
+        yesNoPrompt.gameObject.SetActive(true);
+
+        yesNoPrompt.CreatePrompt(message, onYesCallback); 
+    }
+
+    #region Fadein Fadeout Transitions
 
     public void FadeOutScreen()
     {
@@ -70,13 +84,13 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     public void FadeInScreen()
     {
-        fadeIn.SetActive(true);
+        fadeIn.SetActive(true); 
     }
 
     public void OnFadeInComplete()
     {
         //Disable Fade in Screen when animation is completed
-        fadeIn.SetActive(false);
+        fadeIn.SetActive(false); 
     }
 
     //Reset the fadein fadeout screens to their default positions
@@ -86,10 +100,15 @@ public class UIManager : MonoBehaviour, ITimeTracker
         fadeIn.SetActive(true);
     }
 
+
+
+    #endregion
+
+    #region Inventory
     //Iterate through the slot UI elements and assign it its reference slot index
     public void AssignSlotIndexes()
     {
-        for (int i = 0; i < toolSlots.Length; i++)
+        for (int i =0; i<toolSlots.Length; i++)
         {
             toolSlots[i].AssignIndex(i);
             itemSlots[i].AssignIndex(i);
@@ -160,7 +179,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public void DisplayItemInfo(ItemData data)
     {
         //If data is null, reset
-        if (data == null)
+        if(data == null)
         {
             itemNameText.text = "";
             itemDescriptionText.text = "";
@@ -169,20 +188,22 @@ public class UIManager : MonoBehaviour, ITimeTracker
         }
 
         itemNameText.text = data.name;
-        itemDescriptionText.text = data.description;
+        itemDescriptionText.text = data.description; 
     }
+    #endregion
 
+    #region Time
     //Callback to handle the UI for time
     public void ClockUpdate(GameTimestamp timestamp)
     {
         //Handle the time
         //Get the hours and minutes
         int hours = timestamp.hour;
-        int minutes = timestamp.minute;
+        int minutes = timestamp.minute; 
 
         //AM or PM
         string prefix = "AM ";
-
+        
         //Convert hours to 12 hour clock
         if (hours > 12)
         {
@@ -201,7 +222,8 @@ public class UIManager : MonoBehaviour, ITimeTracker
         string dayOfTheWeek = timestamp.GetDayOfTheWeek().ToString();
 
         //Format it for the date text display
-        dateText.text = season + " " + day + " (" + dayOfTheWeek + ")";
+        dateText.text = season + " " + day + " (" + dayOfTheWeek +")";
 
     }
+    #endregion
 }

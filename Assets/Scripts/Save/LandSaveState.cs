@@ -1,7 +1,9 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct LandSaveState
+public struct LandSaveState 
 {
     public Land.LandStatus landStatus;
     public GameTimestamp lastWatered;
@@ -19,11 +21,15 @@ public struct LandSaveState
         {
             //Hours since the land was watered
             int hoursElapsed = GameTimestamp.CompareTimestamps(lastWatered, timestamp);
+            Debug.Log(hoursElapsed + " hours since this was watered");
 
             if (hoursElapsed > 24)
             {
-                landStatus = Land.LandStatus.Farmland;
+                //Dry up (Switch back to farmland)
+                landStatus = Land.LandStatus.Farmland; 
             }
         }
+
+        
     }
 }
