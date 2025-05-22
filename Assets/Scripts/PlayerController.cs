@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 4f;
     public float runSpeed = 8f;
 
+    private float gravity = 9.81f;
+
 
     //Interaction components
     PlayerInteraction playerInteraction; 
@@ -75,6 +77,12 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = new Vector3(horizontal, 0f, vertical).normalized;
         Vector3 velocity = moveSpeed * Time.deltaTime * dir;
 
+        if (controller.isGrounded)
+        {
+            velocity.y = 0; 
+        }
+        velocity.y -= Time.deltaTime * gravity; 
+
         //Is the sprint key pressed down?
         if (Input.GetButton("Sprint"))
         {
@@ -101,7 +109,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Animation speed parameter
-        animator.SetFloat("Speed", velocity.magnitude); 
+        animator.SetFloat("Speed", dir.magnitude); 
 
 
 

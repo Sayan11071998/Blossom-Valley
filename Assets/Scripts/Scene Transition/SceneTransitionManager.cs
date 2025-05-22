@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,26 +10,29 @@ public class SceneTransitionManager : MonoBehaviour
     public static SceneTransitionManager Instance;
 
     //The scenes the player can enter
-    public enum Location { Farm, PlayerHome, Town}
+    public enum Location { Farm, PlayerHome, Town }
     public Location currentLocation;
+
+    //List of all the places that are to be considered indoor
+    static readonly Location[] indoor = { Location.PlayerHome };
 
     //The player's transform
     Transform playerPoint;
     
     //Check if the screen has finished fading out
-    bool screenFadedOut; 
+    bool screenFadedOut;
 
     private void Awake()
     {
         //If there is more than 1 instance, destroy GameObject
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
             //Set the static instance to this instance
-            Instance = this; 
+            Instance = this;
         }
 
         //Make the gameobject persistent across scenes
@@ -39,6 +43,12 @@ public class SceneTransitionManager : MonoBehaviour
 
         //Find the player's transform
         playerPoint = FindObjectOfType<PlayerController>().transform;
+    }
+
+    //Checks if the current location is indoors
+    public bool CurrentlyIndoor()
+    {
+        return indoor.Contains(currentLocation); 
     }
 
     //Switch the player to another scene
