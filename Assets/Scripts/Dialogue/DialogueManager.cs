@@ -126,4 +126,17 @@ public class DialogueManager : MonoBehaviour
         //Typing sequence complete
         isTyping = false; 
     }
+
+    //Converts a simple string into a List of Dialogue lines to put into DialogueManager
+    public static List<DialogueLine> CreateSimpleMessage(string message)
+    {
+        //The Dialogue line we want to output 
+        DialogueLine messageDialogueLine = new DialogueLine("",message);
+
+        List<DialogueLine> listToReturn = new List<DialogueLine>();
+
+        listToReturn.Add(messageDialogueLine);
+
+        return listToReturn; 
+    }
 }

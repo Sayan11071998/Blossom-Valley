@@ -48,7 +48,8 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         Debug.Log("Day has been reset"); 
         foreach(NPCRelationshipState npc in RelationshipStats.relationships)
         {
-            npc.hasTalkedToday = false; 
+            npc.hasTalkedToday = false;
+            npc.giftGivenToday = false; 
         }
     }
 
