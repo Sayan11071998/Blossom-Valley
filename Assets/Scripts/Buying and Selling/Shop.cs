@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Shop : InteractableObject
 {
-    public List<ItemData> shopItems; 
+    public List<ItemData> shopItems;
+
+    [Header("Dialogues")]
+    public List<DialogueLine> dialogueOnShopOpen;
 
     public static void Purchase(ItemData item, int quantity)
     {
@@ -24,6 +27,12 @@ public class Shop : InteractableObject
 
     public override void Pickup()
     {
-        UIManager.Instance.OpenShop(shopItems); 
+        DialogueManager.Instance.StartDialogue(dialogueOnShopOpen, OpenShop);
+        
+    }
+
+    void OpenShop()
+    {
+        UIManager.Instance.OpenShop(shopItems);
     }
 }

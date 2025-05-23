@@ -156,7 +156,9 @@ public class CropBehaviour : MonoBehaviour
                 {
                     //Unparent it to the crop
                     harvestable.transform.parent = null;
-                    RemoveCrop();
+
+                    //Pass the RemoveCrop function over to the Interactable Object so that it will be called when the player picks it up
+                    harvestable.GetComponent<InteractableObject>().onInteract.AddListener(RemoveCrop);
                 }
                 
                 

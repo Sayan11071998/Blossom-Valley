@@ -48,6 +48,12 @@ public class PlayerController : MonoBehaviour
         {
             TimeManager.Instance.Tick();
         }
+
+        //Toggle relationship panel
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            UIManager.Instance.ToggleRelationshipPanel();
+        }
     }
 
     public void Interact()
