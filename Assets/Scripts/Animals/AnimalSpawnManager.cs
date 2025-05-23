@@ -27,8 +27,11 @@ public class AnimalSpawnManager : MonoBehaviour
 
                 Vector3 spawnPt = new Vector3(offsetX, floor.transform.position.y, offsetZ);
 
+                float randomYRotation = Random.Range(0f, 360f);
+                Quaternion randomRotation = Quaternion.Euler(0f, randomYRotation, 0f);
+
                 //Spawn the animal and get the AnimalBehaviour component
-                AnimalBehaviour animal = Instantiate(animalType.animalObject, spawnPt, Quaternion.identity);
+                AnimalBehaviour animal = Instantiate(animalType.animalObject, spawnPt, randomRotation);
                 //Load in the relationship data
                 animal.LoadRelationship(animalRelation); 
             }

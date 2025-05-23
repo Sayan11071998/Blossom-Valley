@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AnimalMovement))]
 public class AnimalBehaviour : InteractableObject
 {
-    AnimalRelationshipState relationship; 
+    AnimalRelationshipState relationship;
+    AnimalMovement movement;
+
+    private void Start()
+    {
+        movement = GetComponent<AnimalMovement>();
+    }
 
     public void LoadRelationship(AnimalRelationshipState relationship)
     {
@@ -18,7 +25,11 @@ public class AnimalBehaviour : InteractableObject
             Debug.LogError("Relationship not set");
             return; 
         }
-
-        DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage($"{relationship.name} seems happy."));
+        movement.ToggleMovement(false);
+        DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage($"{relationship.name} seems happy."),
+            () => {
+                movement.ToggleMovement(true);
+            }
+            );
     }
 }
