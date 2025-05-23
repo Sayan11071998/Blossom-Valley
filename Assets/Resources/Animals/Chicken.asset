@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92517ca0e0a323b45b6d583c8eb3b19c, type: 3}
   m_Name: Chicken
   m_EditorClassIdentifier: 
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: ba5c1c0e8e07f5444ae738a26605b729, type: 3}
   animalObject: {fileID: 3498039368890056794, guid: 6a648cd7e96b20c45938d20696070d21,
     type: 3}
   purchasePrice: 100

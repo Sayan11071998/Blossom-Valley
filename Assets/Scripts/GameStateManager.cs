@@ -52,6 +52,10 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
             npc.hasTalkedToday = false;
             npc.giftGivenToday = false; 
         }
+        AnimalFeedManager.ResetFeedboxes();
+        AnimalStats.OnDayReset();
+
+       
     }
 
     void UpdateShippingState(GameTimestamp timestamp)
