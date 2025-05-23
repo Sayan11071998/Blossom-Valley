@@ -52,6 +52,10 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
             npc.hasTalkedToday = false;
             npc.giftGivenToday = false; 
         }
+        AnimalFeedManager.ResetFeedboxes();
+        AnimalStats.OnDayReset();
+
+       
     }
 
     void UpdateShippingState(GameTimestamp timestamp)
@@ -155,19 +159,19 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
     public GameSaveState ExportSaveState()
     {
         //Retrieve Farm Data 
-        List<LandSaveState> landData = LandManager.farmData.Item1;
-        List<CropSaveState> cropData = LandManager.farmData.Item2;
+        FarmSaveState farmSaveState = FarmSaveState.Export();
 
-        //Retrieve Inventory Data 
-        ItemSlotData[] toolSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Tool);
-        ItemSlotData[] itemSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Item);
+        //Retrieve inventory data 
+        InventorySaveState inventorySaveState = InventorySaveState.Export();
 
-        ItemSlotData equippedToolSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Tool);
-        ItemSlotData equippedItemSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
+        PlayerSaveState playerSaveState = PlayerSaveState.Export();
 
         //Time
         GameTimestamp timestamp = TimeManager.Instance.GetGameTimestamp();
-        return new GameSaveState(landData, cropData, toolSlots, itemSlots, equippedItemSlot, equippedToolSlot, timestamp, PlayerStats.Money, RelationshipStats.relationships, AnimalStats.animalRelationships,  IncubationManager.eggsIncubating);
+        //Relationships
+        RelationshipSaveState relationshipSaveState = RelationshipSaveState.Export();
+
+        return new GameSaveState(farmSaveState, inventorySaveState, timestamp, playerSaveState, relationshipSaveState);
     }
 
     public void LoadSave()
@@ -180,24 +184,16 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         TimeManager.Instance.LoadTime(save.timestamp);
 
         //Inventory
-        ItemSlotData[] toolSlots = ItemSlotData.DeserializeArray(save.toolSlots);
-        ItemSlotData equippedToolSlot = ItemSlotData.DeserializeData(save.equippedToolSlot);
-        ItemSlotData[] itemSlots = ItemSlotData.DeserializeArray(save.itemSlots);
-        ItemSlotData equippedItemSlot = ItemSlotData.DeserializeData(save.equippedItemSlot);
-        InventoryManager.Instance.LoadInventory(toolSlots, equippedToolSlot, itemSlots, equippedItemSlot);
+        save.inventorySaveState.LoadData();
 
         //Farming data 
-        LandManager.farmData = new System.Tuple<List<LandSaveState>, List<CropSaveState>>(save.landData, save.cropData);
+        save.farmSaveState.LoadData();
 
         //Player Stats
-        PlayerStats.LoadStats(save.money);
+        save.playerSaveState.LoadData();
 
         //Relationship stats
-        RelationshipStats.LoadStats(save.relationships);
-        AnimalStats.LoadStats(save.animals);
-
-        //Animal Farming Stats
-        IncubationManager.eggsIncubating = save.eggsIncubating; 
+        save.relationshipSaveState.LoadData();
 
     }
 }

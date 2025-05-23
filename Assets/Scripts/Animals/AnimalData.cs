@@ -11,6 +11,9 @@ public class AnimalData : ScriptableObject
     //The price the player purchases the animal for
     public int purchasePrice;
 
+    //The days before the animal becomes an adult
+    public int daysToMature;
+
     //The item the animal will produce
     public ItemData produce;
 

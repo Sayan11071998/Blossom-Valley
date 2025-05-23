@@ -6,54 +6,31 @@ using UnityEngine;
 public class GameSaveState
 {
     //Farm Data
-    public List<LandSaveState> landData;
-    public List<CropSaveState> cropData;
-
+    public FarmSaveState farmSaveState;
     //Inventory
-    public ItemSlotSaveData[] toolSlots;
-    public ItemSlotSaveData[] itemSlots;
-
-    public ItemSlotSaveData equippedItemSlot;
-    public ItemSlotSaveData equippedToolSlot;
-
+    public InventorySaveState inventorySaveState;
     //Time
     public GameTimestamp timestamp;
 
     //PlayerStats
-    public int money;
+    public PlayerSaveState playerSaveState;
 
     //Relationships
-    public List<NPCRelationshipState> relationships;
-    public List<AnimalRelationshipState> animals;
-
-    //Farm Animals
-    public List<EggIncubationSaveState> eggsIncubating; 
+    public RelationshipSaveState relationshipSaveState;
 
     public GameSaveState(
-        List<LandSaveState> landData, 
-        List<CropSaveState> cropData,
-        ItemSlotData[] toolSlots, 
-        ItemSlotData[] itemSlots, 
-        ItemSlotData equippedItemSlot, 
-        ItemSlotData equippedToolSlot, 
-        GameTimestamp timestamp, 
-        int money, 
-        List<NPCRelationshipState> relationships,
-        List<AnimalRelationshipState> animals,
-        List<EggIncubationSaveState> eggsIncubating
+        FarmSaveState farmSaveState,
+        InventorySaveState inventorySaveState,
+        GameTimestamp timestamp,
+        PlayerSaveState playerSaveState,
+        RelationshipSaveState relationshipSaveState
         )
         
     {
-        this.landData = landData;
-        this.cropData = cropData;
-        this.toolSlots = ItemSlotData.SerializeArray(toolSlots);
-        this.itemSlots = ItemSlotData.SerializeArray(itemSlots);
-        this.equippedItemSlot = ItemSlotData.SerializeData(equippedItemSlot);
-        this.equippedToolSlot = ItemSlotData.SerializeData(equippedToolSlot);
+        this.farmSaveState = farmSaveState;
+        this.inventorySaveState = inventorySaveState;
         this.timestamp = timestamp;
-        this.money = money;
-        this.relationships = relationships;
-        this.animals = animals; 
-        this.eggsIncubating = eggsIncubating;
+        this.playerSaveState = playerSaveState;
+        this.relationshipSaveState = relationshipSaveState;
     }
 }

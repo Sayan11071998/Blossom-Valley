@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -20,8 +21,16 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    //The full list of items 
-    public ItemIndex itemIndex; 
+    List<ItemData> _itemIndex;
+
+    public ItemData GetItemFromString(string name)
+    {
+        if (_itemIndex == null)
+        {
+            _itemIndex = Resources.LoadAll<ItemData>("").ToList();
+        }
+        return _itemIndex.Find(i => i.name == name);
+    }
 
     [Header("Tools")]
     //Tool Slots

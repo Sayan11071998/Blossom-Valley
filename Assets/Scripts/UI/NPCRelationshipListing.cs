@@ -22,6 +22,14 @@ public class NPCRelationshipListing : MonoBehaviour
 
     }
 
+    public void Display(AnimalData animalData, AnimalRelationshipState relationship)
+    {
+        portraitImage.sprite = animalData.portrait;
+        nameText.text = relationship.name;
+
+        DisplayHearts(relationship.Hearts());
+    }
+
     void DisplayHearts(float number)
     {
         //Set everything to empty
