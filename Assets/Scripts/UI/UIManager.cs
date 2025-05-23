@@ -6,6 +6,16 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour, ITimeTracker
 {
     public static UIManager Instance { get; private set; }
+
+    [Header("Screen Management")]
+    public GameObject menuScreen; 
+    public enum Tab
+    {
+        Inventory, Relationships
+    }
+    //The current selected tab
+    public Tab selectedTab; 
+
     [Header("Status Bar")]
     //Tool equip slot on the status bar
     public Image toolEquipSlot;
@@ -86,6 +96,45 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
         yesNoPrompt.CreatePrompt(message, onYesCallback); 
     }
+
+
+    #region Tab Management
+    public void ToggleMenuPanel()
+    {
+        menuScreen.SetActive(!menuScreen.activeSelf);
+
+        OpenWindow(selectedTab);
+
+        TabBehaviour.onTabStateChange?.Invoke(); 
+    }
+
+    //Manage the opening of windows associated with the tab
+    public void OpenWindow(Tab windowToOpen)
+    {
+        //Disable all windows
+        relationshipListingManager.gameObject.SetActive(false);
+        inventoryPanel.SetActive(false);
+
+        //Open the corresponding window and render it
+        switch (windowToOpen)
+        {
+            case Tab.Inventory:
+                inventoryPanel.SetActive(true);
+                RenderInventory(); 
+                break;
+            case Tab.Relationships:
+                relationshipListingManager.gameObject.SetActive(true);
+                relationshipListingManager.Render(RelationshipStats.relationships); 
+                break; 
+
+        }
+
+        //Set the selected tab
+        selectedTab = windowToOpen; 
+
+
+    }
+    #endregion
 
     #region Fadein Fadeout Transitions
 
