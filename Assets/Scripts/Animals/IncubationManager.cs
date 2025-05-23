@@ -49,8 +49,11 @@ public class IncubationManager : MonoBehaviour
             {
                 eggsIncubating.Remove(egg);
 
-                //Handle Chicken spawning here
-                Debug.Log("A new chick is born!");
+                //Get the animal data of chicken
+                AnimalData chickenData = AnimalStats.GetAnimalTypeFromString("Chicken");
+                //Handle the chicken creation
+                AnimalStats.StartAnimalCreation(chickenData); 
+                
             }
             
         }
