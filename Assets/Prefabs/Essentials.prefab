@@ -2869,8 +2869,8 @@ MonoBehaviour:
     itemData: {fileID: 11400000, guid: f9d2fa745dbb6df49a3b497f82890c1c, type: 2}
     quantity: 1
   itemSlots:
-  - itemData: {fileID: 0}
-    quantity: 0
+  - itemData: {fileID: 11400000, guid: 6abe74226a59b9944aa054d8f314b29a, type: 2}
+    quantity: 1
   - itemData: {fileID: 0}
     quantity: 0
   - itemData: {fileID: 0}

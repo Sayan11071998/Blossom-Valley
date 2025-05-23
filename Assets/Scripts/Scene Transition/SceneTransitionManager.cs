@@ -10,11 +10,11 @@ public class SceneTransitionManager : MonoBehaviour
     public static SceneTransitionManager Instance;
 
     //The scenes the player can enter
-    public enum Location { Farm, PlayerHome, Town }
+    public enum Location { Farm, PlayerHome, Town, ChickenCoop }
     public Location currentLocation;
 
     //List of all the places that are to be considered indoor
-    static readonly Location[] indoor = { Location.PlayerHome };
+    static readonly Location[] indoor = { Location.PlayerHome, Location.ChickenCoop };
 
     //The player's transform
     Transform playerPoint;

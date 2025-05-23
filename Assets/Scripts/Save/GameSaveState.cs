@@ -23,7 +23,10 @@ public class GameSaveState
     public int money;
 
     //Relationships
-    public List<NPCRelationshipState> relationships; 
+    public List<NPCRelationshipState> relationships;
+
+    //Farm Animals
+    public List<EggIncubationSaveState> eggsIncubating; 
 
     public GameSaveState(
         List<LandSaveState> landData, 
@@ -34,7 +37,10 @@ public class GameSaveState
         ItemSlotData equippedToolSlot, 
         GameTimestamp timestamp, 
         int money, 
-        List<NPCRelationshipState> relationships)
+        List<NPCRelationshipState> relationships,
+        List<EggIncubationSaveState> eggsIncubating
+        )
+        
     {
         this.landData = landData;
         this.cropData = cropData;
@@ -44,6 +50,7 @@ public class GameSaveState
         this.equippedToolSlot = ItemSlotData.SerializeData(equippedToolSlot);
         this.timestamp = timestamp;
         this.money = money;
-        this.relationships = relationships; 
+        this.relationships = relationships;
+        this.eggsIncubating = eggsIncubating;
     }
 }
