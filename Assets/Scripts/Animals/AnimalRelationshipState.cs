@@ -20,6 +20,11 @@ public class AnimalRelationshipState : NPCRelationshipState
         }
     }
 
+    //Age in days
+    public int age;
+
+    public bool givenProduceToday;
+
     public AnimalRelationshipState(string name, AnimalData animalType) : base(name)
     {
         this.animalType = animalType.name;

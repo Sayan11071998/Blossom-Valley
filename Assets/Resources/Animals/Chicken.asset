@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Chicken
   m_EditorClassIdentifier: 
   portrait: {fileID: 21300000, guid: ba5c1c0e8e07f5444ae738a26605b729, type: 3}
-  animalObject: {fileID: 3498039368890056794, guid: 6a648cd7e96b20c45938d20696070d21,
+  animalObject: {fileID: 1464612447295433885, guid: 6a648cd7e96b20c45938d20696070d21,
     type: 3}
   purchasePrice: 100
+  daysToMature: 5
   produce: {fileID: 11400000, guid: 6abe74226a59b9944aa054d8f314b29a, type: 2}
   locationToSpawn: 3

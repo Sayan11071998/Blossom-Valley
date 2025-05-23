@@ -72,6 +72,10 @@ public class AnimalStats : MonoBehaviour
             animal.hasTalkedToday = false;
             //Gift given refers to whether the animal has been fed
             animal.giftGivenToday = false;
+            animal.givenProduceToday = false;
+
+            //Advance the age of the animal 
+            animal.age++;
         }
     }
 
