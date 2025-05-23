@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92517ca0e0a323b45b6d583c8eb3b19c, type: 3}
+  m_Name: Chicken
+  m_EditorClassIdentifier: 
+  portrait: {fileID: 0}
+  animalObject: {fileID: 3498039368890056794, guid: 6a648cd7e96b20c45938d20696070d21,
+    type: 3}
+  purchasePrice: 100
+  produce: {fileID: 11400000, guid: 6abe74226a59b9944aa054d8f314b29a, type: 2}
+  locationToSpawn: 3

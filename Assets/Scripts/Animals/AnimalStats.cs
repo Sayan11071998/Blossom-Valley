@@ -1,0 +1,42 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class AnimalStats : MonoBehaviour
+{
+
+    //The relationship data of all the NPCs that the player has met in the game
+    public static List<AnimalRelationshipState> animalRelationships = new List<AnimalRelationshipState>();
+
+    //Load all the animal data scriptable objects
+    static List<AnimalData> animals = Resources.LoadAll<AnimalData>("Animals").ToList();
+
+    //To be fired up when a new animal is born or purchased
+    public static void StartAnimalCreation(AnimalData animalType)
+    {
+        //Handle Chicken spawning here
+        UIManager.Instance.TriggerNamingPrompt($"Give your new {animalType.name} a name.", (inputString) => {
+            //Create a new animal and add it to the animal relationships data
+            animalRelationships.Add(new AnimalRelationshipState(inputString, animalType));
+        });
+    }
+
+    //Load in the animal relationships
+    public static void LoadStats(List<AnimalRelationshipState> relationshipsToLoad)
+    {
+        if(relationshipsToLoad == null)
+        {
+            animalRelationships = new List<AnimalRelationshipState>();
+            return; 
+        }
+        animalRelationships = relationshipsToLoad; 
+    }
+
+    //Get the animal data type from a string
+    public static AnimalData GetAnimalTypeFromString(string name)
+    {
+        return animals.Find(i => i.name == name);
+    }
+
+}

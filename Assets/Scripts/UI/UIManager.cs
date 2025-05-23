@@ -1,29 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour, ITimeTracker
 {
     public static UIManager Instance { get; private set; }
 
     [Header("Screen Management")]
-    public GameObject menuScreen; 
+    public GameObject menuScreen;
     public enum Tab
     {
         Inventory, Relationships
     }
     //The current selected tab
-    public Tab selectedTab; 
+    public Tab selectedTab;
 
     [Header("Status Bar")]
     //Tool equip slot on the status bar
     public Image toolEquipSlot;
     //Tool Quantity text on the status bar 
-    public Text toolQuantityText; 
+    public Text toolQuantityText;
     //Time UI
     public Text timeText;
-    public Text dateText; 
+    public Text dateText;
 
 
     [Header("Inventory System")]
@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public GameObject inventoryPanel;
 
     //The tool equip slot UI on the Inventory panel
-    public HandInventorySlot toolHandSlot; 
+    public HandInventorySlot toolHandSlot;
 
     //The tool slot UIs
     public InventorySlot[] toolSlots;
@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public InventorySlot[] itemSlots;
 
     [Header("Item info box")]
-    public GameObject itemInfoBox; 
+    public GameObject itemInfoBox;
     public Text itemNameText;
     public Text itemDescriptionText;
 
@@ -51,8 +51,9 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public GameObject fadeIn;
     public GameObject fadeOut;
 
-    [Header("Yes No Prompt")]
+    [Header("Prompts")]
     public YesNoPrompt yesNoPrompt;
+    public NamingPrompt namingPrompt;
 
     [Header("Player Stats")]
     public Text moneyText;
@@ -61,7 +62,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public ShopListingManager shopListingManager;
 
     [Header("Relationships")]
-    public RelationshipListingManager relationshipListingManager; 
+    public RelationshipListingManager relationshipListingManager;
 
 
     private void Awake()
@@ -83,10 +84,28 @@ public class UIManager : MonoBehaviour, ITimeTracker
         RenderInventory();
         AssignSlotIndexes();
         RenderPlayerStats();
-        DisplayItemInfo(null); 
+        DisplayItemInfo(null);
 
         //Add UIManager to the list of objects TimeManager will notify when the time updates
         TimeManager.Instance.RegisterTracker(this);
+    }
+
+    #region Prompts
+
+    public void TriggerNamingPrompt(string message, System.Action<string> onConfirmCallback)
+    {
+        //Check if another prompt is already in progress
+        if (namingPrompt.gameObject.activeSelf)
+        {
+            //Queue the prompt
+            namingPrompt.QueuePromptAction(() => TriggerNamingPrompt(message, onConfirmCallback));
+            return; 
+        }
+
+        //Open the panel
+        namingPrompt.gameObject.SetActive(true);
+
+        namingPrompt.CreatePrompt(message, onConfirmCallback); 
     }
 
     public void TriggerYesNoPrompt(string message, System.Action onYesCallback)
@@ -96,7 +115,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
         yesNoPrompt.CreatePrompt(message, onYesCallback); 
     }
-
+    #endregion
 
     #region Tab Management
     public void ToggleMenuPanel()
