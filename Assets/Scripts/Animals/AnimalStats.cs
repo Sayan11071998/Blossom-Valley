@@ -25,6 +25,7 @@ public class AnimalStats : MonoBehaviour
     //Load in the animal relationships
     public static void LoadStats(List<AnimalRelationshipState> relationshipsToLoad)
     {
+        Debug.Log("Animals: " + relationshipsToLoad.Count); 
         if(relationshipsToLoad == null)
         {
             animalRelationships = new List<AnimalRelationshipState>();

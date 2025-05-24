@@ -24,6 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 98eb918a7759b0d4fa2f2eb75bc79fcb, type: 2}
   dislikes:
   - {fileID: 11400000, guid: 7c5d10f9731296d4f995bc32cb72b1fe, type: 2}
+  prefab: {fileID: 2868576992454718586, guid: 6f8824151316bfe4f86160e0bbb7606f, type: 3}
   onFirstMeet:
   - speaker: Ben
     message: 'Are you the new farmer on the block? '

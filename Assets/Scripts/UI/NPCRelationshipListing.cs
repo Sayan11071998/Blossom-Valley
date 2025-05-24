@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using TMPro;
 
 public class NPCRelationshipListing : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class NPCRelationshipListing : MonoBehaviour
 
     [Header("UI Elements")]
     public Image portraitImage;
-    public Text nameText;
+    public TextMeshProUGUI nameText;
     public Image[] hearts; 
 
     public void Display(CharacterData characterData, NPCRelationshipState relationship)

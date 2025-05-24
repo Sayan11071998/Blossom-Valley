@@ -22,9 +22,19 @@ public class FarmSaveState
     //Prepare the data for exporting 
     public static FarmSaveState Export()
     {
-        List<LandSaveState> landData = LandManager.farmData.Item1;
-        List<CropSaveState> cropData = LandManager.farmData.Item2;
-        List<EggIncubationSaveState> eggsIncubating = IncubationManager.eggsIncubating; 
+
+        List<LandSaveState> landData = new List<LandSaveState>();
+        List<CropSaveState> cropData = new List<CropSaveState>(); 
+        if (LandManager.farmData != null)
+        {
+            landData = LandManager.farmData.Item1;
+            cropData = LandManager.farmData.Item2;
+        }
+        List<EggIncubationSaveState> eggsIncubating = new List<EggIncubationSaveState>(); 
+        if(IncubationManager.eggsIncubating != null)
+        {
+            eggsIncubating = IncubationManager.eggsIncubating;
+        }
         return new FarmSaveState(landData, cropData, eggsIncubating); 
 
     }

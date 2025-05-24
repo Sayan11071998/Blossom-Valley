@@ -23,6 +23,7 @@ MonoBehaviour:
   likes:
   - {fileID: 11400000, guid: 7c5d10f9731296d4f995bc32cb72b1fe, type: 2}
   dislikes: []
+  prefab: {fileID: 4293373722112277805, guid: 0a0ad57d056ea154089214ddefc65872, type: 3}
   onFirstMeet:
   - speaker: Jeff
     message: Are you the new farmer?
