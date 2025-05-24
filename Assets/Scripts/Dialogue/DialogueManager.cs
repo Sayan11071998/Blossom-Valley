@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
 
 public class DialogueManager : MonoBehaviour
 {
@@ -11,8 +10,8 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue Components")]
     public GameObject dialoguePanel;
-    public TextMeshProUGUI speakerText;
-    public TextMeshProUGUI dialogueText;
+    public Text speakerText;
+    public Text dialogueText;
 
     //The lines to queue during the dialogue sequence
     Queue<DialogueLine> dialogueQueue;
@@ -139,29 +138,5 @@ public class DialogueManager : MonoBehaviour
         listToReturn.Add(messageDialogueLine);
 
         return listToReturn; 
-    }
-
-    //Filter to see if there is any dialogue lines we can overwrite with
-    public static List<DialogueLine> SelectDialogue(List<DialogueLine> dialogueToExecute, DialogueCondition[] conditions)
-    {
-        //Replace the dialogue set with the highest condition score
-        int highestConditionScore = -1; 
-        foreach(DialogueCondition condition in conditions)
-        {
-            //Check if conditions met first
-            if(condition.CheckConditions(out int score))
-            {
-                if(score > highestConditionScore)
-                {
-                    highestConditionScore = score;
-                    dialogueToExecute = condition.dialogueLine;
-                    Debug.Log("Will play " + condition.id); 
-                }
-            }
-        }
-
-        
-
-        return dialogueToExecute; 
     }
 }

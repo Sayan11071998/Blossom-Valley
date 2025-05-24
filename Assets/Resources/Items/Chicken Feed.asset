@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Chicken Feed
   m_EditorClassIdentifier: 
   description: Feed for chickens.
-  thumbnail: {fileID: 886423002, guid: 040be57890032874eb5605985a0d2b29, type: 3}
+  thumbnail: {fileID: -5839387938066880692, guid: 01531636b360a184ebafe28cd155ef35,
+    type: 3}
   gameModel: {fileID: 482605842391551417, guid: 50578f6f04f07d14a98cc05e81fe198f,
     type: 3}
   cost: 10

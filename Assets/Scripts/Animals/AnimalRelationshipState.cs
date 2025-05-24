@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class AnimalRelationshipState : NPCRelationshipState
 {
-    public int id; 
     //The type of animal this animal is 
     public string animalType;
 
@@ -26,24 +25,21 @@ public class AnimalRelationshipState : NPCRelationshipState
 
     public bool givenProduceToday;
 
-    public AnimalRelationshipState(int id, string name, AnimalData animalType) : base(name)
+    public AnimalRelationshipState(string name, AnimalData animalType) : base(name)
     {
-        this.id = id; 
         this.animalType = animalType.name;
 
         Mood = MAX_MOOD; 
     }
 
-    public AnimalRelationshipState(int id, string name, AnimalData animalType, int friendshipPoints): base(name, friendshipPoints)
+    public AnimalRelationshipState(string name, AnimalData animalType, int friendshipPoints): base(name, friendshipPoints)
     {
-        this.id = id; 
         this.animalType = animalType.name;
         Mood = MAX_MOOD;
     }
 
-    public AnimalRelationshipState(int id ,string name, AnimalData animalType, int friendshipPoints, int mood) : base(name, friendshipPoints)
+    public AnimalRelationshipState(string name, AnimalData animalType, int friendshipPoints, int mood) : base(name, friendshipPoints)
     {
-        this.id = id; 
         this.animalType = animalType.name;
         Mood = mood; 
     }

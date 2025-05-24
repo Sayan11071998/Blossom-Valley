@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Cabbage
   m_EditorClassIdentifier: 
   description: A leafy green vegetable
-  thumbnail: {fileID: 632171896, guid: f75c1edc3bea71c4b87214d33c1af6d3, type: 3}
+  thumbnail: {fileID: 8242820234695673801, guid: f949b641c023682449ac83cf35d5142e,
+    type: 3}
   gameModel: {fileID: 8554979865545778643, guid: aec8969d0290c6d4cbc587ef85a01ce4,
     type: 3}
   cost: 500

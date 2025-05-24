@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
 
 public class UIManager : MonoBehaviour, ITimeTracker
 {
@@ -21,10 +20,10 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Tool equip slot on the status bar
     public Image toolEquipSlot;
     //Tool Quantity text on the status bar 
-    public TextMeshProUGUI toolQuantityText;
+    public Text toolQuantityText;
     //Time UI
-    public TextMeshProUGUI timeText;
-    public TextMeshProUGUI dateText;
+    public Text timeText;
+    public Text dateText;
 
 
     [Header("Inventory System")]
@@ -45,8 +44,8 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     [Header("Item info box")]
     public GameObject itemInfoBox;
-    public TextMeshProUGUI itemNameText;
-    public TextMeshProUGUI itemDescriptionText;
+    public Text itemNameText;
+    public Text itemDescriptionText;
 
     [Header("Screen Transitions")]
     public GameObject fadeIn;
@@ -55,10 +54,9 @@ public class UIManager : MonoBehaviour, ITimeTracker
     [Header("Prompts")]
     public YesNoPrompt yesNoPrompt;
     public NamingPrompt namingPrompt;
-    [SerializeField] InteractBubble interactBubble; 
 
     [Header("Player Stats")]
-    public TextMeshProUGUI moneyText;
+    public Text moneyText;
 
     [Header("Shop")]
     public ShopListingManager shopListingManager;
@@ -66,14 +64,6 @@ public class UIManager : MonoBehaviour, ITimeTracker
     [Header("Relationships")]
     public RelationshipListingManager relationshipListingManager;
     public AnimalListingManager animalRelationshipListingManager;
-
-    [Header("Calendar")]
-    public CalendarUIListing calendar;
-
-    [Header("Stamina")]
-    public Sprite[] staminaUI;
-    public Image StaminaUIImage;
-    public int staminaCount;
 
 
     private void Awake()
@@ -92,7 +82,6 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     private void Start()
     {
-        PlayerStats.RestoreStamina();
         RenderInventory();
         AssignSlotIndexes();
         RenderPlayerStats();
@@ -302,17 +291,14 @@ public class UIManager : MonoBehaviour, ITimeTracker
         string prefix = "AM ";
         
         //Convert hours to 12 hour clock
-        if (hours >= 12)
+        if (hours > 12)
         {
             //Time becomes PM 
             prefix = "PM ";
-            //12 PM and later
-            hours = hours - 12; 
+            hours = hours - 12;
             Debug.Log(hours);
         }
-        //Special case for 12am/pm to display it as 12 instead of 0
-        hours = hours == 0 ? 12 : hours;
-        
+
         //Format it for the time text display
         timeText.text = prefix + hours + ":" + minutes.ToString("00");
 
@@ -330,10 +316,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Render the UI of the player stats in the HUD
     public void RenderPlayerStats()
     {
-        moneyText.text = PlayerStats.Money + PlayerStats.CURRENCY;
-        staminaCount = PlayerStats.Stamina;
-        ChangeStaminaUI();
-        
+        moneyText.text = PlayerStats.Money + PlayerStats.CURRENCY; 
     }
 
     //Open the shop window with the shop items listed
@@ -354,26 +337,5 @@ public class UIManager : MonoBehaviour, ITimeTracker
         {
             relationshipListingManager.Render(RelationshipStats.relationships);
         }        
-    }
-
-    public void InteractPrompt(Transform item, string message, float offset)
-    {
-        interactBubble.gameObject.SetActive(true); 
-        interactBubble.transform.position = item.transform.position + new Vector3(0, offset, 0);
-        interactBubble.Display(message);
-    }
-
-    public void DeactivateInteractPrompt()
-    {
-        interactBubble.gameObject.SetActive(false);
-    }
-
-    public void ChangeStaminaUI()
-    {
-        if (staminaCount <= 45) StaminaUIImage.sprite = staminaUI[3]; // exhausted
-        else if (staminaCount <= 80) StaminaUIImage.sprite = staminaUI[2]; // tired
-        else if (staminaCount <= 115) StaminaUIImage.sprite = staminaUI[1]; // active
-        else if (staminaCount <= 150) StaminaUIImage.sprite = staminaUI[0]; // energised
-
     }
 }

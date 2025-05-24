@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
 
 public class NamingPrompt : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI promptText;
+    Text promptText;
     [SerializeField]
-    TMP_InputField inputField;
+    InputField inputField;
 
     Action<string> onConfirm;
     Action onPromptComplete; 

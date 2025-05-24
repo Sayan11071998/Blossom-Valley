@@ -18,5 +18,6 @@ public class EggIncubationSaveState
     public void Tick()
     {
         timeToIncubate--;
+        Debug.Log($"Incubator {incubatorID} has {timeToIncubate} mins remaining ");
     }
 }

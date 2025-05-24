@@ -4,44 +4,28 @@ using UnityEngine;
 
 public class RelationshipStats : MonoBehaviour
 {
-
-    const string RELATIONSHIP_PREFIX = "NPCRelationship_";
     //The relationship data of all the NPCs that the player has met in the game
-    public static List<NPCRelationshipState> relationships = new();
+    public static List<NPCRelationshipState> relationships = new List<NPCRelationshipState>();
     
     public enum GiftReaction
     {
         Like, Dislike, Neutral
     }
 
-    
-    public static void LoadStats()
+    public static void LoadStats(List<NPCRelationshipState> relationshipsToLoad)
     {
-        relationships = new List<NPCRelationshipState>();
-        GameBlackboard blackboard = GameStateManager.Instance.GetBlackboard();
-        foreach (CharacterData c in NPCManager.Instance.Characters()) {
-            if (blackboard.TryGetValue(RELATIONSHIP_PREFIX + c.name, out NPCRelationshipState rs))
-            {
-                 relationships.Add(rs);
-            }
-            
-        }
-
-        /*
         if (relationshipsToLoad == null)
         {
             relationships = new List<NPCRelationshipState>();
             return; 
         }
-        relationships = relationshipsToLoad;*/
+        relationships = relationshipsToLoad;
     }
 
     //Check if the player has met this NPC. 
     public static bool FirstMeeting(CharacterData character)
     {
-        GameBlackboard blackboard = GameStateManager.Instance.GetBlackboard();
-        return !blackboard.ContainsKey(RELATIONSHIP_PREFIX + character.name); 
-        //return !relationships.Exists(i => i.name == character.name);
+        return !relationships.Exists(i => i.name == character.name);
     }
 
     //Get relationship information about a character
@@ -49,21 +33,14 @@ public class RelationshipStats : MonoBehaviour
     {
         //Check if it is the first meeting
         if (FirstMeeting(character)) return null;
-        GameBlackboard blackboard = GameStateManager.Instance.GetBlackboard();
-        if (blackboard.TryGetValue(RELATIONSHIP_PREFIX + character.name, out NPCRelationshipState relationship)) ; 
-        return relationship;
 
-
-        //return relationships.Find(i => i.name == character.name);
+        return relationships.Find(i => i.name == character.name);
     }
 
     //Add the character to the relationships data
     public static void UnlockCharacter(CharacterData character)
     {
-        GameBlackboard blackboard = GameStateManager.Instance.GetBlackboard();
-        NPCRelationshipState relationship = new NPCRelationshipState(character.name); 
-        blackboard.SetValue(RELATIONSHIP_PREFIX + character.name, relationship);
-        relationships.Add(relationship);
+        relationships.Add(new NPCRelationshipState(character.name)); 
     }
 
     //Improve the relationship with an NPC
@@ -113,27 +90,6 @@ public class RelationshipStats : MonoBehaviour
         GameTimestamp today = TimeManager.Instance.GetGameTimestamp();
 
         return (today.day == birthday.day) && (today.season == birthday.season);
-    }
-
-    public static bool IsBirthday(CharacterData character, GameTimestamp today)
-    {
-        GameTimestamp birthday = character.birthday;
-        
-
-        return (today.day == birthday.day) && (today.season == birthday.season);
-    }
-
-    public static CharacterData WhoseBirthday(GameTimestamp timestamp)
-    {
-        
-        foreach (CharacterData c in NPCManager.Instance.Characters())
-        {
-            if (IsBirthday(c, timestamp))
-            {
-                return c; 
-            }
-        }
-        return null; 
     }
 
 }

@@ -15,15 +15,7 @@ public class LocationEntryPoint : MonoBehaviour
             //Switch scenes to the location of the entry point
             SceneTransitionManager.Instance.SwitchLocation(locationToSwitch);
         }
-
-        //Characters walking through here and items thrown will be despawned
-        if(other.tag == "Item")
-        {
-            Destroy(other.gameObject);
-        }
-        
     }
-
 
 
 }

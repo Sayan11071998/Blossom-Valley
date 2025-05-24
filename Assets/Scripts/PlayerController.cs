@@ -54,12 +54,6 @@ public class PlayerController : MonoBehaviour
         {
             UIManager.Instance.ToggleRelationshipPanel();
         }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SceneTransitionManager.Location location = LocationManager.GetNextLocation(SceneTransitionManager.Location.PlayerHome, SceneTransitionManager.Location.Farm);
-            Debug.Log(location);
-        }
     }
 
     public void Interact()
