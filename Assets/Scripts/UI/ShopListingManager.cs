@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using TMPro; 
 
 public class ShopListingManager : ListingManager<ItemData>
 {
@@ -11,9 +12,9 @@ public class ShopListingManager : ListingManager<ItemData>
 
     [Header("Confirmation Screen")]
     public GameObject confirmationScreen;
-    public Text confirmationPrompt;
-    public Text quantityText;
-    public Text costCalculationText;
+    public TextMeshProUGUI confirmationPrompt;
+    public TextMeshProUGUI quantityText;
+    public TextMeshProUGUI costCalculationText;
     public Button purchaseButton;
 
     protected override void DisplayListing(ItemData listingItem, GameObject listingGameObject)

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using TMPro; 
 
 public class ShopListing : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Image itemThumbnail;
-    public Text nameText;
-    public Text costText;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI costText;
 
     ItemData itemData; 
 

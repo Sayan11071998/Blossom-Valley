@@ -2032,6 +2032,8 @@ MonoBehaviour:
   onInteract:
     m_PersistentCalls:
       m_Calls: []
+  interactText: Talk
+  offset: 2.3
   characterData: {fileID: 11400000, guid: 6895767ffb23e1148a3483eaede408eb, type: 2}
 --- !u!195 &6998447782345089821
 NavMeshAgent:

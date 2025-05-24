@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldBubble : MonoBehaviour
+public class WorldBubble : WorldUI
 {
-    Transform cameraPos;
+    
     [SerializeField]
     Animator speechAnimator; 
 
@@ -13,13 +13,6 @@ public class WorldBubble : MonoBehaviour
         Happy, BadMood, Heart, Thinking, Sad
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        cameraPos = FindObjectOfType<CameraController>().transform;
-        
-    }
 
     public void Display(Emote mood)
     {
@@ -55,13 +48,6 @@ public class WorldBubble : MonoBehaviour
 
 
 
-    private void Update()
-    {
 
-        //Look at camera
-        transform.rotation = cameraPos.rotation;
-
-        
-    }
 
 }

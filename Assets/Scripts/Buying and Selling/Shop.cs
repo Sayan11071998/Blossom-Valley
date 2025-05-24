@@ -56,4 +56,11 @@ public class Shop : InteractableObject
     {
         UIManager.Instance.OpenShop(shopItems);
     }
+
+    public override void OnHover()
+    {
+        //If store is unmanned there is nothing to interact with
+        if (!IsStoreManned()) return; 
+        base.OnHover();
+    }
 }

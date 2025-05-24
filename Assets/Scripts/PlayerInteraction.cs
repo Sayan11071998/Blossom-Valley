@@ -48,12 +48,14 @@ public class PlayerInteraction : MonoBehaviour
         {
             //Set the interactable to the currently selected interactable
             selectedInteractable = other.GetComponent<InteractableObject>();
+            selectedInteractable.OnHover(); 
             return; 
         }
 
         //Deselect the interactable if the player is not standing on anything at the moment
         if(selectedInteractable != null)
         {
+            selectedInteractable.OnMoveAway(); 
             selectedInteractable = null; 
         }
 

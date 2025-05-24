@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; 
 
 public class UIManager : MonoBehaviour, ITimeTracker
 {
@@ -20,10 +21,10 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Tool equip slot on the status bar
     public Image toolEquipSlot;
     //Tool Quantity text on the status bar 
-    public Text toolQuantityText;
+    public TextMeshProUGUI toolQuantityText;
     //Time UI
-    public Text timeText;
-    public Text dateText;
+    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI dateText;
 
 
     [Header("Inventory System")]
@@ -44,8 +45,8 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     [Header("Item info box")]
     public GameObject itemInfoBox;
-    public Text itemNameText;
-    public Text itemDescriptionText;
+    public TextMeshProUGUI itemNameText;
+    public TextMeshProUGUI itemDescriptionText;
 
     [Header("Screen Transitions")]
     public GameObject fadeIn;
@@ -54,9 +55,10 @@ public class UIManager : MonoBehaviour, ITimeTracker
     [Header("Prompts")]
     public YesNoPrompt yesNoPrompt;
     public NamingPrompt namingPrompt;
+    [SerializeField] InteractBubble interactBubble; 
 
     [Header("Player Stats")]
-    public Text moneyText;
+    public TextMeshProUGUI moneyText;
 
     [Header("Shop")]
     public ShopListingManager shopListingManager;
@@ -64,6 +66,9 @@ public class UIManager : MonoBehaviour, ITimeTracker
     [Header("Relationships")]
     public RelationshipListingManager relationshipListingManager;
     public AnimalListingManager animalRelationshipListingManager;
+
+    [Header("Calendar")]
+    public CalendarUIListing calendar; 
 
 
     private void Awake()
@@ -337,5 +342,17 @@ public class UIManager : MonoBehaviour, ITimeTracker
         {
             relationshipListingManager.Render(RelationshipStats.relationships);
         }        
+    }
+
+    public void InteractPrompt(Transform item, string message, float offset)
+    {
+        interactBubble.gameObject.SetActive(true); 
+        interactBubble.transform.position = item.transform.position + new Vector3(0, offset, 0);
+        interactBubble.Display(message);
+    }
+
+    public void DeactivateInteractPrompt()
+    {
+        interactBubble.gameObject.SetActive(false);
     }
 }

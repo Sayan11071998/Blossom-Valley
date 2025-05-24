@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; 
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue Components")]
     public GameObject dialoguePanel;
-    public Text speakerText;
-    public Text dialogueText;
+    public TextMeshProUGUI speakerText;
+    public TextMeshProUGUI dialogueText;
 
     //The lines to queue during the dialogue sequence
     Queue<DialogueLine> dialogueQueue;
