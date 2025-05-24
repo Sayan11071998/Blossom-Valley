@@ -19,7 +19,7 @@ public class PlayerSaveState
 
     public static PlayerSaveState Export()
     {
-        PlayerModel playerModel = Object.FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        PlayerModel playerModel = Object.FindAnyObjectByType<PlayerView>().PlayerModel;
         return new PlayerSaveState(playerModel.Money);
     }
 }

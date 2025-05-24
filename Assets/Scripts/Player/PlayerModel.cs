@@ -14,7 +14,17 @@ public class PlayerModel
         }
     }
 
-    public PlayerModel() => money = 0;
+    public float WalkSpeed { get; private set; }
+    public float RunSpeed { get; private set; }
+    public float Gravity { get; private set; }
+
+    public PlayerModel(float walkSpeed, float runSpeed, float gravity)
+    {
+        Money = 0;
+        WalkSpeed = walkSpeed;
+        RunSpeed = runSpeed;
+        Gravity = gravity;
+    }
 
     public void Spend(int cost)
     {

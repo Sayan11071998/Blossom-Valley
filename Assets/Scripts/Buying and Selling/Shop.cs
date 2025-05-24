@@ -12,7 +12,7 @@ public class Shop : InteractableObject
     public static void Purchase(ItemData item, int quantity)
     {
         int totalCost = item.cost * quantity; 
-        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
 
         if (playerModel.Money >= totalCost)
         {

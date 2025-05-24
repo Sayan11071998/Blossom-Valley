@@ -191,7 +191,7 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         save.farmSaveState.LoadData();
 
         //Player Stats
-        PlayerModel playerModel = UnityEngine.Object.FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        PlayerModel playerModel = UnityEngine.Object.FindAnyObjectByType<PlayerView>().PlayerModel;
         save.playerSaveState.LoadData(playerModel);
 
         //Relationship stats

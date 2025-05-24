@@ -33,7 +33,7 @@ public class ShopListingManager : ListingManager<ItemData>
         confirmationPrompt.text = $"Buy {itemToBuy.name}?";
         quantityText.text = "x" + quantity;
         int cost = itemToBuy.cost * quantity;
-        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
         int playerMoneyLeft = playerModel.Money - cost;
 
         if (playerMoneyLeft < 0)

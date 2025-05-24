@@ -44,7 +44,7 @@ public class ShippingBin : InteractableObject
         // Calculate how much the player should receive upon shipping the items
         int moneyToReceive = TallyItems(itemsToShip);
         // Convert the items to money
-        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
         playerModel.Earn(moneyToReceive);
         // Empty the shipping bin
         itemsToShip.Clear(); 

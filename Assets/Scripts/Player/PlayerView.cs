@@ -2,18 +2,23 @@ using UnityEngine;
 
 public class PlayerView : MonoBehaviour
 {
+    [SerializeField] private Transform interactorTransform;
+    [SerializeField] private float walkSpeed = 4f;
+    [SerializeField] private float runSpeed = 8f;
+    [SerializeField] private float gravity = 9.81f;
+
     private CharacterController controller;
     private Animator animator;
-
-    private PlayerModel playerModel;
     private PlayerController playerController;
+
+    public PlayerModel PlayerModel => playerController.PlayerModel;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
-        playerModel = new PlayerModel();
+        PlayerModel playerModel = new PlayerModel(walkSpeed, runSpeed, gravity);
         playerController = new PlayerController(playerModel, this);
 
         playerModel.MoneyChanged += OnMoneyChanged;
@@ -37,7 +42,7 @@ public class PlayerView : MonoBehaviour
             playerController.ItemKeep();
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1))
+        if (Physics.Raycast(interactorTransform.position, Vector3.down, out hit, 1))
         {
             Collider other = hit.collider;
             if (other.tag == "Land")
@@ -60,11 +65,12 @@ public class PlayerView : MonoBehaviour
             playerController.Deselect();
         }
 
-        // Game Cheats. Need to Delete Later!!
+        // Game Cheats for Play testing. Need to Delete Later!!
         if (Input.GetKey(KeyCode.RightBracket))
             TimeManager.Instance.Tick();
         if (Input.GetKeyDown(KeyCode.R))
             UIManager.Instance.ToggleRelationshipPanel();
+        // Delete the Game Cheats Later!!
     }
 
     public void Move(Vector3 velocity, Vector3 direction, bool isSprinting)
@@ -81,6 +87,4 @@ public class PlayerView : MonoBehaviour
     public bool IsGrounded() => controller.isGrounded;
 
     private void OnMoneyChanged() => UIManager.Instance.RenderPlayerStats();
-
-    public PlayerModel GetPlayerModel() => playerModel;
 }

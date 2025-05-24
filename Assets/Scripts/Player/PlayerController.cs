@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerController
 {
     private PlayerModel model;
@@ -6,9 +8,7 @@ public class PlayerController
     private Land selectedLand;
     private InteractableObject selectedInteractable;
 
-    private float walkSpeed = 4f;
-    private float runSpeed = 8f;
-    private float gravity = 9.81f;
+    public PlayerModel PlayerModel => model;
 
     public PlayerController(PlayerModel model, PlayerView view)
     {
@@ -18,14 +18,14 @@ public class PlayerController
 
     public void HandleMovement(float horizontal, float vertical, bool isSprinting)
     {
-        UnityEngine.Vector3 dir = new UnityEngine.Vector3(horizontal, 0f, vertical).normalized;
-        float speed = isSprinting ? runSpeed : walkSpeed;
-        UnityEngine.Vector3 velocity = speed * UnityEngine.Time.deltaTime * dir;
+        Vector3 dir = new Vector3(horizontal, 0f, vertical).normalized;
+        float speed = isSprinting ? model.RunSpeed : model.WalkSpeed;
+        Vector3 velocity = speed * Time.deltaTime * dir;
 
         if (view.IsGrounded())
             velocity.y = 0;
 
-        velocity.y -= UnityEngine.Time.deltaTime * gravity;
+        velocity.y -= Time.deltaTime * model.Gravity;
         view.Move(velocity, dir, isSprinting);
     }
 
@@ -59,8 +59,6 @@ public class PlayerController
 
         if (selectedLand != null)
             selectedLand.Interact();
-        else
-            UnityEngine.Debug.Log("Not on any land!");
     }
 
     public void ItemInteract()

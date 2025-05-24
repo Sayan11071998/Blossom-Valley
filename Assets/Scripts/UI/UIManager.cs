@@ -228,7 +228,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     public void RenderPlayerStats()
     {
-        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
         moneyText.text = playerModel.Money + PlayerModel.CURRENCY; 
     }
 
