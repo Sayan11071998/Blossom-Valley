@@ -61,5 +61,10 @@ public class CharacterMovement : MonoBehaviour
         
     }
 
+    public void MoveTo(Vector3 pos)
+    {
+        agent.SetDestination(pos); 
+    }
+
 
 }

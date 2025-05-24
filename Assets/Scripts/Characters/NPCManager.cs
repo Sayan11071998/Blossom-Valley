@@ -6,9 +6,7 @@ using UnityEngine;
 public class NPCManager : MonoBehaviour, ITimeTracker
 {
     public static NPCManager Instance { get; private set; }
-
-    
-
+    bool paused; 
     private void Awake()
     {
         //If there is more than one instance, destroy the extra
@@ -49,6 +47,25 @@ public class NPCManager : MonoBehaviour, ITimeTracker
         npcSchedules = schedules.ToList();
         InitNPCLocations();
         
+    }
+
+    //Pause NPC Spawning logic
+    public void Pause()
+    {
+        paused = true;
+        //Kill all npcs 
+        InteractableCharacter[] npcs = Object.FindObjectsByType<InteractableCharacter>(sortMode: default);
+        foreach(InteractableCharacter npc in npcs)
+        {
+            Destroy(npc); 
+        }
+    }
+
+    //Spawn in all the npcs again
+    public void Continue()
+    {
+        paused = false; 
+        RenderNPCs(); 
     }
 
     private void Start()
@@ -97,6 +114,8 @@ public class NPCManager : MonoBehaviour, ITimeTracker
 
     private void UpdateNPCLocations(GameTimestamp timestamp)
     {
+        if (paused) return; 
+
         for (int i = 0; i < npcLocations.Count; i++)
         {
             NPCLocationState npcLocator = npcLocations[i];

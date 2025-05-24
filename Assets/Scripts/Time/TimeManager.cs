@@ -19,6 +19,8 @@ public class TimeManager : MonoBehaviour
     //List of Objects to inform of changes to the time
     List<ITimeTracker> listeners = new List<ITimeTracker>();
 
+    public bool TimeTicking { get; set; }
+
     private void Awake()
     {
         //If there is more than one instance, destroy the extra
@@ -37,6 +39,7 @@ public class TimeManager : MonoBehaviour
     {
         //Initialise the time stamp
         timestamp = new GameTimestamp(0, GameTimestamp.Season.Spring, 1, 6, 0);
+        TimeTicking = true;
         StartCoroutine(TimeUpdate());
 
     }
@@ -51,7 +54,11 @@ public class TimeManager : MonoBehaviour
     {
         while (true)
         {
-            Tick();
+            if (TimeTicking)
+            {
+                Tick();
+            }
+            
             yield return new WaitForSeconds(1 / timeScale);
         }
        

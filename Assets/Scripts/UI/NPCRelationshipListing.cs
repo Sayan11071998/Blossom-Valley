@@ -19,7 +19,7 @@ public class NPCRelationshipListing : MonoBehaviour
         portraitImage.sprite = characterData.portrait;
         nameText.text = relationship.name;
 
-        DisplayHearts(relationship.Hearts()); 
+        DisplayHearts(relationship.Hearts); 
 
     }
 
@@ -28,7 +28,7 @@ public class NPCRelationshipListing : MonoBehaviour
         portraitImage.sprite = animalData.portrait;
         nameText.text = relationship.name;
 
-        DisplayHearts(relationship.Hearts());
+        DisplayHearts(relationship.Hearts);
     }
 
     void DisplayHearts(float number)

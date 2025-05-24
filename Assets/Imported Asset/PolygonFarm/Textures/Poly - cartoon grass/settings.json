@@ -1,0 +1,22 @@
+{
+  "prompt_text": "cartoon grass",
+  "patch": {
+    "ext": "png",
+    "dtype": "uint8",
+    "width": 512,
+    "height": 512,
+    "url": "https://static.withpoly.com/v3-voronoi/textures/patches/37be338b-78c1-4026-b049-e34e5808f725.png",
+    "patch_id": "hCbQFQKRev"
+  },
+  "seamless_prompt_text": "cartoon grass",
+  "seamless_patch_scale": 0.8,
+  "upscale_prompt_text": "cartoon grass",
+  "upscale_resolution": 1024,
+  "is_seamless": true,
+  "pbr_mode": "general",
+  "pbr_generate_color": true,
+  "pbr_generate_normal": true,
+  "pbr_generate_height": true,
+  "pbr_generate_ao": true,
+  "pbr_generate_roughness": true
+}

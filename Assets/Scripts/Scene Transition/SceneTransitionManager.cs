@@ -10,6 +10,10 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance;
 
+    //The blackboard key for location
+    const string LOCATION_KEY = "Location";
+    const string INDOORS = "CurrentlyIndoor"; 
+
     //The scenes the player can enter
     public enum Location { Farm, PlayerHome, Town, YodelRanch, ChickenCoop, Forest }
     public Location currentLocation;
@@ -120,6 +124,15 @@ public class SceneTransitionManager : MonoBehaviour
 
         //Save the current location that we just switched to
         currentLocation = newLocation;
-        onLocationLoad?.Invoke(); 
+
+        GameBlackboard blackboard = GameStateManager.Instance.GetBlackboard();
+        blackboard.SetValue(LOCATION_KEY, currentLocation);
+        blackboard.SetValue(INDOORS, CurrentlyIndoor()); 
+
+
+
+        onLocationLoad?.Invoke();
+
+        CutsceneManager.Instance.OnLocationLoad(); 
     }
 }

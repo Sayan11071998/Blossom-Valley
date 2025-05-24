@@ -28,7 +28,7 @@ public class InteractableObject : MonoBehaviour
         //Disable the prompt
         OnMoveAway();
         //Destroy this instance so as to not have multiple copies
-        Destroy(gameObject); 
+        GameStateManager.Instance.PersistentDestroy(gameObject); 
     }
 
     //When the player is hovering around the item
