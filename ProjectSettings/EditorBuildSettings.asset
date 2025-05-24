@@ -26,4 +26,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Forest.unity
     guid: 2323872562e37a444a55c2751c5bfc9f
+  - enabled: 1
+    path: Assets/Scenes/Inn.unity
+    guid: ec32873a7eda5584e9ad25171a78ec77
+  - enabled: 1
+    path: Assets/Scenes/TownSquare.unity
+    guid: aaf6d5e3b450ea74fb22b3784122a55c
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
