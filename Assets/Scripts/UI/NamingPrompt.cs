@@ -10,7 +10,7 @@ public class NamingPrompt : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI promptText;
     [SerializeField]
-    InputField inputField;
+    TMP_InputField inputField;
 
     Action<string> onConfirm;
     Action onPromptComplete; 
