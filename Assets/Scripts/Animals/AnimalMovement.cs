@@ -4,23 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class AnimalMovement : MonoBehaviour
+public class AnimalMovement : CharacterMovement
 {
-    NavMeshAgent agent; 
-
     //Time before the navmesh sets another destination to move towards
     [SerializeField] float cooldownTime;
-    float cooldownTimer; 
-    // Start is called before the first frame update
-    void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        cooldownTimer = Random.Range(0, cooldownTime);
-    }
+    float cooldownTimer;
 
-    public void ToggleMovement(bool enabled)
+     protected override void Start()
     {
-        agent.enabled = enabled; 
+        base.Start();
+        cooldownTimer = Random.Range(0, cooldownTime);
     }
 
     // Update is called once per frame
@@ -31,6 +24,7 @@ public class AnimalMovement : MonoBehaviour
 
     void Wander()
     {
+        if (!agent.enabled) return; 
         if(cooldownTimer > 0)
         {
             cooldownTimer -= Time.deltaTime;

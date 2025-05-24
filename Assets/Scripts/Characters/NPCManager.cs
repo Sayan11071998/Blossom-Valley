@@ -7,6 +7,8 @@ public class NPCManager : MonoBehaviour, ITimeTracker
 {
     public static NPCManager Instance { get; private set; }
 
+    
+
     private void Awake()
     {
         //If there is more than one instance, destroy the extra
@@ -77,15 +79,28 @@ public class NPCManager : MonoBehaviour, ITimeTracker
         }
     }
 
+    void SpawnInNPC(CharacterData npc, SceneTransitionManager.Location comingFrom)
+    {
+        Transform start = LocationManager.Instance.GetPlayerStartingPosition(comingFrom);
+        Instantiate(npc.prefab, start.position, start.rotation);
+
+    }
+
     public void ClockUpdate(GameTimestamp timestamp) {
         UpdateNPCLocations(timestamp); 
+    }
+
+    public NPCLocationState GetNPCLocation(string name)
+    {
+        return npcLocations.Find(x => x.character.name == name); 
     }
 
     private void UpdateNPCLocations(GameTimestamp timestamp)
     {
         for (int i = 0; i < npcLocations.Count; i++)
         {
-            NPCLocationState npcLocator = npcLocations[i]; 
+            NPCLocationState npcLocator = npcLocations[i];
+            SceneTransitionManager.Location previousLocation = npcLocator.location; 
             //Find the schedule belonging to the NPC
             NPCScheduleData schedule = npcSchedules.Find(x => x.character == npcLocator.character);
             if(schedule == null)
@@ -120,6 +135,17 @@ public class NPCManager : MonoBehaviour, ITimeTracker
             ScheduleEvent eventToExecute = eventsToConsider.OrderByDescending(x => x.priority).First();
             //Set the NPC Locator value accordingly
             npcLocations[i] = new NPCLocationState(schedule.character, eventToExecute.location, eventToExecute.coord, eventToExecute.facing);
+            SceneTransitionManager.Location newLocation = eventToExecute.location; 
+            //If there has been a change in location
+            if(newLocation != previousLocation)
+            {
+                Debug.Log("New location: " + newLocation); 
+                //If the location is where we are
+                if(SceneTransitionManager.Instance.currentLocation == newLocation)
+                {
+                    SpawnInNPC(schedule.character, previousLocation);
+                }
+            }
         }
 
     }

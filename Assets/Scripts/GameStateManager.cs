@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events; 
 
 public class GameStateManager : MonoBehaviour, ITimeTracker
 {
@@ -9,6 +10,11 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
     //Check if the screen has finished fading out
     bool screenFadedOut;
 
+    //To track interval updates
+    private int minutesElapsed = 0;
+
+    //Event triggered every 15 minutes
+    public UnityEvent onIntervalUpdate; 
 
     private void Awake()
     {
@@ -40,6 +46,16 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         if(timestamp.hour == 0 && timestamp.minute == 0)
         {
             OnDayReset(); 
+        }
+
+        if(minutesElapsed >= 15)
+        {
+            minutesElapsed = 0;
+            onIntervalUpdate?.Invoke();
+
+        } else
+        {
+            minutesElapsed++; 
         }
     }
 
@@ -109,9 +125,9 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
 
             }
 
-            LandManager.farmData.Item2.ForEach((CropSaveState crop) => {
+            /*LandManager.farmData.Item2.ForEach((CropSaveState crop) => {
                 Debug.Log(crop.seedToGrow + "\n Health: " + crop.health + "\n Growth: " + crop.growth + "\n State: " + crop.cropState.ToString());
-            });
+            });*/
         }
     }
 
