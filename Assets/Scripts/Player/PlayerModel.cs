@@ -1,7 +1,6 @@
 public class PlayerModel
 {
     public event System.Action MoneyChanged;
-
     public const string CURRENCY = " $";
 
     private int money;
@@ -15,10 +14,7 @@ public class PlayerModel
         }
     }
 
-    public PlayerModel()
-    {
-        money = 0; // Initial value, can be set via Load later
-    }
+    public PlayerModel() => money = 0;
 
     public void Spend(int cost)
     {
@@ -30,13 +26,7 @@ public class PlayerModel
         Money -= cost;
     }
 
-    public void Earn(int income)
-    {
-        Money += income;
-    }
+    public void Earn(int income) => Money += income;
 
-    public void LoadStats(int money)
-    {
-        Money = money;
-    }
+    public void LoadStats(int money) => Money = money;
 }
