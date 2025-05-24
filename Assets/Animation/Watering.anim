@@ -93424,14 +93424,21 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: SpawnWaterCan
+    functionName: SpawnTool
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 3
+    functionName: CompleteInteraction
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 5.3333335
-    functionName: DespawnWaterCan
+    functionName: Despawn
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
