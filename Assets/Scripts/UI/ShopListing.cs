@@ -9,7 +9,6 @@ public class ShopListing : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Image itemThumbnail;
     public Text nameText;
     public Text costText;
-
     ItemData itemData; 
 
     public void Display(ItemData itemData)
@@ -17,7 +16,7 @@ public class ShopListing : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         this.itemData = itemData;
         itemThumbnail.sprite = itemData.thumbnail;
         nameText.text = itemData.name;
-        costText.text = itemData.cost + PlayerStats.CURRENCY; 
+        costText.text = itemData.cost + PlayerModel.CURRENCY; 
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -25,7 +24,6 @@ public class ShopListing : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         UIManager.Instance.shopListingManager.OpenConfirmationScreen(itemData);
     }
 
-    //Display the item info on the item info box when the player mouses over
     public void OnPointerEnter(PointerEventData eventData)
     {
         UIManager.Instance.DisplayItemInfo(itemData);
