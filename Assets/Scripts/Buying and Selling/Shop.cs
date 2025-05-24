@@ -12,15 +12,16 @@ public class Shop : InteractableObject
     public static void Purchase(ItemData item, int quantity)
     {
         int totalCost = item.cost * quantity; 
+        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().GetPlayerModel();
 
-        if(PlayerStats.Money >= totalCost)
+        if (playerModel.Money >= totalCost)
         {
-            //Deduct from the player's money
-            PlayerStats.Spend(totalCost);
-            //Create an ItemSlotData for the purchased item
+            // Deduct from the player's money
+            playerModel.Spend(totalCost);
+            // Create an ItemSlotData for the purchased item
             ItemSlotData purchasedItem = new ItemSlotData(item, quantity);
 
-            //Send it to the player's inventory
+            // Send it to the player's inventory
             InventoryManager.Instance.ShopToInventory(purchasedItem); 
         }
     }
@@ -28,7 +29,6 @@ public class Shop : InteractableObject
     public override void Pickup()
     {
         DialogueManager.Instance.StartDialogue(dialogueOnShopOpen, OpenShop);
-        
     }
 
     void OpenShop()

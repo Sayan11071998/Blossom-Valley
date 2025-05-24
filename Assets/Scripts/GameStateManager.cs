@@ -28,40 +28,40 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
     void Start()
     {
         //Add this to TimeManager's Listener list
-        TimeManager.Instance.RegisterTracker(this); 
+        TimeManager.Instance.RegisterTracker(this);
     }
 
     public void ClockUpdate(GameTimestamp timestamp)
     {
-        UpdateShippingState(timestamp); 
+        UpdateShippingState(timestamp);
         UpdateFarmState(timestamp);
         IncubationManager.UpdateEggs();
 
-        if(timestamp.hour == 0 && timestamp.minute == 0)
+        if (timestamp.hour == 0 && timestamp.minute == 0)
         {
-            OnDayReset(); 
+            OnDayReset();
         }
     }
 
     //Called when the day has been reset
     void OnDayReset()
     {
-        Debug.Log("Day has been reset"); 
-        foreach(NPCRelationshipState npc in RelationshipStats.relationships)
+        Debug.Log("Day has been reset");
+        foreach (NPCRelationshipState npc in RelationshipStats.relationships)
         {
             npc.hasTalkedToday = false;
-            npc.giftGivenToday = false; 
+            npc.giftGivenToday = false;
         }
         AnimalFeedManager.ResetFeedboxes();
         AnimalStats.OnDayReset();
 
-       
+
     }
 
     void UpdateShippingState(GameTimestamp timestamp)
     {
         //Check if the hour is here (Exactly 1800 hours)
-        if(timestamp.hour == ShippingBin.hourToShip && timestamp.minute == 0)
+        if (timestamp.hour == ShippingBin.hourToShip && timestamp.minute == 0)
         {
             ShippingBin.ShipItems();
         }
@@ -109,7 +109,8 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
 
             }
 
-            LandManager.farmData.Item2.ForEach((CropSaveState crop) => {
+            LandManager.farmData.Item2.ForEach((CropSaveState crop) =>
+            {
                 Debug.Log(crop.seedToGrow + "\n Health: " + crop.health + "\n Growth: " + crop.growth + "\n State: " + crop.cropState.ToString());
             });
         }
@@ -120,7 +121,7 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         //Call a fadeout
         UIManager.Instance.FadeOutScreen();
         screenFadedOut = false;
-        StartCoroutine(TransitionTime()); 
+        StartCoroutine(TransitionTime());
     }
 
     IEnumerator TransitionTime()
@@ -133,8 +134,8 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         timestampOfNextDay.hour = 6;
         timestampOfNextDay.minute = 0;
         Debug.Log(timestampOfNextDay.day + " " + timestampOfNextDay.hour + ":" + timestampOfNextDay.minute);
-        
-        
+
+
         //Wait for the scene to finish fading out before loading the next scene
         while (!screenFadedOut)
         {
@@ -190,7 +191,8 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         save.farmSaveState.LoadData();
 
         //Player Stats
-        save.playerSaveState.LoadData();
+        PlayerModel playerModel = UnityEngine.Object.FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        save.playerSaveState.LoadData(playerModel);
 
         //Relationship stats
         save.relationshipSaveState.LoadData();

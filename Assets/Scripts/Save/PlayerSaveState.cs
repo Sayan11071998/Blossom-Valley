@@ -5,21 +5,21 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerSaveState
 {
-    //In future we will collect information like achievements, shipping history, building assets/upgrades and the like here. 
-    public int money; 
+    public int money;
 
     public PlayerSaveState(int money)
     {
         this.money = money;
     }
 
-    public void LoadData()
+    public void LoadData(PlayerModel playerModel)
     {
-        PlayerStats.LoadStats(money);
+        playerModel.LoadStats(money);
     }
 
     public static PlayerSaveState Export()
     {
-        return new PlayerSaveState(PlayerStats.Money); 
+        PlayerModel playerModel = Object.FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        return new PlayerSaveState(playerModel.Money);
     }
 }

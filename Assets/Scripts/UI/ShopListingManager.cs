@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ShopListingManager : ListingManager<ItemData>
 {
-    //Variables to keep track of what the player is trying to purchase (selection)
     ItemData itemToBuy;
     int quantity; 
 
@@ -31,26 +30,20 @@ public class ShopListingManager : ListingManager<ItemData>
     public void RenderConfirmationScreen()
     {
         confirmationScreen.SetActive(true);
-
         confirmationPrompt.text = $"Buy {itemToBuy.name}?";
-
         quantityText.text = "x" + quantity;
-
         int cost = itemToBuy.cost * quantity;
+        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().GetPlayerModel();
+        int playerMoneyLeft = playerModel.Money - cost;
 
-        int playerMoneyLeft = PlayerStats.Money - cost;
-
-        //Stop the player from purchasing the item if he does not have enough money
-        if(playerMoneyLeft < 0)
+        if (playerMoneyLeft < 0)
         {
             costCalculationText.text = "Insufficient funds.";
             purchaseButton.interactable = false;
             return; 
         }
-
         purchaseButton.interactable = true; 
-
-        costCalculationText.text = $"{PlayerStats.Money} > {playerMoneyLeft} ";
+        costCalculationText.text = $"{playerModel.Money} > {playerMoneyLeft} ";
     }
 
     public void AddQuantity()
@@ -61,14 +54,13 @@ public class ShopListingManager : ListingManager<ItemData>
 
     public void SubtractQuantity()
     {
-        if(quantity > 1)
+        if (quantity > 1)
         {
             quantity--;
         }
         RenderConfirmationScreen(); 
     }
 
-    //Purchase the item and close the confirmation screen
     public void ConfirmPurchase()
     {
         Shop.Purchase(itemToBuy, quantity);
@@ -79,6 +71,4 @@ public class ShopListingManager : ListingManager<ItemData>
     {
         confirmationScreen.SetActive(false);
     }
-
-
 }
