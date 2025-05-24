@@ -68,7 +68,12 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public AnimalListingManager animalRelationshipListingManager;
 
     [Header("Calendar")]
-    public CalendarUIListing calendar; 
+    public CalendarUIListing calendar;
+
+    [Header("Stamina")]
+    public Sprite[] staminaUI;
+    public Image StaminaUIImage;
+    public int staminaCount;
 
 
     private void Awake()
@@ -87,6 +92,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     private void Start()
     {
+        PlayerStats.RestoreStamina();
         RenderInventory();
         AssignSlotIndexes();
         RenderPlayerStats();
@@ -296,14 +302,17 @@ public class UIManager : MonoBehaviour, ITimeTracker
         string prefix = "AM ";
         
         //Convert hours to 12 hour clock
-        if (hours > 12)
+        if (hours >= 12)
         {
             //Time becomes PM 
             prefix = "PM ";
-            hours = hours - 12;
+            //12 PM and later
+            hours = hours - 12; 
             Debug.Log(hours);
         }
-
+        //Special case for 12am/pm to display it as 12 instead of 0
+        hours = hours == 0 ? 12 : hours;
+        
         //Format it for the time text display
         timeText.text = prefix + hours + ":" + minutes.ToString("00");
 
@@ -321,7 +330,10 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Render the UI of the player stats in the HUD
     public void RenderPlayerStats()
     {
-        moneyText.text = PlayerStats.Money + PlayerStats.CURRENCY; 
+        moneyText.text = PlayerStats.Money + PlayerStats.CURRENCY;
+        staminaCount = PlayerStats.Stamina;
+        ChangeStaminaUI();
+        
     }
 
     //Open the shop window with the shop items listed
@@ -354,5 +366,14 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public void DeactivateInteractPrompt()
     {
         interactBubble.gameObject.SetActive(false);
+    }
+
+    public void ChangeStaminaUI()
+    {
+        if (staminaCount <= 45) StaminaUIImage.sprite = staminaUI[3]; // exhausted
+        else if (staminaCount <= 80) StaminaUIImage.sprite = staminaUI[2]; // tired
+        else if (staminaCount <= 115) StaminaUIImage.sprite = staminaUI[1]; // active
+        else if (staminaCount <= 150) StaminaUIImage.sprite = staminaUI[0]; // energised
+
     }
 }

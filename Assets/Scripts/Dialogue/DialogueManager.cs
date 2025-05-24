@@ -140,4 +140,28 @@ public class DialogueManager : MonoBehaviour
 
         return listToReturn; 
     }
+
+    //Filter to see if there is any dialogue lines we can overwrite with
+    public static List<DialogueLine> SelectDialogue(List<DialogueLine> dialogueToExecute, DialogueCondition[] conditions)
+    {
+        //Replace the dialogue set with the highest condition score
+        int highestConditionScore = -1; 
+        foreach(DialogueCondition condition in conditions)
+        {
+            //Check if conditions met first
+            if(condition.CheckConditions(out int score))
+            {
+                if(score > highestConditionScore)
+                {
+                    highestConditionScore = score;
+                    dialogueToExecute = condition.dialogueLine;
+                    Debug.Log("Will play " + condition.id); 
+                }
+            }
+        }
+
+        
+
+        return dialogueToExecute; 
+    }
 }

@@ -26,4 +26,6 @@ public class CharacterData : ScriptableObject
     public List<DialogueLine> birthdayLikedGiftDialogue;
     public List<DialogueLine> birthdayDislikedGiftDialogue;
     public List<DialogueLine> birthdayNeutralGiftDialogue;
+
+    public DialogueCondition[] dialogues; 
 }

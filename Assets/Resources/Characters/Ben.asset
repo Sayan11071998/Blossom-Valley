@@ -56,3 +56,80 @@ MonoBehaviour:
   birthdayNeutralGiftDialogue:
   - speaker: Ben
     message: A birthday gift! Thanks!
+  dialogues:
+  - id: Forest Dialogue
+    conditions:
+    - blackboardEntryData:
+        keyName: Location
+        valueType: 0
+        intValue: 5
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 0
+    dialogueLine:
+    - speaker: Ben
+      message: Mornin! Isn't it a nice day to go fishing?
+  - id: Shop Dialogue
+    conditions:
+    - blackboardEntryData:
+        keyName: Location
+        valueType: 0
+        intValue: 3
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 0
+    dialogueLine:
+    - speaker: Ben
+      message: 'Do you love animals? I certainly do. '
+    - speaker: Ben
+      message: 'I''m always happy to help! '
+  - id: Shop Friday Dialogue
+    conditions:
+    - blackboardEntryData:
+        keyName: Location
+        valueType: 0
+        intValue: 3
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 0
+    - blackboardEntryData:
+        keyName: Timestamp.DayOfWeek
+        valueType: 0
+        intValue: 6
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 0
+    dialogueLine:
+    - speaker: Ben
+      message: Business has been really good tonight. I'm pleased.
+  - id: Shop with 2 Hearts
+    conditions:
+    - blackboardEntryData:
+        keyName: Location
+        valueType: 0
+        intValue: 3
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 0
+    - blackboardEntryData:
+        keyName: NPCRelationship_Ben.Hearts
+        valueType: 0
+        intValue: 2
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 1
+    dialogueLine:
+    - speaker: Ben
+      message: 'It''s always good to see you! '

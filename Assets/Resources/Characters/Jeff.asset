@@ -31,7 +31,7 @@ MonoBehaviour:
     message: 'Nice to meet you, I''m Jeff. '
   defaultDialogue:
   - speaker: Jeff
-    message: Good morning!
+    message: Hi there!
   likedGiftDialogue:
   - speaker: Jeff
     message: Thank you! I really like this!
@@ -58,3 +58,55 @@ MonoBehaviour:
   birthdayNeutralGiftDialogue:
   - speaker: Jeff
     message: Oh, a birthday gift! Thank you!
+  dialogues:
+  - id: General Morning Greeting
+    conditions:
+    - blackboardEntryData:
+        keyName: Timestamp.hour
+        valueType: 0
+        intValue: 12
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 4
+    dialogueLine:
+    - speaker: Jeff
+      message: 'Good morning! '
+  - id: Afternoon Greeting
+    conditions:
+    - blackboardEntryData:
+        keyName: Timestamp.hour
+        valueType: 0
+        intValue: 12
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 1
+    - blackboardEntryData:
+        keyName: Timestamp.hour
+        valueType: 0
+        intValue: 18
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 4
+    dialogueLine:
+    - speaker: Jeff
+      message: Good afternoon!
+  - id: Evening Greeting
+    conditions:
+    - blackboardEntryData:
+        keyName: Timestamp.hour
+        valueType: 0
+        intValue: 18
+        floatValue: 0
+        boolValue: 0
+        stringValue: 
+        vector3Value: {x: 0, y: 0, z: 0}
+      comparison: 3
+    dialogueLine:
+    - speaker: Jeff
+      message: Good evening!

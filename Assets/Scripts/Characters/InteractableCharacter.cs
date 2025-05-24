@@ -124,7 +124,10 @@ public class InteractableCharacter : InteractableObject
 
         //Do the checks to determine which dialogue to put out
 
-        //Is the player meeting for the first time?
+        //Filter through the available dialogues through arbitration
+        dialogueToHave = DialogueManager.SelectDialogue(dialogueToHave, characterData.dialogues);
+
+        //Is the player meeting for the first time? (Highest Priority)
         if (RelationshipStats.FirstMeeting(characterData))
         {
             //Assign the first meet dialogue

@@ -24,8 +24,9 @@ public class NPCRelationshipState
     }
 
     //Ever 250 friendship points is a heart
-    public float Hearts()
+    public int Hearts
     {
-        return friendshipPoints / 250; 
+        get { return friendshipPoints / 250; }
     }
+
 }

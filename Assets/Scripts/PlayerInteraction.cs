@@ -6,6 +6,10 @@ public class PlayerInteraction : MonoBehaviour
 {
     PlayerController playerController;
 
+    Animator animator;
+
+    EquipmentData equipmentTool;
+
     //The land the player is currently selecting
     Land selectedLand = null;
 
@@ -17,6 +21,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         //Get access to our PlayerController component
         playerController = transform.parent.GetComponent<PlayerController>();
+
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -84,16 +90,37 @@ public class PlayerInteraction : MonoBehaviour
     //Triggered when the player presses the tool button
     public void Interact()
     {
+        //Detecting what is the current tool that the player is holding
+        ItemData toolSlot = InventoryManager.Instance.GetEquippedSlotItem(InventorySlot.InventoryType.Tool);
+
+        EquipmentData equipmentTool = toolSlot as EquipmentData;
+
         //The player shouldn't be able to use his tool when he has his hands full with an item
         if(InventoryManager.Instance.SlotEquipped(InventorySlot.InventoryType.Item))
         {
+
             return;
         }
 
         //Check if the player is selecting any land
         if(selectedLand != null)
         {
-            selectedLand.Interact();
+            EquipmentData.ToolType toolType = equipmentTool.toolType;
+
+            switch (toolType)
+            {
+                case EquipmentData.ToolType.WateringCan:
+                    PlayerStats.UseStamina(2);
+                    animator.SetTrigger("Watering");
+                    selectedLand.Interact();
+                    return;
+
+                case EquipmentData.ToolType.Hoe:
+                    PlayerStats.UseStamina(2);
+                    animator.SetTrigger("Plowing");
+                    selectedLand.Interact();
+                    return;
+            }
             return; 
         }
 

@@ -21,7 +21,9 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
     [SerializeField]
     GameBlackboard blackboard = new GameBlackboard();
     //This blackboard will not be saved 
-    GameBlackboard sceneItemsBoard = new GameBlackboard(); 
+    GameBlackboard sceneItemsBoard = new GameBlackboard();
+
+    const string TIMESTAMP = "Timestamp";
     public GameBlackboard GetBlackboard()
     {
         return blackboard;
@@ -54,9 +56,11 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         UpdateShippingState(timestamp); 
         UpdateFarmState(timestamp);
         IncubationManager.UpdateEggs();
+        blackboard.SetValue(TIMESTAMP, timestamp);
 
-        if(timestamp.hour == 0 && timestamp.minute == 0)
+        if (timestamp.hour == 0 && timestamp.minute == 0)
         {
+            
             OnDayReset(); 
         }
 
@@ -64,6 +68,7 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         {
             minutesElapsed = 0;
             onIntervalUpdate?.Invoke();
+            
 
         } else
         {
@@ -82,8 +87,6 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         }
         AnimalFeedManager.ResetFeedboxes();
         AnimalStats.OnDayReset();
-
-       
     }
 
     void UpdateShippingState(GameTimestamp timestamp)
@@ -181,7 +184,9 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         //Call a fadeout
         UIManager.Instance.FadeOutScreen();
         screenFadedOut = false;
-        StartCoroutine(TransitionTime()); 
+        StartCoroutine(TransitionTime());
+        //Restore Stamina fully when sleeping
+        PlayerStats.RestoreStamina();
     }
 
     IEnumerator TransitionTime()
