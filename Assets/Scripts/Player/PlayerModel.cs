@@ -1,6 +1,8 @@
+using System;
+
 public class PlayerModel
 {
-    public event System.Action MoneyChanged;
+    public event Action MoneyChanged;
     public const string CURRENCY = " $";
 
     private int money;
@@ -28,11 +30,8 @@ public class PlayerModel
 
     public void Spend(int cost)
     {
-        if (cost > Money)
-        {
-            UnityEngine.Debug.LogError("Player does not have enough money");
-            return;
-        }
+        if (cost > Money) return;
+
         Money -= cost;
     }
 

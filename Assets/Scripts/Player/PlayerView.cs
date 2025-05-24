@@ -26,12 +26,23 @@ public class PlayerView : MonoBehaviour
 
     void Update()
     {
+        HandleMovementInput();
+        HandleInteractionInput();
+        HandleRaycastSelection();
+        HandleCheatShortcuts(); // For testing, remove later
+    }
+
+    private void HandleMovementInput()
+    {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         bool isSprinting = Input.GetButton("Sprint");
 
         playerController.HandleMovement(horizontal, vertical, isSprinting);
+    }
 
+    private void HandleInteractionInput()
+    {
         if (Input.GetButtonDown("Fire1"))
             playerController.Interact();
 
@@ -40,17 +51,19 @@ public class PlayerView : MonoBehaviour
 
         if (Input.GetButtonDown("Fire3"))
             playerController.ItemKeep();
+    }
 
-        RaycastHit hit;
-        if (Physics.Raycast(interactorTransform.position, Vector3.down, out hit, 1))
+    private void HandleRaycastSelection()
+    {
+        if (Physics.Raycast(interactorTransform.position, Vector3.down, out RaycastHit hit, 1))
         {
             Collider other = hit.collider;
-            if (other.tag == "Land")
+            if (other.CompareTag("Land"))
             {
                 Land land = other.GetComponent<Land>();
                 playerController.SelectLand(land);
             }
-            else if (other.tag == "Item")
+            else if (other.CompareTag("Item"))
             {
                 InteractableObject interactable = other.GetComponent<InteractableObject>();
                 playerController.SelectInteractable(interactable);
@@ -64,14 +77,17 @@ public class PlayerView : MonoBehaviour
         {
             playerController.Deselect();
         }
+    }
 
-        // Game Cheats for Play testing. Need to Delete Later!!
+    private void HandleCheatShortcuts()
+    {
         if (Input.GetKey(KeyCode.RightBracket))
             TimeManager.Instance.Tick();
+
         if (Input.GetKeyDown(KeyCode.R))
             UIManager.Instance.ToggleRelationshipPanel();
-        // Delete the Game Cheats Later!!
     }
+
 
     public void Move(Vector3 velocity, Vector3 direction, bool isSprinting)
     {
