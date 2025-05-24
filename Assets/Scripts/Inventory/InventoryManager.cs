@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BlossomValley.Utilities;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : GenericMonoSingleton<InventoryManager>
 {
     public static InventoryManager Instance { get; private set; }
 
