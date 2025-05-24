@@ -1,3 +1,4 @@
+using BlossomValley.GameStrings;
 using UnityEngine;
 
 public class PlayerView : MonoBehaviour
@@ -34,22 +35,22 @@ public class PlayerView : MonoBehaviour
 
     private void HandleMovementInput()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        bool isSprinting = Input.GetButton("Sprint");
+        float horizontal = Input.GetAxisRaw(GameString.Horizontal);
+        float vertical = Input.GetAxisRaw(GameString.Vertical);
+        bool isSprinting = Input.GetButton(GameString.Sprint);
 
         playerController.HandleMovement(horizontal, vertical, isSprinting);
     }
 
     private void HandleInteractionInput()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown(GameString.InteractFire_1))
             playerController.Interact();
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown(GameString.InteractFire_2))
             playerController.ItemInteract();
 
-        if (Input.GetButtonDown("Fire3"))
+        if (Input.GetButtonDown(GameString.InteractFire_3))
             playerController.ItemKeep();
     }
 
@@ -58,12 +59,12 @@ public class PlayerView : MonoBehaviour
         if (Physics.Raycast(interactorTransform.position, Vector3.down, out RaycastHit hit, 1))
         {
             Collider other = hit.collider;
-            if (other.CompareTag("Land"))
+            if (other.CompareTag(GameString.Land))
             {
                 Land land = other.GetComponent<Land>();
                 playerController.SelectLand(land);
             }
-            else if (other.CompareTag("Item"))
+            else if (other.CompareTag(GameString.Item))
             {
                 InteractableObject interactable = other.GetComponent<InteractableObject>();
                 playerController.SelectInteractable(interactable);
@@ -96,8 +97,8 @@ public class PlayerView : MonoBehaviour
         if (direction.magnitude >= 0.1f)
             transform.rotation = Quaternion.LookRotation(direction);
 
-        animator.SetFloat("Speed", direction.magnitude);
-        animator.SetBool("Running", isSprinting);
+        animator.SetFloat(GameString.SpeedAnimationFloat, direction.magnitude);
+        animator.SetBool(GameString.RunAminationBool, isSprinting);
     }
 
     public bool IsGrounded() => controller.isGrounded;

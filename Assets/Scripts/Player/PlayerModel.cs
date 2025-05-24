@@ -1,9 +1,10 @@
 using System;
+using BlossomValley.GameStrings;
 
 public class PlayerModel
 {
     public event Action MoneyChanged;
-    public const string CURRENCY = " $";
+    public const string CURRENCY = GameString.currency;
 
     private int money;
     public int Money
