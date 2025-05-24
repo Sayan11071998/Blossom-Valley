@@ -9867,7 +9867,7 @@ MonoBehaviour:
     playerStart: {fileID: 251563334}
   - enteringFrom: 1
     playerStart: {fileID: 813727257}
-  - enteringFrom: 3
+  - enteringFrom: 4
     playerStart: {fileID: 920006524}
 --- !u!4 &486427419 stripped
 Transform:
@@ -19983,7 +19983,7 @@ GameObject:
   m_Component:
   - component: {fileID: 920006524}
   m_Layer: 0
-  m_Name: From Player Home
+  m_Name: From Chicken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44840,7 +44840,7 @@ GameObject:
   - component: {fileID: 2130610767}
   - component: {fileID: 2130610766}
   m_Layer: 0
-  m_Name: To PlayerHome
+  m_Name: To Chicken Coop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44872,7 +44872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ee0b60c2765ad4299232a0dea2924c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationToSwitch: 3
+  locationToSwitch: 4
 --- !u!65 &2130610767
 BoxCollider:
   m_ObjectHideFlags: 0

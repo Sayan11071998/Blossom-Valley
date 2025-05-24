@@ -8,7 +8,8 @@ public class CharacterData : ScriptableObject
     public Sprite portrait; 
     public GameTimestamp birthday;
     public List<ItemData> likes;
-    public List<ItemData> dislikes; 
+    public List<ItemData> dislikes;
+    public GameObject prefab; 
 
     [Header("Dialogue")]
     //The dialogue to have when the player first meets this character
