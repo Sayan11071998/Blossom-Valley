@@ -95,10 +95,7 @@ public class GameTimestamp
             
         }
     }
-    public DayOfTheWeek DayOfWeek
-    {
-        get { return GetDayOfTheWeek(); }
-    }
+
     public DayOfTheWeek GetDayOfTheWeek()
     {
         //Convert the total time passed into days
@@ -153,6 +150,4 @@ public class GameTimestamp
         int difference = timestamp2Hours - timestamp1Hours;
         return Mathf.Abs(difference);
     }
-
-   
 }

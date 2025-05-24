@@ -1,7 +1,4 @@
-﻿/*
- * Deprecated
- * 
- * using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
@@ -25,8 +22,7 @@ public class RelationshipSaveState
 
     public void LoadData()
     {
-        //RelationshipStats.LoadStats(relationships);
-        AnimalStats.LoadStats();
+        RelationshipStats.LoadStats(relationships);
+        AnimalStats.LoadStats(animals);
     }
 }
-*/

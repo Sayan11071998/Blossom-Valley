@@ -130,7 +130,6 @@ public class Land : MonoBehaviour, ITimeTracker
             case LandStatus.Farmland:
                 //Switch to farmland material 
                 materialToSwitch = farmlandMat;
-
                 break;
 
             case LandStatus.Watered:
@@ -283,16 +282,8 @@ public class Land : MonoBehaviour, ITimeTracker
 
     public void ClockUpdate(GameTimestamp timestamp)
     {
-
-        //When raining, have it watered if it is farmland
-        if (WeatherManager.Instance.WeatherToday == WeatherData.WeatherType.Rain && landStatus == LandStatus.Farmland)
-        {
-            SwitchLandStatus(LandStatus.Watered);
-
-        }
-
         //Checked if 24 hours has passed since last watered
-        if (landStatus == LandStatus.Watered)
+        if(landStatus == LandStatus.Watered)
         {
             //Hours since the land was watered
             int hoursElapsed = GameTimestamp.CompareTimestamps(timeWatered, timestamp);

@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro; 
+using UnityEngine.UI; 
 
 public class ShopListingManager : ListingManager<ItemData>
 {
@@ -12,9 +11,9 @@ public class ShopListingManager : ListingManager<ItemData>
 
     [Header("Confirmation Screen")]
     public GameObject confirmationScreen;
-    public TextMeshProUGUI confirmationPrompt;
-    public TextMeshProUGUI quantityText;
-    public TextMeshProUGUI costCalculationText;
+    public Text confirmationPrompt;
+    public Text quantityText;
+    public Text costCalculationText;
     public Button purchaseButton;
 
     protected override void DisplayListing(ItemData listingItem, GameObject listingGameObject)
@@ -22,36 +21,17 @@ public class ShopListingManager : ListingManager<ItemData>
         listingGameObject.GetComponent<ShopListing>().Display(listingItem); 
     }
 
-    private void Awake()
-    {
-        //Check if the components are set
-        if (confirmationPrompt == null || quantityText == null || costCalculationText == null|| purchaseButton == null)
-        {
-            throw new System.Exception("Components not set");
-        }
-    }
-
     public void OpenConfirmationScreen(ItemData item)
     {
         itemToBuy = item;
         quantity = 1;
-        if(itemToBuy == null)
-        {
-            Debug.LogError("Item not set");
-            return; 
-        }
         RenderConfirmationScreen(); 
     }
 
     public void RenderConfirmationScreen()
     {
         confirmationScreen.SetActive(true);
-        if(itemToBuy == null)
-        {
-            Debug.LogError("Item not set");
-            return;
-        }
-        
+
         confirmationPrompt.text = $"Buy {itemToBuy.name}?";
 
         quantityText.text = "x" + quantity;

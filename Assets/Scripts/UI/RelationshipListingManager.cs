@@ -27,6 +27,7 @@ public class RelationshipListingManager : ListingManager<NPCRelationshipState>
     //Load all characters from the resource folder
     void LoadAllCharacters()
     {
-        characters = NPCManager.Instance.Characters(); 
+        CharacterData[] characterDatabase = Resources.LoadAll<CharacterData>("Characters");
+        characters = characterDatabase.ToList();
     }
 }

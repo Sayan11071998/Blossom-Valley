@@ -2,13 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UI; 
 
 public class YesNoPrompt : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI promptText;
+    Text promptText;
     Action onYesSelected = null; 
 
     public void CreatePrompt(string message, Action onYesSelected)

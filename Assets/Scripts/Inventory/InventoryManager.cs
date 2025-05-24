@@ -233,12 +233,7 @@ public class InventoryManager : MonoBehaviour
         if(SlotEquipped(InventorySlot.InventoryType.Item))
         {
             //Instantiate the game model on the player's hand and put it on the scene
-            GameObject itemModel = Instantiate(GetEquippedSlotItem(InventorySlot.InventoryType.Item).gameModel, handPoint);
-            //So the player doesnt interact with it
-            if(itemModel.TryGetComponent(out Collider col))
-            {
-                Destroy(col); 
-            }
+            Instantiate(GetEquippedSlotItem(InventorySlot.InventoryType.Item).gameModel, handPoint);
         }
         
     }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class UIManager : MonoBehaviour, ITimeTracker
 {
@@ -21,10 +20,10 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Tool equip slot on the status bar
     public Image toolEquipSlot;
     //Tool Quantity text on the status bar 
-    public TextMeshProUGUI toolQuantityText;
+    public Text toolQuantityText;
     //Time UI
-    public TextMeshProUGUI timeText;
-    public TextMeshProUGUI dateText;
+    public Text timeText;
+    public Text dateText;
 
 
     [Header("Inventory System")]
@@ -45,8 +44,8 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     [Header("Item info box")]
     public GameObject itemInfoBox;
-    public TextMeshProUGUI itemNameText;
-    public TextMeshProUGUI itemDescriptionText;
+    public Text itemNameText;
+    public Text itemDescriptionText;
 
     [Header("Screen Transitions")]
     public GameObject fadeIn;
@@ -55,10 +54,9 @@ public class UIManager : MonoBehaviour, ITimeTracker
     [Header("Prompts")]
     public YesNoPrompt yesNoPrompt;
     public NamingPrompt namingPrompt;
-    [SerializeField] InteractBubble interactBubble;
 
     [Header("Player Stats")]
-    public TextMeshProUGUI moneyText;
+    public Text moneyText;
 
     [Header("Shop")]
     public ShopListingManager shopListingManager;
@@ -66,18 +64,6 @@ public class UIManager : MonoBehaviour, ITimeTracker
     [Header("Relationships")]
     public RelationshipListingManager relationshipListingManager;
     public AnimalListingManager animalRelationshipListingManager;
-
-    [Header("Calendar")]
-    public CalendarUIListing calendar;
-
-    [Header("Stamina")]
-    public Sprite[] staminaUI;
-    public Image StaminaUIImage;
-    public int staminaCount;
-
-    [Header("Weather")]
-    public Sprite[] weatherUI;
-    public Image WeatherUIImage;
 
 
     private void Awake()
@@ -96,12 +82,10 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     private void Start()
     {
-        PlayerStats.RestoreStamina();
         RenderInventory();
         AssignSlotIndexes();
         RenderPlayerStats();
         DisplayItemInfo(null);
-        ChangeWeatherUI();
 
         //Add UIManager to the list of objects TimeManager will notify when the time updates
         TimeManager.Instance.RegisterTracker(this);
@@ -116,13 +100,13 @@ public class UIManager : MonoBehaviour, ITimeTracker
         {
             //Queue the prompt
             namingPrompt.QueuePromptAction(() => TriggerNamingPrompt(message, onConfirmCallback));
-            return;
+            return; 
         }
 
         //Open the panel
         namingPrompt.gameObject.SetActive(true);
 
-        namingPrompt.CreatePrompt(message, onConfirmCallback);
+        namingPrompt.CreatePrompt(message, onConfirmCallback); 
     }
 
     public void TriggerYesNoPrompt(string message, System.Action onYesCallback)
@@ -130,7 +114,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
         //Set active the gameobject of the Yes No Prompt
         yesNoPrompt.gameObject.SetActive(true);
 
-        yesNoPrompt.CreatePrompt(message, onYesCallback);
+        yesNoPrompt.CreatePrompt(message, onYesCallback); 
     }
     #endregion
 
@@ -141,7 +125,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
         OpenWindow(selectedTab);
 
-        TabBehaviour.onTabStateChange?.Invoke();
+        TabBehaviour.onTabStateChange?.Invoke(); 
     }
 
     //Manage the opening of windows associated with the tab
@@ -157,11 +141,11 @@ public class UIManager : MonoBehaviour, ITimeTracker
         {
             case Tab.Inventory:
                 inventoryPanel.SetActive(true);
-                RenderInventory();
+                RenderInventory(); 
                 break;
             case Tab.Relationships:
                 relationshipListingManager.gameObject.SetActive(true);
-                relationshipListingManager.Render(RelationshipStats.relationships);
+                relationshipListingManager.Render(RelationshipStats.relationships); 
                 break;
             case Tab.Animals:
                 animalRelationshipListingManager.gameObject.SetActive(true);
@@ -171,7 +155,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
         }
 
         //Set the selected tab
-        selectedTab = windowToOpen;
+        selectedTab = windowToOpen; 
 
 
     }
@@ -186,13 +170,13 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     public void FadeInScreen()
     {
-        fadeIn.SetActive(true);
+        fadeIn.SetActive(true); 
     }
 
     public void OnFadeInComplete()
     {
         //Disable Fade in Screen when animation is completed
-        fadeIn.SetActive(false);
+        fadeIn.SetActive(false); 
     }
 
     //Reset the fadein fadeout screens to their default positions
@@ -210,7 +194,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Iterate through the slot UI elements and assign it its reference slot index
     public void AssignSlotIndexes()
     {
-        for (int i = 0; i < toolSlots.Length; i++)
+        for (int i =0; i<toolSlots.Length; i++)
         {
             toolSlots[i].AssignIndex(i);
             itemSlots[i].AssignIndex(i);
@@ -281,16 +265,16 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public void DisplayItemInfo(ItemData data)
     {
         //If data is null, reset
-        if (data == null)
+        if(data == null)
         {
             itemNameText.text = "";
             itemDescriptionText.text = "";
-            itemInfoBox.SetActive(false);
+            itemInfoBox.SetActive(false); 
             return;
         }
-        itemInfoBox.SetActive(true);
+        itemInfoBox.SetActive(true); 
         itemNameText.text = data.name;
-        itemDescriptionText.text = data.description;
+        itemDescriptionText.text = data.description; 
     }
     #endregion
 
@@ -301,22 +285,19 @@ public class UIManager : MonoBehaviour, ITimeTracker
         //Handle the time
         //Get the hours and minutes
         int hours = timestamp.hour;
-        int minutes = timestamp.minute;
+        int minutes = timestamp.minute; 
 
         //AM or PM
         string prefix = "AM ";
-
+        
         //Convert hours to 12 hour clock
-        if (hours >= 12)
+        if (hours > 12)
         {
             //Time becomes PM 
             prefix = "PM ";
-            //12 PM and later
             hours = hours - 12;
             Debug.Log(hours);
         }
-        //Special case for 12am/pm to display it as 12 instead of 0
-        hours = hours == 0 ? 12 : hours;
 
         //Format it for the time text display
         timeText.text = prefix + hours + ":" + minutes.ToString("00");
@@ -327,7 +308,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
         string dayOfTheWeek = timestamp.GetDayOfTheWeek().ToString();
 
         //Format it for the date text display
-        dateText.text = season + " " + day + " (" + dayOfTheWeek + ")";
+        dateText.text = season + " " + day + " (" + dayOfTheWeek +")";
 
     }
     #endregion
@@ -335,10 +316,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     //Render the UI of the player stats in the HUD
     public void RenderPlayerStats()
     {
-        moneyText.text = PlayerStats.Money + PlayerStats.CURRENCY;
-        staminaCount = PlayerStats.Stamina;
-        ChangeStaminaUI();
-
+        moneyText.text = PlayerStats.Money + PlayerStats.CURRENCY; 
     }
 
     //Open the shop window with the shop items listed
@@ -346,7 +324,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     {
         //Set active the shop window
         shopListingManager.gameObject.SetActive(true);
-        shopListingManager.Render(shopItems);
+        shopListingManager.Render(shopItems); 
     }
 
     public void ToggleRelationshipPanel()
@@ -358,51 +336,6 @@ public class UIManager : MonoBehaviour, ITimeTracker
         if (panel.activeSelf)
         {
             relationshipListingManager.Render(RelationshipStats.relationships);
-        }
-    }
-
-    public void InteractPrompt(Transform item, string message, float offset)
-    {
-        interactBubble.gameObject.SetActive(true);
-        interactBubble.transform.position = item.transform.position + new Vector3(0, offset, 0);
-        interactBubble.Display(message);
-    }
-
-    public void DeactivateInteractPrompt()
-    {
-        interactBubble.gameObject.SetActive(false);
-    }
-
-    public void ChangeStaminaUI()
-    {
-        if (staminaCount <= 45) StaminaUIImage.sprite = staminaUI[3]; // exhausted
-        else if (staminaCount <= 80) StaminaUIImage.sprite = staminaUI[2]; // tired
-        else if (staminaCount <= 115) StaminaUIImage.sprite = staminaUI[1]; // active
-        else if (staminaCount <= 150) StaminaUIImage.sprite = staminaUI[0]; // energised
-
-    }
-
-    public void ChangeWeatherUI()
-    {
-        var WeatherToday = WeatherManager.Instance.WeatherToday;
-
-        switch (WeatherToday)
-        {
-            case WeatherData.WeatherType.Sunny:
-                WeatherUIImage.sprite = weatherUI[0];
-                break;
-            case WeatherData.WeatherType.Rain:
-                WeatherUIImage.sprite = weatherUI[1];
-                break;
-            case WeatherData.WeatherType.Snow:
-                WeatherUIImage.sprite = weatherUI[2];
-                break;
-            case WeatherData.WeatherType.HeavySnow:
-                WeatherUIImage.sprite = weatherUI[3];
-                break;
-        }
+        }        
     }
 }
-    
-
-

@@ -18,4 +18,4 @@ MonoBehaviour:
   purchasePrice: 100
   daysToMature: 5
   produce: {fileID: 11400000, guid: 6abe74226a59b9944aa054d8f314b29a, type: 2}
-  locationToSpawn: 4
+  locationToSpawn: 3
