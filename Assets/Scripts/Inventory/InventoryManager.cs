@@ -3,13 +3,9 @@ using BlossomValley.Utilities;
 
 public class InventoryManager : GenericMonoSingleton<InventoryManager>
 {
-    public static InventoryManager Instance { get; private set; }
-
-    [Header("Tools")]
+    [Header("Inventory Data")]
     [SerializeField] private ItemSlotData[] toolSlots = new ItemSlotData[8];
     [SerializeField] private ItemSlotData equippedToolSlot = null;
-
-    [Header("Items")]
     [SerializeField] private ItemSlotData[] itemSlots = new ItemSlotData[8];
     [SerializeField] private ItemSlotData equippedItemSlot = null;
 
@@ -23,21 +19,12 @@ public class InventoryManager : GenericMonoSingleton<InventoryManager>
     protected override void Awake()
     {
         base.Awake();
-
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
         InitializeInventorySystem();
     }
 
     private void Start()
     {
-        if (view != null)
-            view.RenderHand();
+        view?.RenderHand();
 
         if (UIManager.Instance != null)
             UIManager.Instance.RenderInventory();
@@ -53,41 +40,26 @@ public class InventoryManager : GenericMonoSingleton<InventoryManager>
     }
 
     public void InventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType) => controller?.HandleInventoryToHand(slotIndex, inventoryType);
-
     public void HandToInventory(InventorySlot.InventoryType inventoryType) => controller?.HandleHandToInventory(inventoryType);
-
     public void ShopToInventory(ItemSlotData itemSlotToMove) => controller?.HandleShopToInventory(itemSlotToMove);
-
     public void ConsumeItem(ItemSlotData itemSlot) => controller?.HandleItemConsumption(itemSlot);
-
     public void EquipHandSlot(ItemData item) => model?.EquipHandSlot(item);
-
     public void EquipHandSlot(ItemSlotData itemSlot) => model?.EquipHandSlot(itemSlot);
 
     public bool StackItemToInventory(ItemSlotData itemSlot, ItemSlotData[] inventoryArray)
     {
-        if (model.IsToolType(itemSlot.itemData))
-            controller.HandleShopToInventory(itemSlot);
-        else
-            controller.HandleShopToInventory(itemSlot);
-
+        controller?.HandleShopToInventory(itemSlot);
         return true;
     }
 
     public ItemData GetItemFromString(string name) => model?.GetItemFromString(name);
-
     public ItemData GetEquippedSlotItem(InventorySlot.InventoryType inventoryType) => model?.GetEquippedSlotItem(inventoryType);
-
     public ItemSlotData GetEquippedSlot(InventorySlot.InventoryType inventoryType) => model?.GetEquippedSlot(inventoryType);
-
     public ItemSlotData[] GetInventorySlots(InventorySlot.InventoryType inventoryType) => model?.GetInventorySlots(inventoryType);
-
     public bool SlotEquipped(InventorySlot.InventoryType inventoryType) => model?.IsSlotEquipped(inventoryType) ?? false;
-
     public bool IsTool(ItemData item) => model?.IsToolType(item) ?? false;
 
-    public void LoadInventory(ItemSlotData[] toolSlots, ItemSlotData equippedToolSlot, ItemSlotData[] itemSlots, ItemSlotData equippedItemSlot) => model?.LoadInventoryData(toolSlots, equippedToolSlot, itemSlots, equippedItemSlot);
-
+    public InventoryView GetView() => view;
     public void RenderHand() => view?.RenderHand();
 
     private void OnValidate()

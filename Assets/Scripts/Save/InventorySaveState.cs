@@ -21,19 +21,11 @@ public class InventorySaveState
 
     public static InventorySaveState Export()
     {
-        ItemSlotData[] toolSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Tool);
-        ItemSlotData[] itemSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Item);
-        ItemSlotData equippedToolSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Tool);
-        ItemSlotData equippedItemSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
-        return new InventorySaveState(toolSlots, itemSlots, equippedItemSlot, equippedToolSlot);
+        return InventoryManager.Instance?.GetView()?.ExportSaveState();
     }
 
     public void LoadData()
     {
-        ItemSlotData[] toolSlots = ItemSlotData.DeserializeArray(this.toolSlots);
-        ItemSlotData equippedToolSlot = ItemSlotData.DeserializeData(this.equippedToolSlot);
-        ItemSlotData[] itemSlots = ItemSlotData.DeserializeArray(this.itemSlots);
-        ItemSlotData equippedItemSlot = ItemSlotData.DeserializeData(this.equippedItemSlot);
-        InventoryManager.Instance.LoadInventory(toolSlots, equippedToolSlot, itemSlots, equippedItemSlot);
+        InventoryManager.Instance?.GetView()?.LoadInventory(this);
     }
 }

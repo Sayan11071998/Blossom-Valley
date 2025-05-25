@@ -103,13 +103,7 @@ public class InventoryModel
 
     public bool IsToolType(ItemData item)
     {
-        if (item == null) return false;
-        EquipmentData equipment = item as EquipmentData;
-
-        if (equipment != null) return true;
-        SeedData seed = item as SeedData;
-
-        return seed != null;
+        return item is EquipmentData;
     }
 
     private void NotifyInventoryChanged() => OnInventoryChanged?.Invoke();

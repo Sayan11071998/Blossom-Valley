@@ -9,7 +9,11 @@ public class InventoryController
         this.view = view;
     }
 
-    public void HandleItemPickup(ItemData item) => model.EquipHandSlot(item);
+    public void HandleItemPickup(ItemData item)
+    {
+        model.EquipHandSlot(item);
+        view.RenderHand(); // Controller triggers view update
+    }
 
     public void HandleInventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType)
     {
@@ -34,6 +38,12 @@ public class InventoryController
         }
 
         model.TriggerInventoryChanged();
+        
+        // Only render hand if dealing with items (matching original behavior)
+        if (inventoryType == InventorySlot.InventoryType.Item)
+        {
+            view.RenderHand();
+        }
     }
 
     public void HandleHandToInventory(InventorySlot.InventoryType inventoryType)
@@ -55,6 +65,12 @@ public class InventoryController
         }
 
         model.TriggerInventoryChanged();
+        
+        // Only render hand if dealing with items (matching original behavior)
+        if (inventoryType == InventorySlot.InventoryType.Item)
+        {
+            view.RenderHand();
+        }
     }
 
     public void HandleShopToInventory(ItemSlotData itemSlotToMove)
@@ -74,6 +90,7 @@ public class InventoryController
         }
 
         model.TriggerInventoryChanged();
+        view.RenderHand(); // Always render hand after shop operations
     }
 
     public void HandleItemConsumption(ItemSlotData itemSlot)
@@ -82,6 +99,7 @@ public class InventoryController
 
         itemSlot.Remove();
         model.TriggerInventoryChanged();
+        view.RenderHand(); // Render hand after consuming items
     }
 
     private bool TryStackItemToInventory(ItemSlotData itemSlot, ItemSlotData[] inventoryArray)
