@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "SeedScriptableObject", menuName = "Items/Seed")]
-public class SeedData : ItemData
+public class SeedData : EquipmentData
 {
     public int daysToGrow;
     public ItemData cropToYield;

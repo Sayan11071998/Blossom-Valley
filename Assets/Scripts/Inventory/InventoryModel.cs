@@ -103,7 +103,9 @@ public class InventoryModel
 
     public bool IsToolType(ItemData item)
     {
-        return item is EquipmentData;
+        if (item is EquipmentData) return true;
+
+        return false;
     }
 
     private void NotifyInventoryChanged() => OnInventoryChanged?.Invoke();

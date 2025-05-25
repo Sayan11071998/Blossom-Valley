@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class InventoryView : MonoBehaviour
 {
-    [Header("Hand Point")]
     public Transform handPoint;
 
     private InventoryModel model;
@@ -22,7 +21,6 @@ public class InventoryView : MonoBehaviour
 
     private void OnInventoryChanged()
     {
-        // Only update UI, hand rendering is now handled by controller
         if (UIManager.Instance != null)
             UIManager.Instance.RenderInventory();
     }
@@ -35,7 +33,6 @@ public class InventoryView : MonoBehaviour
 
         if (model == null) return;
 
-        // Only render equipped items in hand (matching original behavior)
         if (model.IsSlotEquipped(InventorySlot.InventoryType.Item))
         {
             ItemData equippedItem = model.GetEquippedSlotItem(InventorySlot.InventoryType.Item);
@@ -61,7 +58,6 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    // Serialization responsibility - View handles all save/load operations
     public InventorySaveState ExportSaveState()
     {
         if (model == null) return null;
