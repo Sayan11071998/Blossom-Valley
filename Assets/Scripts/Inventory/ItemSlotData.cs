@@ -1,50 +1,33 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class ItemSlotData
 {
     public ItemData itemData;
     public int quantity;
 
-    //Class Constructor 
-    public ItemSlotData(ItemData itemData, int quantity)
+    public ItemSlotData(ItemData itemData, int quantity = 1)
     {
         this.itemData = itemData;
         this.quantity = quantity;
         ValidateQuantity();
     }
 
-    //Automatically construct the class with the item data of quantity 1
-    public ItemSlotData(ItemData itemData)
+    public ItemSlotData(ItemSlotData slotToClone)
     {
-        this.itemData = itemData;
-        quantity = 1;
-        ValidateQuantity();
+        if (slotToClone != null)
+        {
+            itemData = slotToClone.itemData;
+            quantity = slotToClone.quantity;
+        }
+        else
+        {
+            itemData = null;
+            quantity = 0;
+        }
     }
 
-    //Clones the ItemSlotData
-    public ItemSlotData (ItemSlotData slotToClone)
-    {
-        itemData = slotToClone.itemData;
-        quantity = slotToClone.quantity; 
-    }
-
-    //Stacking System
-
-    //Shortcut function to add 1 to the stack
-    public void AddQuantity()
-    {
-        AddQuantity(1); 
-    }
-
-    //Add a specified amount to the stack
-    public void AddQuantity(int amountToAdd)
-    {
-        quantity += amountToAdd; 
-    }
+    public void AddQuantity(int amountToAdd = 1) => quantity += amountToAdd;
 
     public void Remove()
     {
@@ -52,57 +35,34 @@ public class ItemSlotData
         ValidateQuantity();
     }
 
-    //Compares the item to see if it can be stacked
-    public bool Stackable(ItemSlotData slotToCompare)
-    {
-        return slotToCompare.itemData == itemData; 
-    }
+    public bool Stackable(ItemSlotData slotToCompare) => slotToCompare != null && slotToCompare.itemData == itemData && itemData != null;
 
-    //Do checks to see if the values make sense
     private void ValidateQuantity()
     {
         if (quantity <= 0 || itemData == null)
-        {
             Empty();
-        }
     }
 
-    //Empties out the item slot
     public void Empty()
     {
         itemData = null;
         quantity = 0;
     }
 
-    //Check if the slot is considered 'empty'
-    public bool IsEmpty()
-    {
-        return itemData == null; 
-    }
+    public bool IsEmpty() => itemData == null;
 
-    //Convert ItemSlotData into ItemSlotSaveData
-    public static ItemSlotSaveData SerializeData(ItemSlotData itemSlot)
-    {
-        return new ItemSlotSaveData(itemSlot); 
-    }
+    public static ItemSlotSaveData SerializeData(ItemSlotData itemSlot) => new ItemSlotSaveData(itemSlot);
 
-    //Convert ItemSlotSaveData into ItemSlotData
     public static ItemSlotData DeserializeData(ItemSlotSaveData itemSaveSlot)
     {
-        //Convert string back into ItemData
+        if (InventoryManager.Instance == null)
+            return new ItemSlotData(null);
+
         ItemData item = InventoryManager.Instance.GetItemFromString(itemSaveSlot.itemID);
         return new ItemSlotData(item, itemSaveSlot.quantity);
     }
 
-    //Convert an entire ItemSlotData array into an ItemSlotSaveData
-    public static ItemSlotSaveData[] SerializeArray(ItemSlotData[] array)
-    {
-        return Array.ConvertAll(array, new Converter<ItemSlotData, ItemSlotSaveData>(SerializeData));
-    }
+    public static ItemSlotSaveData[] SerializeArray(ItemSlotData[] array) => Array.ConvertAll(array, SerializeData);
 
-    //Convert an entire ItemSlotData array into an ItemSlotSaveData
-    public static ItemSlotData[] DeserializeArray(ItemSlotSaveData[] array)
-    {
-        return Array.ConvertAll(array, new Converter<ItemSlotSaveData, ItemSlotData>(DeserializeData));
-    }
+    public static ItemSlotData[] DeserializeArray(ItemSlotSaveData[] array) => Array.ConvertAll(array, DeserializeData);
 }
