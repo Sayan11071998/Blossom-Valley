@@ -1,24 +1,24 @@
 public class InventoryController
 {
-    private readonly InventoryModel model;
-    private readonly InventoryView view;
+    private InventoryModel inventoryModel;
+    private InventoryView inventoryView;
 
-    public InventoryController(InventoryModel model, InventoryView view)
+    public InventoryController(InventoryModel modelToSet, InventoryView viewToSet)
     {
-        this.model = model;
-        this.view = view;
+        inventoryModel = modelToSet;
+        inventoryView = viewToSet;
     }
 
     public void HandleItemPickup(ItemData item)
     {
-        model.EquipHandSlot(item);
-        view.RenderHand(); // Controller triggers view update
+        inventoryModel.EquipHandSlot(item);
+        inventoryView.RenderHand();
     }
 
     public void HandleInventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType)
     {
-        ItemSlotData handSlot = model.GetEquippedSlot(inventoryType);
-        ItemSlotData[] inventoryArray = model.GetInventorySlots(inventoryType);
+        ItemSlotData handSlot = inventoryModel.GetEquippedSlot(inventoryType);
+        ItemSlotData[] inventoryArray = inventoryModel.GetInventorySlots(inventoryType);
 
         if (handSlot.Stackable(inventoryArray[slotIndex]))
         {
@@ -34,22 +34,19 @@ public class InventoryController
             if (slotToEquip.IsEmpty())
                 handSlot.Empty();
             else
-                model.EquipHandSlot(slotToEquip);
+                inventoryModel.EquipHandSlot(slotToEquip);
         }
 
-        model.TriggerInventoryChanged();
-        
-        // Only render hand if dealing with items (matching original behavior)
+        inventoryModel.TriggerInventoryChanged();
+
         if (inventoryType == InventorySlot.InventoryType.Item)
-        {
-            view.RenderHand();
-        }
+            inventoryView.RenderHand();
     }
 
     public void HandleHandToInventory(InventorySlot.InventoryType inventoryType)
     {
-        ItemSlotData handSlot = model.GetEquippedSlot(inventoryType);
-        ItemSlotData[] inventoryArray = model.GetInventorySlots(inventoryType);
+        ItemSlotData handSlot = inventoryModel.GetEquippedSlot(inventoryType);
+        ItemSlotData[] inventoryArray = inventoryModel.GetInventorySlots(inventoryType);
 
         if (!TryStackItemToInventory(handSlot, inventoryArray))
         {
@@ -64,18 +61,15 @@ public class InventoryController
             }
         }
 
-        model.TriggerInventoryChanged();
-        
-        // Only render hand if dealing with items (matching original behavior)
+        inventoryModel.TriggerInventoryChanged();
+
         if (inventoryType == InventorySlot.InventoryType.Item)
-        {
-            view.RenderHand();
-        }
+            inventoryView.RenderHand();
     }
 
     public void HandleShopToInventory(ItemSlotData itemSlotToMove)
     {
-        ItemSlotData[] inventoryArray = model.IsToolType(itemSlotToMove.itemData) ? model.ToolSlots : model.ItemSlots;
+        ItemSlotData[] inventoryArray = inventoryModel.IsToolType(itemSlotToMove.itemData) ? inventoryModel.ToolSlots : inventoryModel.ItemSlots;
 
         if (!TryStackItemToInventory(itemSlotToMove, inventoryArray))
         {
@@ -89,8 +83,8 @@ public class InventoryController
             }
         }
 
-        model.TriggerInventoryChanged();
-        view.RenderHand(); // Always render hand after shop operations
+        inventoryModel.TriggerInventoryChanged();
+        inventoryView.RenderHand();
     }
 
     public void HandleItemConsumption(ItemSlotData itemSlot)
@@ -98,8 +92,8 @@ public class InventoryController
         if (itemSlot.IsEmpty()) return;
 
         itemSlot.Remove();
-        model.TriggerInventoryChanged();
-        view.RenderHand(); // Render hand after consuming items
+        inventoryModel.TriggerInventoryChanged();
+        inventoryView.RenderHand();
     }
 
     private bool TryStackItemToInventory(ItemSlotData itemSlot, ItemSlotData[] inventoryArray)

@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 [Serializable]
 public class ItemSlotData
@@ -57,10 +56,7 @@ public class ItemSlotData
     public static ItemSlotData DeserializeData(ItemSlotSaveData itemSaveSlot)
     {
         if (InventoryManager.Instance == null)
-        {
-            Debug.LogError("InventoryManager.Instance is null during deserialization");
             return new ItemSlotData(null);
-        }
 
         ItemData item = InventoryManager.Instance.GetItemFromString(itemSaveSlot.itemID);
         return new ItemSlotData(item, itemSaveSlot.quantity);

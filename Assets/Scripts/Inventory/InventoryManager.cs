@@ -34,7 +34,7 @@ public class InventoryManager : GenericMonoSingleton<InventoryManager>
     {
         model = new InventoryModel(toolSlots, equippedToolSlot, itemSlots, equippedItemSlot);
         view = gameObject.AddComponent<InventoryView>();
-        view.handPoint = handPoint;
+        view.HandPoint = handPoint;
         view.Initialize(model);
         controller = new InventoryController(model, view);
     }

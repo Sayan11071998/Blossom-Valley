@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class InventoryView : MonoBehaviour
 {
-    public Transform handPoint;
-
+    private Transform handPoint;
     private InventoryModel model;
+
+    public Transform HandPoint
+    {
+        get => handPoint;
+        set => handPoint = value;
+    }
 
     public void Initialize(InventoryModel inventoryModel)
     {
@@ -38,9 +43,7 @@ public class InventoryView : MonoBehaviour
             ItemData equippedItem = model.GetEquippedSlotItem(InventorySlot.InventoryType.Item);
 
             if (equippedItem != null && equippedItem.gameModel != null)
-            {
                 Instantiate(equippedItem.gameModel, handPoint);
-            }
         }
     }
 
