@@ -1,26 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class ItemSlotSaveData
 {
     public string itemID;
-    public int quantity; 
+    public int quantity;
 
-    //Convert ItemSlotData into a serializable format
     public ItemSlotSaveData(ItemSlotData data)
     {
         if (data.IsEmpty())
         {
             itemID = null;
             quantity = 0;
-            return; 
+            return;
         }
 
-        //Copy over the values 
-        //Store the ItemData as a string
         itemID = data.itemData.name;
-        quantity = data.quantity; 
+        quantity = data.quantity;
     }
 }

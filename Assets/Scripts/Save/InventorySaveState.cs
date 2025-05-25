@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
-public class InventorySaveState 
+public class InventorySaveState
 {
     public ItemSlotSaveData[] toolSlots;
     public ItemSlotSaveData[] itemSlots;
-
     public ItemSlotSaveData equippedItemSlot;
     public ItemSlotSaveData equippedToolSlot;
 
@@ -24,19 +21,15 @@ public class InventorySaveState
         this.equippedToolSlot = ItemSlotData.SerializeData(equippedToolSlot);
     }
 
-    //Retrieve information from the current game for saving purposes
     public static InventorySaveState Export()
     {
-        //Retrieve Inventory Data 
         ItemSlotData[] toolSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Tool);
         ItemSlotData[] itemSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Item);
-
         ItemSlotData equippedToolSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Tool);
         ItemSlotData equippedItemSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
-        return new InventorySaveState(toolSlots, itemSlots, equippedItemSlot, equippedToolSlot); 
+        return new InventorySaveState(toolSlots, itemSlots, equippedItemSlot, equippedToolSlot);
     }
 
-    //Put the save data into the game
     public void LoadData()
     {
         ItemSlotData[] toolSlots = ItemSlotData.DeserializeArray(this.toolSlots);
