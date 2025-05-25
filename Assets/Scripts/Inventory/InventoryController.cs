@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class InventoryController
 {
     private readonly InventoryModel model;
@@ -11,10 +9,7 @@ public class InventoryController
         this.view = view;
     }
 
-    public void HandleItemPickup(ItemData item)
-    {
-        model.EquipHandSlot(item);
-    }
+    public void HandleItemPickup(ItemData item) => model.EquipHandSlot(item);
 
     public void HandleInventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType)
     {
@@ -33,13 +28,9 @@ public class InventoryController
             inventoryArray[slotIndex] = new ItemSlotData(handSlot);
 
             if (slotToEquip.IsEmpty())
-            {
                 handSlot.Empty();
-            }
             else
-            {
                 model.EquipHandSlot(slotToEquip);
-            }
         }
 
         model.TriggerInventoryChanged();
@@ -68,8 +59,7 @@ public class InventoryController
 
     public void HandleShopToInventory(ItemSlotData itemSlotToMove)
     {
-        ItemSlotData[] inventoryArray = model.IsToolType(itemSlotToMove.itemData) 
-            ? model.ToolSlots : model.ItemSlots;
+        ItemSlotData[] inventoryArray = model.IsToolType(itemSlotToMove.itemData) ? model.ToolSlots : model.ItemSlots;
 
         if (!TryStackItemToInventory(itemSlotToMove, inventoryArray))
         {
@@ -88,11 +78,7 @@ public class InventoryController
 
     public void HandleItemConsumption(ItemSlotData itemSlot)
     {
-        if (itemSlot.IsEmpty())
-        {
-            Debug.LogError("There is nothing to consume!");
-            return;
-        }
+        if (itemSlot.IsEmpty()) return;
 
         itemSlot.Remove();
         model.TriggerInventoryChanged();

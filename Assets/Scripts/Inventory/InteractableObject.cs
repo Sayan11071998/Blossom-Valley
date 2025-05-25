@@ -9,13 +9,13 @@ public class InteractableObject : MonoBehaviour
     public virtual void Pickup()
     {
         onInteract?.Invoke();
-        
+
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.EquipHandSlot(item);
             InventoryManager.Instance.RenderHand();
         }
-        
+
         Destroy(gameObject);
     }
 }

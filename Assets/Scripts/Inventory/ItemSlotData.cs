@@ -28,10 +28,7 @@ public class ItemSlotData
         }
     }
 
-    public void AddQuantity(int amountToAdd = 1)
-    {
-        quantity += amountToAdd;
-    }
+    public void AddQuantity(int amountToAdd = 1) => quantity += amountToAdd;
 
     public void Remove()
     {
@@ -39,17 +36,12 @@ public class ItemSlotData
         ValidateQuantity();
     }
 
-    public bool Stackable(ItemSlotData slotToCompare)
-    {
-        return slotToCompare != null && slotToCompare.itemData == itemData && itemData != null;
-    }
+    public bool Stackable(ItemSlotData slotToCompare) => slotToCompare != null && slotToCompare.itemData == itemData && itemData != null;
 
     private void ValidateQuantity()
     {
         if (quantity <= 0 || itemData == null)
-        {
             Empty();
-        }
     }
 
     public void Empty()
@@ -58,15 +50,9 @@ public class ItemSlotData
         quantity = 0;
     }
 
-    public bool IsEmpty()
-    {
-        return itemData == null;
-    }
+    public bool IsEmpty() => itemData == null;
 
-    public static ItemSlotSaveData SerializeData(ItemSlotData itemSlot)
-    {
-        return new ItemSlotSaveData(itemSlot);
-    }
+    public static ItemSlotSaveData SerializeData(ItemSlotData itemSlot) => new ItemSlotSaveData(itemSlot);
 
     public static ItemSlotData DeserializeData(ItemSlotSaveData itemSaveSlot)
     {
@@ -80,13 +66,7 @@ public class ItemSlotData
         return new ItemSlotData(item, itemSaveSlot.quantity);
     }
 
-    public static ItemSlotSaveData[] SerializeArray(ItemSlotData[] array)
-    {
-        return Array.ConvertAll(array, SerializeData);
-    }
+    public static ItemSlotSaveData[] SerializeArray(ItemSlotData[] array) => Array.ConvertAll(array, SerializeData);
 
-    public static ItemSlotData[] DeserializeArray(ItemSlotSaveData[] array)
-    {
-        return Array.ConvertAll(array, DeserializeData);
-    }
+    public static ItemSlotData[] DeserializeArray(ItemSlotSaveData[] array) => Array.ConvertAll(array, DeserializeData);
 }
