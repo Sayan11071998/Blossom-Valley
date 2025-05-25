@@ -3,7 +3,7 @@ using UnityEngine;
 public class InventoryView : MonoBehaviour
 {
     private Transform handPoint;
-    private InventoryModel model;
+    private InventoryController controller;
 
     public Transform HandPoint
     {
@@ -11,17 +11,17 @@ public class InventoryView : MonoBehaviour
         set => handPoint = value;
     }
 
-    public void Initialize(InventoryModel inventoryModel)
+    public void Initialize(InventoryController inventoryController)
     {
-        model = inventoryModel;
-        model.OnInventoryChanged += OnInventoryChanged;
+        controller = inventoryController;
+        controller.OnInventoryChanged += OnInventoryChanged;
         RenderHand();
     }
 
     private void OnDestroy()
     {
-        if (model != null)
-            model.OnInventoryChanged -= OnInventoryChanged;
+        if (controller != null)
+            controller.OnInventoryChanged -= OnInventoryChanged;
     }
 
     private void OnInventoryChanged()
@@ -32,15 +32,13 @@ public class InventoryView : MonoBehaviour
 
     public void RenderHand()
     {
-        if (handPoint == null) return;
+        if (handPoint == null || controller == null) return;
 
         ClearHandPoint();
 
-        if (model == null) return;
-
-        if (model.IsSlotEquipped(InventorySlot.InventoryType.Item))
+        if (controller.IsSlotEquipped(InventorySlot.InventoryType.Item))
         {
-            ItemData equippedItem = model.GetEquippedSlotItem(InventorySlot.InventoryType.Item);
+            ItemData equippedItem = controller.GetEquippedSlotItem(InventorySlot.InventoryType.Item);
 
             if (equippedItem != null && equippedItem.gameModel != null)
                 Instantiate(equippedItem.gameModel, handPoint);
@@ -61,27 +59,7 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    public InventorySaveState ExportSaveState()
-    {
-        if (model == null) return null;
+    public InventorySaveState ExportSaveState() => controller?.HandleExportSaveState();
 
-        ItemSlotData[] toolSlots = model.GetInventorySlots(InventorySlot.InventoryType.Tool);
-        ItemSlotData[] itemSlots = model.GetInventorySlots(InventorySlot.InventoryType.Item);
-        ItemSlotData equippedToolSlot = model.GetEquippedSlot(InventorySlot.InventoryType.Tool);
-        ItemSlotData equippedItemSlot = model.GetEquippedSlot(InventorySlot.InventoryType.Item);
-
-        return new InventorySaveState(toolSlots, itemSlots, equippedItemSlot, equippedToolSlot);
-    }
-
-    public void LoadInventory(InventorySaveState saveState)
-    {
-        if (model == null || saveState == null) return;
-
-        ItemSlotData[] toolSlots = ItemSlotData.DeserializeArray(saveState.toolSlots);
-        ItemSlotData equippedToolSlot = ItemSlotData.DeserializeData(saveState.equippedToolSlot);
-        ItemSlotData[] itemSlots = ItemSlotData.DeserializeArray(saveState.itemSlots);
-        ItemSlotData equippedItemSlot = ItemSlotData.DeserializeData(saveState.equippedItemSlot);
-
-        model.LoadInventoryData(toolSlots, equippedToolSlot, itemSlots, equippedItemSlot);
-    }
+    public void LoadInventory(InventorySaveState saveState) => controller?.HandleLoadInventory(saveState);
 }

@@ -30,13 +30,15 @@ public class InventoryManager : GenericMonoSingleton<InventoryManager>
             UIManager.Instance.RenderInventory();
     }
 
+    private void OnDestroy() => controller?.Cleanup();
+
     private void InitializeInventorySystem()
     {
         model = new InventoryModel(toolSlots, equippedToolSlot, itemSlots, equippedItemSlot);
         view = gameObject.AddComponent<InventoryView>();
         view.HandPoint = handPoint;
-        view.Initialize(model);
         controller = new InventoryController(model, view);
+        view.Initialize(controller);
     }
 
     public void InventoryToHand(int slotIndex, InventorySlot.InventoryType inventoryType) => controller?.HandleInventoryToHand(slotIndex, inventoryType);
@@ -52,12 +54,12 @@ public class InventoryManager : GenericMonoSingleton<InventoryManager>
         return true;
     }
 
-    public ItemData GetItemFromString(string name) => model?.GetItemFromString(name);
-    public ItemData GetEquippedSlotItem(InventorySlot.InventoryType inventoryType) => model?.GetEquippedSlotItem(inventoryType);
-    public ItemSlotData GetEquippedSlot(InventorySlot.InventoryType inventoryType) => model?.GetEquippedSlot(inventoryType);
-    public ItemSlotData[] GetInventorySlots(InventorySlot.InventoryType inventoryType) => model?.GetInventorySlots(inventoryType);
-    public bool SlotEquipped(InventorySlot.InventoryType inventoryType) => model?.IsSlotEquipped(inventoryType) ?? false;
-    public bool IsTool(ItemData item) => model?.IsToolType(item) ?? false;
+    public ItemData GetItemFromString(string name) => controller?.GetItemFromString(name);
+    public ItemData GetEquippedSlotItem(InventorySlot.InventoryType inventoryType) => controller?.GetEquippedSlotItem(inventoryType);
+    public ItemSlotData GetEquippedSlot(InventorySlot.InventoryType inventoryType) => controller?.GetEquippedSlot(inventoryType);
+    public ItemSlotData[] GetInventorySlots(InventorySlot.InventoryType inventoryType) => controller?.GetInventorySlots(inventoryType);
+    public bool SlotEquipped(InventorySlot.InventoryType inventoryType) => controller?.IsSlotEquipped(inventoryType) ?? false;
+    public bool IsTool(ItemData item) => controller?.IsTool(item) ?? false;
 
     public InventoryView GetView() => view;
     public void RenderHand() => view?.RenderHand();

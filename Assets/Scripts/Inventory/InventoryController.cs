@@ -1,12 +1,31 @@
+using System;
+
 public class InventoryController
 {
     private InventoryModel inventoryModel;
     private InventoryView inventoryView;
 
+    public event Action OnInventoryChanged;
+
     public InventoryController(InventoryModel modelToSet, InventoryView viewToSet)
     {
         inventoryModel = modelToSet;
         inventoryView = viewToSet;
+
+        inventoryModel.OnInventoryChanged += HandleInventoryChanged;
+    }
+
+    public void Cleanup()
+    {
+        if (inventoryModel != null)
+            inventoryModel.OnInventoryChanged -= HandleInventoryChanged;
+    }
+
+    private void HandleInventoryChanged()
+    {
+        OnInventoryChanged?.Invoke();
+        if (UIManager.Instance != null)
+            UIManager.Instance.RenderInventory();
     }
 
     public void HandleItemPickup(ItemData item)
@@ -95,6 +114,38 @@ public class InventoryController
         inventoryModel.TriggerInventoryChanged();
         inventoryView.RenderHand();
     }
+
+    public void HandleLoadInventory(InventorySaveState saveState)
+    {
+        if (saveState == null) return;
+
+        ItemSlotData[] toolSlots = ItemSlotData.DeserializeArray(saveState.toolSlots);
+        ItemSlotData equippedToolSlot = ItemSlotData.DeserializeData(saveState.equippedToolSlot);
+        ItemSlotData[] itemSlots = ItemSlotData.DeserializeArray(saveState.itemSlots);
+        ItemSlotData equippedItemSlot = ItemSlotData.DeserializeData(saveState.equippedItemSlot);
+
+        inventoryModel.LoadInventoryData(toolSlots, equippedToolSlot, itemSlots, equippedItemSlot);
+        inventoryView.RenderHand();
+    }
+
+    public InventorySaveState HandleExportSaveState()
+    {
+        ItemSlotData[] toolSlots = inventoryModel.GetInventorySlots(InventorySlot.InventoryType.Tool);
+        ItemSlotData[] itemSlots = inventoryModel.GetInventorySlots(InventorySlot.InventoryType.Item);
+        ItemSlotData equippedToolSlot = inventoryModel.GetEquippedSlot(InventorySlot.InventoryType.Tool);
+        ItemSlotData equippedItemSlot = inventoryModel.GetEquippedSlot(InventorySlot.InventoryType.Item);
+
+        return new InventorySaveState(toolSlots, itemSlots, equippedItemSlot, equippedToolSlot);
+    }
+
+    public bool IsSlotEquipped(InventorySlot.InventoryType inventoryType) => inventoryModel.IsSlotEquipped(inventoryType);
+
+    public ItemData GetEquippedSlotItem(InventorySlot.InventoryType inventoryType) => inventoryModel.GetEquippedSlotItem(inventoryType);
+
+    public ItemData GetItemFromString(string name) => inventoryModel.GetItemFromString(name);
+    public ItemSlotData GetEquippedSlot(InventorySlot.InventoryType inventoryType) => inventoryModel.GetEquippedSlot(inventoryType);
+    public ItemSlotData[] GetInventorySlots(InventorySlot.InventoryType inventoryType) => inventoryModel.GetInventorySlots(inventoryType);
+    public bool IsTool(ItemData item) => inventoryModel.IsToolType(item);
 
     private bool TryStackItemToInventory(ItemSlotData itemSlot, ItemSlotData[] inventoryArray)
     {
