@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour
 {
     [SerializeField] private Transform interactorTransform;
+
     [SerializeField] private float walkSpeed = 4f;
     [SerializeField] private float runSpeed = 8f;
     [SerializeField] private float gravity = 9.81f;

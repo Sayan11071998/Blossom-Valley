@@ -2,31 +2,31 @@ using UnityEngine;
 
 public class PlayerController
 {
-    private PlayerModel model;
-    private PlayerView view;
+    private PlayerModel playerModel;
+    private PlayerView playerView;
 
     private Land selectedLand;
     private InteractableObject selectedInteractable;
 
-    public PlayerModel PlayerModel => model;
+    public PlayerModel PlayerModel => playerModel;
 
-    public PlayerController(PlayerModel model, PlayerView view)
+    public PlayerController(PlayerModel modelToSet, PlayerView viewToSet)
     {
-        this.model = model;
-        this.view = view;
+        playerModel = modelToSet;
+        playerView = viewToSet;
     }
 
     public void HandleMovement(float horizontal, float vertical, bool isSprinting)
     {
         Vector3 dir = new Vector3(horizontal, 0f, vertical).normalized;
-        float speed = isSprinting ? model.RunSpeed : model.WalkSpeed;
+        float speed = isSprinting ? playerModel.RunSpeed : playerModel.WalkSpeed;
         Vector3 velocity = speed * Time.deltaTime * dir;
 
-        if (view.IsGrounded())
+        if (playerView.IsGrounded())
             velocity.y = 0;
 
-        velocity.y -= Time.deltaTime * model.Gravity;
-        view.Move(velocity, dir, isSprinting);
+        velocity.y -= Time.deltaTime * playerModel.Gravity;
+        playerView.Move(velocity, dir, isSprinting);
     }
 
     public void SelectLand(Land land)
