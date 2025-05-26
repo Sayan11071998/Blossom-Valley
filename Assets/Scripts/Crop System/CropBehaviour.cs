@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CropBehaviour : MonoBehaviour
 {
     [Header("Stages of Life")]
-    public GameObject seed;
-    public GameObject wilted;
+    [SerializeField] private GameObject seedGameObject;
+    [SerializeField] private GameObject wiltedGameObject;
 
-    // State management
     private CropContext cropContext;
 
     public enum CropState
@@ -16,20 +13,14 @@ public class CropBehaviour : MonoBehaviour
         Seed, Seedling, Harvestable, Wilted
     }
 
-    // Properties to access context data
     public CropState cropState => cropContext.GetCurrentStateType();
     public int landID => cropContext.landID;
     public SeedData seedToGrow => cropContext.seedToGrow;
     public int growth => cropContext.growth;
     public int health => cropContext.health;
 
-    private void Awake()
-    {
-        cropContext = new CropContext(this);
-    }
+    private void Awake() => cropContext = new CropContext(this);
 
-    // Initialisation for the crop GameObject
-    // Called when the player plants a seed
     public void Plant(int landID, SeedData seedToGrow)
     {
         LoadCrop(landID, seedToGrow, CropState.Seed, 0, 0);
@@ -38,31 +29,15 @@ public class CropBehaviour : MonoBehaviour
 
     public void LoadCrop(int landID, SeedData seedToGrow, CropState cropState, int growth, int health)
     {
-        cropContext.Initialize(landID, seedToGrow, seed, wilted);
+        cropContext.Initialize(landID, seedToGrow, seedGameObject, wiltedGameObject);
         cropContext.LoadState(cropState, growth, health);
     }
 
-    // Delegate to context
-    public void Grow()
-    {
-        cropContext.Grow();
-    }
+    public void Grow() => cropContext.Grow();
 
-    // Delegate to context
-    public void Wither()
-    {
-        cropContext.Wither();
-    }
+    public void Wither() => cropContext.Wither();
 
-    // Delegate to context
-    public void RemoveCrop()
-    {
-        cropContext.RemoveCrop();
-    }
+    public void RemoveCrop() => cropContext.RemoveCrop();
 
-    // Delegate to context
-    public void Regrow()
-    {
-        cropContext.Regrow();
-    }
+    public void Regrow() => cropContext.Regrow();
 }

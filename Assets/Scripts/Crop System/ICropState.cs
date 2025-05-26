@@ -1,10 +1,8 @@
-using UnityEngine;
-
 public interface ICropState
 {
-    void EnterState(CropContext context);
-    void ExitState(CropContext context);
-    void Grow(CropContext context);
-    void Wither(CropContext context);
-    CropBehaviour.CropState GetStateType();
+    public void EnterState(CropContext context);
+    public void ExitState(CropContext context);
+    public void Grow(CropContext context);
+    public void Wither(CropContext context);
+    public CropBehaviour.CropState GetStateType();
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CropContext
 {
-    // Crop data
     public int landID { get; private set; }
     public SeedData seedToGrow { get; private set; }
     public int growth { get; set; }
@@ -10,47 +9,40 @@ public class CropContext
     public int maxGrowth { get; private set; }
     public int maxHealth { get; private set; }
 
-    // GameObjects for visual representation
+    public CropBehaviour cropBehaviour { get; private set; }
     public GameObject seed { get; private set; }
     public GameObject seedling { get; private set; }
     public GameObject harvestable { get; private set; }
     public GameObject wilted { get; private set; }
     public Transform transform { get; private set; }
 
-    // State management
     private ICropState currentState;
     private CropStateFactory stateFactory;
 
-    // Reference to the MonoBehaviour for destroy operations
-    public CropBehaviour cropBehaviour { get; private set; }
-
-    public CropContext(CropBehaviour cropBehaviour)
+    public CropContext(CropBehaviour cropBehaviourToSet)
     {
-        this.cropBehaviour = cropBehaviour;
-        this.transform = cropBehaviour.transform;
+        cropBehaviour = cropBehaviourToSet;
+        transform = cropBehaviourToSet.transform;
         stateFactory = new CropStateFactory();
         maxHealth = GameTimestamp.HoursToMinutes(48);
     }
 
-    public void Initialize(int landID, SeedData seedToGrow, GameObject seed, GameObject wilted)
+    public void Initialize(int landIDToSet, SeedData seedToGrowToSet, GameObject seedToSet, GameObject wiltedToSet)
     {
-        this.landID = landID;
-        this.seedToGrow = seedToGrow;
-        this.seed = seed;
-        this.wilted = wilted;
+        landID = landIDToSet;
+        seedToGrow = seedToGrowToSet;
+        seed = seedToSet;
+        wilted = wiltedToSet;
 
-        // Create seedling and harvestable GameObjects
-        this.seedling = Object.Instantiate(seedToGrow.seedling, transform);
-        
-        ItemData cropToYield = seedToGrow.cropToYield;
-        this.harvestable = Object.Instantiate(cropToYield.gameModel, transform);
+        seedling = Object.Instantiate(seedToGrowToSet.seedling, transform);
 
-        // Calculate max growth
-        int hoursToGrow = GameTimestamp.DaysToHours(seedToGrow.daysToGrow);
+        ItemData cropToYield = seedToGrowToSet.cropToYield;
+        harvestable = Object.Instantiate(cropToYield.gameModel, transform);
+
+        int hoursToGrow = GameTimestamp.DaysToHours(seedToGrowToSet.daysToGrow);
         maxGrowth = GameTimestamp.HoursToMinutes(hoursToGrow);
 
-        // Setup regrowable behavior if needed
-        if (seedToGrow.regrowable)
+        if (seedToGrowToSet.regrowable)
         {
             RegrowableHarvestBehaviour regrowableHarvest = harvestable.GetComponent<RegrowableHarvestBehaviour>();
             regrowableHarvest.SetParent(cropBehaviour);
@@ -60,37 +52,27 @@ public class CropContext
     public void SetState(CropBehaviour.CropState stateType)
     {
         ICropState newState = stateFactory.CreateState(stateType);
-        
+
         if (currentState != null)
-        {
             currentState.ExitState(this);
-        }
 
         currentState = newState;
         currentState.EnterState(this);
     }
 
-    public void LoadState(CropBehaviour.CropState stateType, int growth, int health)
+    public void LoadState(CropBehaviour.CropState stateType, int growthValue, int healthValue)
     {
-        this.growth = growth;
-        this.health = health;
+        growth = growthValue;
+        health = healthValue;
+
         SetState(stateType);
     }
 
-    public CropBehaviour.CropState GetCurrentStateType()
-    {
-        return currentState?.GetStateType() ?? CropBehaviour.CropState.Seed;
-    }
+    public CropBehaviour.CropState GetCurrentStateType() => currentState?.GetStateType() ?? CropBehaviour.CropState.Seed;
 
-    public void Grow()
-    {
-        currentState?.Grow(this);
-    }
+    public void Grow() => currentState?.Grow(this);
 
-    public void Wither()
-    {
-        currentState?.Wither(this);
-    }
+    public void Wither() => currentState?.Wither(this);
 
     public void DeactivateAllVisuals()
     {
@@ -100,10 +82,7 @@ public class CropContext
         wilted.SetActive(false);
     }
 
-    public void NotifyLandManager()
-    {
-        LandManager.Instance.OnCropStateChange(landID, GetCurrentStateType(), growth, health);
-    }
+    public void NotifyLandManager() => LandManager.Instance.OnCropStateChange(landID, GetCurrentStateType(), growth, health);
 
     public void RemoveCrop()
     {
@@ -113,11 +92,8 @@ public class CropContext
 
     public void Regrow()
     {
-        // Reset the growth 
         int hoursToRegrow = GameTimestamp.DaysToHours(seedToGrow.daysToRegrow);
         growth = maxGrowth - GameTimestamp.HoursToMinutes(hoursToRegrow);
-        
-        // Switch back to seedling state
         SetState(CropBehaviour.CropState.Seedling);
     }
 }
