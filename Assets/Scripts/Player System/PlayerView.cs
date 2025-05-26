@@ -62,7 +62,7 @@ public class PlayerView : MonoBehaviour
             Collider other = hit.collider;
             if (other.CompareTag(GameString.Land))
             {
-                Land land = other.GetComponent<Land>();
+                LandView land = other.GetComponent<LandView>();
                 playerController.SelectLand(land);
             }
             else if (other.CompareTag(GameString.Item))

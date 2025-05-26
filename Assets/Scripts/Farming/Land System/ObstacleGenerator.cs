@@ -8,7 +8,7 @@ public class ObstacleGenerator : MonoBehaviour
     [Range(1, 100)]
     public int percentageFilled;
     
-    public void GenerateObstacles(List<Land> landPlots)
+    public void GenerateObstacles(List<LandView> landPlots)
     {
         //Calculate how many plots to fill based on the percentage
         int plotsToFill = Mathf.RoundToInt((float)percentageFilled / 100 * landPlots.Count);
@@ -22,14 +22,12 @@ public class ObstacleGenerator : MonoBehaviour
             int index = shuffledList[i];
 
             //Randomize what obstacle to spawn
-            Land.FarmObstacleStatus status = (Land.FarmObstacleStatus) Random.Range(1, 4);
+            LandModel.FarmObstacleStatus status = (LandModel.FarmObstacleStatus) Random.Range(1, 4);
 
             //Set the land plot accordingly
             landPlots[index].SetObstacleStatus(status); 
         }
-
     }
-
 
     //Shuffle the indexes 
     List<int> ShuffleLandIndexes(int count)

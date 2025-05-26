@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public struct LandSaveState 
 {
-    public Land.LandStatus landStatus;
+    public LandModel.LandStatus landStatus;
     public GameTimestamp lastWatered;
-    public Land.FarmObstacleStatus obstacleStatus; 
+    public LandModel.FarmObstacleStatus obstacleStatus; 
 
-    public LandSaveState(Land.LandStatus landStatus, GameTimestamp lastWatered, Land.FarmObstacleStatus obstacleStatus)
+    public LandSaveState(LandModel.LandStatus landStatus, GameTimestamp lastWatered, LandModel.FarmObstacleStatus obstacleStatus)
     {
         this.landStatus = landStatus;
         this.lastWatered = lastWatered;
@@ -19,7 +19,7 @@ public struct LandSaveState
     public void ClockUpdate(GameTimestamp timestamp)
     {
         //Checked if 24 hours has passed since last watered
-        if (landStatus == Land.LandStatus.Watered)
+        if (landStatus == LandModel.LandStatus.Watered)
         {
             //Hours since the land was watered
             int hoursElapsed = GameTimestamp.CompareTimestamps(lastWatered, timestamp);
@@ -28,7 +28,7 @@ public struct LandSaveState
             if (hoursElapsed > 24)
             {
                 //Dry up (Switch back to farmland)
-                landStatus = Land.LandStatus.Farmland; 
+                landStatus = LandModel.LandStatus.Farmland; 
             }
         }
 

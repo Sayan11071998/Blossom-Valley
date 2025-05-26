@@ -10,7 +10,7 @@ public class LandManager : MonoBehaviour
 
     public static Tuple<List<LandSaveState>, List<CropSaveState>> farmData = null; 
 
-    List<Land> landPlots = new List<Land>();
+    List<LandView> landPlots = new List<LandView>();
 
     //The save states of our land and crops
     List<LandSaveState> landData = new List<LandSaveState>();
@@ -30,12 +30,10 @@ public class LandManager : MonoBehaviour
         }
     }
 
-
     void OnEnable()
     {
         RegisterLandPlots();
         StartCoroutine(LoadFarmData());
-        
     }
 
     IEnumerator LoadFarmData()
@@ -70,14 +68,18 @@ public class LandManager : MonoBehaviour
     {
         foreach(Transform landTransform in transform)
         {
-            Land land = landTransform.GetComponent<Land>();
-            landPlots.Add(land);
+            LandView landView = landTransform.GetComponent<LandView>();
+            if (landView != null)
+            {
+                landPlots.Add(landView);
 
-            //Create a corresponding LandSaveState
-            landData.Add(new LandSaveState()); 
+                //Create a corresponding LandSaveState
+                landData.Add(new LandSaveState()); 
 
-            //Assign it an id based on its index
-            land.id = landPlots.Count - 1; 
+                //Assign it an id based on its index
+                int landId = landPlots.Count - 1;
+                landView.SetId(landId);
+            }
         }
     }
 
@@ -96,9 +98,13 @@ public class LandManager : MonoBehaviour
 
     #region State Changes
     //Update the corresponding Land Data on ever change to the Land's state
-    public void OnLandStateChange(int id, Land.LandStatus landStatus, GameTimestamp lastWatered, Land.FarmObstacleStatus obstacleStatus)
+    public void OnLandStateChange(int id, LandModel.LandStatus landStatus, GameTimestamp lastWatered, LandModel.FarmObstacleStatus obstacleStatus)
     {
-        landData[id] = new LandSaveState(landStatus, lastWatered, obstacleStatus);
+        // Convert from model enums to original enums for save state compatibility
+        LandModel.LandStatus convertedLandStatus = (LandModel.LandStatus)landStatus;
+        LandModel.FarmObstacleStatus convertedObstacleStatus = (LandModel.FarmObstacleStatus)obstacleStatus;
+        
+        landData[id] = new LandSaveState(convertedLandStatus, lastWatered, convertedObstacleStatus);
     }
 
     //Update the corresponding Crop Data on ever change to the Land's state
@@ -116,13 +122,17 @@ public class LandManager : MonoBehaviour
     //Load over the static farmData onto the Instance's landData
     public void ImportLandData(List<LandSaveState> landDatasetToLoad)
     {
-        for(int i =0; i < landDatasetToLoad.Count; i++)
+        for(int i = 0; i < landDatasetToLoad.Count; i++)
         {
             //Get the individual land save state
             LandSaveState landDataToLoad = landDatasetToLoad[i];
-            //Load it up onto the Land instance
-            landPlots[i].LoadLandData(landDataToLoad.landStatus, landDataToLoad.lastWatered, landDataToLoad.obstacleStatus);
             
+            // Convert from original enums to model enums
+            LandModel.LandStatus convertedLandStatus = (LandModel.LandStatus)landDataToLoad.landStatus;
+            LandModel.FarmObstacleStatus convertedObstacleStatus = (LandModel.FarmObstacleStatus)landDataToLoad.obstacleStatus;
+            
+            //Load it up onto the LandView instance
+            landPlots[i].LoadLandData(convertedLandStatus, landDataToLoad.lastWatered, convertedObstacleStatus);
         }
 
         landData = landDatasetToLoad; 
@@ -135,7 +145,7 @@ public class LandManager : MonoBehaviour
         foreach (CropSaveState cropSave in cropDatasetToLoad)
         {
             //Access the land
-            Land landToPlant = landPlots[cropSave.landID];
+            LandView landToPlant = landPlots[cropSave.landID];
             //Spawn the crop
             CropBehaviour cropToPlant = landToPlant.SpawnCrop();
             Debug.Log(cropToPlant.gameObject);
@@ -143,7 +153,6 @@ public class LandManager : MonoBehaviour
             SeedData seedToGrow = (SeedData)InventoryManager.Instance.GetItemFromString(cropSave.seedToGrow);
             cropToPlant.LoadCrop(cropSave.landID, seedToGrow, cropSave.cropState, cropSave.growth, cropSave.health);
         }
-        
     }
     #endregion
 
