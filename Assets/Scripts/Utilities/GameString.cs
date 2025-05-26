@@ -3,6 +3,7 @@ namespace BlossomValley.GameStrings
     public static class GameString
     {
         #region Tags
+        public const string Player = "Player";
         public const string Land = "Land";
         public const string Item = "Item";
         #endregion

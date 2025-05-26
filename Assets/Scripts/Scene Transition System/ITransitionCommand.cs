@@ -1,6 +1,4 @@
-using UnityEngine;
-
 public interface ITransitionCommand
 {
-    void Execute();
+    public void Execute();
 }

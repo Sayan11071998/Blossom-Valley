@@ -1,17 +1,8 @@
-using UnityEngine;
-
 public static class FadeEventManager
 {
     public static event System.Action OnFadeOutComplete;
     public static event System.Action OnFadeInComplete;
-    
-    public static void NotifyFadeOutComplete()
-    {
-        OnFadeOutComplete?.Invoke();
-    }
-    
-    public static void NotifyFadeInComplete()
-    {
-        OnFadeInComplete?.Invoke();
-    }
+
+    public static void NotifyFadeOutComplete() => OnFadeOutComplete?.Invoke();
+    public static void NotifyFadeInComplete() => OnFadeInComplete?.Invoke();
 }

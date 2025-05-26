@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum TransitionType { Location, Sleep }
 
 public static class TransitionFactory

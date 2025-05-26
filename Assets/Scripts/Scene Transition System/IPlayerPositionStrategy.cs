@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IPlayerPositionStrategy
 {
-    Transform GetPlayerPosition(SceneTransitionManager.Location fromLocation);
+    public Transform GetPlayerPosition(SceneTransitionManager.Location fromLocation);
 }
