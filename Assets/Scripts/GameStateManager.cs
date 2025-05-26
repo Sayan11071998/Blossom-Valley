@@ -9,7 +9,6 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
     //Check if the screen has finished fading out
     bool screenFadedOut;
 
-
     private void Awake()
     {
         //If there is more than one instance, destroy the extra
@@ -22,6 +21,15 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
             //Set the static instance to this instance
             Instance = this;
         }
+        
+        // Subscribe to fade events
+        FadeEventManager.OnFadeOutComplete += OnFadeOutComplete;
+    }
+    
+    private void OnDestroy()
+    {
+        // Unsubscribe from events
+        FadeEventManager.OnFadeOutComplete -= OnFadeOutComplete;
     }
 
     // Start is called before the first frame update
@@ -54,8 +62,6 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         }
         AnimalFeedManager.ResetFeedboxes();
         AnimalStats.OnDayReset();
-
-
     }
 
     void UpdateShippingState(GameTimestamp timestamp)
@@ -106,7 +112,6 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
                 //Update the element in the array
                 cropData[i] = crop;
                 landData[crop.landID] = land;
-
             }
 
             LandManager.farmData.Item2.ForEach((CropSaveState crop) =>
@@ -135,7 +140,6 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         timestampOfNextDay.minute = 0;
         Debug.Log(timestampOfNextDay.day + " " + timestampOfNextDay.hour + ":" + timestampOfNextDay.minute);
 
-
         //Wait for the scene to finish fading out before loading the next scene
         while (!screenFadedOut)
         {
@@ -147,14 +151,12 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
         //Reset the boolean
         screenFadedOut = false;
         UIManager.Instance.ResetFadeDefaults();
-
     }
 
     //Called when the screen has faded out
     public void OnFadeOutComplete()
     {
         screenFadedOut = true;
-
     }
 
     public GameSaveState ExportSaveState()
@@ -196,6 +198,5 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
 
         //Relationship stats
         save.relationshipSaveState.LoadData();
-
     }
 }

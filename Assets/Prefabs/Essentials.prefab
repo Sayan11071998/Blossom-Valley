@@ -3703,6 +3703,7 @@ GameObject:
   - component: {fileID: 7066737237370393323}
   - component: {fileID: 7066737237370393322}
   - component: {fileID: 722042198375827311}
+  - component: {fileID: 5453764427447712582}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -3864,6 +3865,18 @@ MonoBehaviour:
   dialoguePanel: {fileID: 6381139058066723578}
   speakerText: {fileID: 1307986539063795126}
   dialogueText: {fileID: 8344418511480790049}
+--- !u!114 &5453764427447712582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7066737237370393318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61400a90e64de4439add776c76b5b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7066737237667664583
 GameObject:
   m_ObjectHideFlags: 0

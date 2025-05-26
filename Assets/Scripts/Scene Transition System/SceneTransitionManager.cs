@@ -10,9 +10,10 @@ public class SceneTransitionManager : MonoBehaviour
     public static SceneTransitionManager Instance;
     public enum Location { Farm, PlayerHome, Town, ChickenCoop }
     public Location currentLocation;
-    static readonly Location[] indoor = { Location.PlayerHome, Location.ChickenCoop };
+    
     Transform playerPoint;
     bool screenFadedOut;
+    PlayerPositioner playerPositioner;
 
     private void Awake()
     {
@@ -27,11 +28,23 @@ public class SceneTransitionManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnLocationLoad;
         playerPoint = FindAnyObjectByType<PlayerView>().transform;
+        
+        // Initialize player positioner with strategy
+        playerPositioner = new PlayerPositioner(new StartPointPositionStrategy());
+        
+        // Subscribe to fade events
+        FadeEventManager.OnFadeOutComplete += OnFadeOutComplete;
+    }
+    
+    private void OnDestroy()
+    {
+        // Unsubscribe from events
+        FadeEventManager.OnFadeOutComplete -= OnFadeOutComplete;
     }
 
     public bool CurrentlyIndoor()
     {
-        return indoor.Contains(currentLocation); 
+        return LocationTypeChecker.IsIndoor(currentLocation);
     }
 
     public void SwitchLocation(Location locationToSwitch)
@@ -51,7 +64,7 @@ public class SceneTransitionManager : MonoBehaviour
         }
         screenFadedOut = false;
         UIManager.Instance.ResetFadeDefaults();
-        SceneManager.LoadScene(locationToSwitch.ToString());
+        SceneLoader.Instance.LoadScene(locationToSwitch);
     }
 
     public void OnFadeOutComplete()
@@ -64,13 +77,11 @@ public class SceneTransitionManager : MonoBehaviour
         Location oldLocation = currentLocation;
         Location newLocation = (Location) Enum.Parse(typeof(Location), scene.name);
         if (currentLocation == newLocation) return; 
-        Transform startPoint = LocationManager.Instance.GetPlayerStartingPosition(oldLocation);
-        if (playerPoint == null) return; 
-        CharacterController playerCharacter = playerPoint.GetComponent<CharacterController>();
-        playerCharacter.enabled = false; 
-        playerPoint.position = startPoint.position;
-        playerPoint.rotation = startPoint.rotation;
-        playerCharacter.enabled = true;
+        
+        if (playerPoint == null) return;
+        
+        // Use player positioner to handle positioning logic
+        playerPositioner.PositionPlayer(playerPoint, oldLocation);
         currentLocation = newLocation; 
     }
 }
