@@ -1,10 +1,14 @@
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemIndexScriptableObject", menuName = "Items/Item Index")]
+[CreateAssetMenu(menuName = "Items/Item Index")]
 public class ItemIndex : ScriptableObject
 {
-    public List<ItemData> items;
+    public List<ItemData> items; 
 
-    public ItemData GetItemFromString(string name) => items.Find(i => i.name == name);
+    public ItemData GetItemFromString(string name)
+    {
+        return items.Find(i => i.name == name); 
+    }
 }

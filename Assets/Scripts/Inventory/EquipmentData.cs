@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-[CreateAssetMenu(fileName = "EquipmentScriptableObject", menuName = "Items/Equipment")]
+[CreateAssetMenu(menuName = "Items/Equipment")]
 public class EquipmentData : ItemData
 {
     public enum ToolType
     {
         Hoe, WateringCan, Axe, Pickaxe, Shovel
     }
-
-    public ToolType toolType;
+    public ToolType toolType; 
+ 
 }
