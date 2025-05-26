@@ -22,13 +22,13 @@ public class LandManager : MonoBehaviour
             Instance = this;
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         RegisterLandPlots();
         StartCoroutine(LoadFarmData());
     }
 
-    IEnumerator LoadFarmData()
+    private IEnumerator LoadFarmData()
     {
         yield return new WaitForEndOfFrame();
         if (farmData != null)
@@ -51,7 +51,7 @@ public class LandManager : MonoBehaviour
         });
     }
 
-    void RegisterLandPlots()
+    private void RegisterLandPlots()
     {
         foreach (Transform landTransform in transform)
         {

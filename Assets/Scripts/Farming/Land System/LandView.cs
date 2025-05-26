@@ -23,7 +23,7 @@ public class LandView : MonoBehaviour
     private CropBehaviour cropPlanted = null;
     private LandController controller;
 
-    void Start()
+    private void Start()
     {
         renderer = GetComponent<Renderer>();
         selectGameObject.gameObject.SetActive(false);
@@ -133,7 +133,7 @@ public class LandView : MonoBehaviour
     public GameTimestamp TimeWatered => controller?.TimeWatered ?? new GameTimestamp(0, GameTimestamp.Season.Spring, 1, 0, 0);
     public bool HasCrop => controller?.HasCrop ?? false;
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         controller?.Dispose();
     }

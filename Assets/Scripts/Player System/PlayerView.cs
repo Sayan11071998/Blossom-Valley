@@ -15,7 +15,7 @@ public class PlayerView : MonoBehaviour
 
     public PlayerModel PlayerModel => playerController.PlayerModel;
 
-    void Start()
+    private void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -26,7 +26,7 @@ public class PlayerView : MonoBehaviour
         playerModel.MoneyChanged += OnMoneyChanged;
     }
 
-    void Update()
+    private void Update()
     {
         HandleMovementInput();
         HandleInteractionInput();
@@ -81,6 +81,7 @@ public class PlayerView : MonoBehaviour
         }
     }
 
+    // Delete Before Final Build
     private void HandleCheatShortcuts()
     {
         if (Input.GetKey(KeyCode.RightBracket))
@@ -89,7 +90,7 @@ public class PlayerView : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
             UIManager.Instance.ToggleRelationshipPanel();
     }
-
+    //
 
     public void Move(Vector3 velocity, Vector3 direction, bool isSprinting)
     {
