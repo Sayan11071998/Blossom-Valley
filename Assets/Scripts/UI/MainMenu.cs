@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.IO;
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,7 +11,8 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
-        StartCoroutine(LoadGameAsync(SceneTransitionManager.Location.PlayerHome, null));
+        ClearSaveFile();
+        StartCoroutine(LoadGameAsync(SceneTransitionManager.Location.PlayerHome, InitializeNewGame));
     }
 
     public void ContinueGame()
@@ -19,7 +20,38 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(LoadGameAsync(SceneTransitionManager.Location.PlayerHome, LoadGame));
     }
 
-    //To be called after the scene is loaded
+    // Clear the save file to ensure a fresh start
+    void ClearSaveFile()
+    {
+        string filePath = Application.persistentDataPath + "/Save.save";
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            Debug.Log("Save file cleared for new game");
+        }
+    }
+
+    // Initialize a completely new game state
+    void InitializeNewGame()
+    {
+        if(GameStateManager.Instance == null)
+        {
+            Debug.LogError("Cannot find Game State Manager!");
+            return;
+        }
+
+        // Clear any existing farm data
+        LandManager.farmData = null;
+        
+        // You might also want to reset other managers here
+        // For example:
+        // InventoryManager.Instance.ClearInventory(); // if such method exists
+        // TimeManager.Instance.ResetToDefault(); // if such method exists
+        
+        Debug.Log("New game initialized with fresh state");
+    }
+
+    //To be called after the scene is loaded for continuing a game
     void LoadGame()
     {
         //Confirm if the GameStateManager is there (It should be if the scene is loaded)
@@ -66,6 +98,4 @@ public class MainMenu : MonoBehaviour
         //Disable or enable the Load Game button based on whether there is a save file
         loadGameButton.interactable = SaveManager.HasSave(); 
     }
-
-
 }
