@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface ITimeTracker 
+﻿public interface ITimeTracker
 {
-    void ClockUpdate(GameTimestamp timestamp);
+    public void ClockUpdate(GameTimestamp timestamp);
 }
