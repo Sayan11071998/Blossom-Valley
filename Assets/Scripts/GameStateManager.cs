@@ -94,7 +94,7 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
                 //Update the Land's state
                 land.ClockUpdate(timestamp);
                 //Update the crop's state based on the land state
-                if (land.landStatus == Land.LandStatus.Watered)
+                if (land.landStatus == LandModel.LandStatus.Watered)
                 {
                     crop.Grow();
                 }

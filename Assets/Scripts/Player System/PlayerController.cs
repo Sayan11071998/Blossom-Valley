@@ -5,7 +5,7 @@ public class PlayerController
     private PlayerModel playerModel;
     private PlayerView playerView;
 
-    private Land selectedLand;
+    private LandView selectedLand;
     private InteractableObject selectedInteractable;
 
     public PlayerModel PlayerModel => playerModel;
@@ -29,7 +29,7 @@ public class PlayerController
         playerView.Move(velocity, dir, isSprinting);
     }
 
-    public void SelectLand(Land land)
+    public void SelectLand(LandView land)
     {
         if (selectedLand != null)
             selectedLand.Select(false);
