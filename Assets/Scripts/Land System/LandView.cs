@@ -130,7 +130,7 @@ public class LandView : MonoBehaviour
     public int Id => controller?.Id ?? 0;
     public LandModel.LandStatus LandStatus => controller?.LandStatus ?? LandModel.LandStatus.Soil;
     public LandModel.FarmObstacleStatus ObstacleStatus => controller?.ObstacleStatus ?? LandModel.FarmObstacleStatus.None;
-    public GameTimestamp TimeWatered => controller?.TimeWatered ?? new GameTimestamp(0, GameTimestamp.Season.Spring, 1, 0, 0);
+    public GameTimestamp TimeWatered => controller?.TimeWatered ?? new GameTimestamp(0, Season.Spring, 1, 0, 0);
     public bool HasCrop => controller?.HasCrop ?? false;
 
     private void OnDestroy()
