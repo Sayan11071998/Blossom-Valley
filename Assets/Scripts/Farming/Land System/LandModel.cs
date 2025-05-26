@@ -1,8 +1,5 @@
 using System;
 
-/// <summary>
-/// Pure C# model representing the data and state of a land plot
-/// </summary>
 [Serializable]
 public class LandModel
 {
@@ -18,18 +15,12 @@ public class LandModel
         None, Rock, Wood, Weeds
     }
 
-    // Land properties
     public LandStatus landStatus;
     public FarmObstacleStatus obstacleStatus;
     public bool isSelected;
-
-    // Time tracking
     public GameTimestamp timeWatered;
-
-    // Crop state
     public bool hasCrop;
 
-    // Events for notifying changes
     public event Action<LandStatus> OnLandStatusChanged;
     public event Action<FarmObstacleStatus> OnObstacleStatusChanged;
     public event Action<bool> OnSelectionChanged;
@@ -43,7 +34,6 @@ public class LandModel
         obstacleStatus = FarmObstacleStatus.None;
         isSelected = false;
         hasCrop = false;
-        // Initialize with default timestamp (year 0, spring, day 1, hour 0, minute 0)
         timeWatered = new GameTimestamp(0, GameTimestamp.Season.Spring, 1, 0, 0);
     }
 
@@ -89,18 +79,9 @@ public class LandModel
         }
     }
 
-    public bool CanPlantSeed()
-    {
-        return landStatus != LandStatus.Soil && !hasCrop && obstacleStatus == FarmObstacleStatus.None;
-    }
+    public bool CanPlantSeed() => landStatus != LandStatus.Soil && !hasCrop && obstacleStatus == FarmObstacleStatus.None;
 
-    public bool CanUseWateringCan()
-    {
-        return landStatus != LandStatus.Soil;
-    }
+    public bool CanUseWateringCan() => landStatus != LandStatus.Soil;
 
-    public bool CanRemoveObstacle(FarmObstacleStatus targetObstacle)
-    {
-        return obstacleStatus == targetObstacle;
-    }
+    public bool CanRemoveObstacle(FarmObstacleStatus targetObstacle) => obstacleStatus == targetObstacle;
 }

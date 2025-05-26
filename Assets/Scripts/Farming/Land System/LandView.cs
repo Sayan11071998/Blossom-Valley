@@ -1,23 +1,23 @@
 using UnityEngine;
 
-/// <summary>
-/// MonoBehaviour view handling the visual representation and Unity-specific functionality of land
-/// </summary>
 public class LandView : MonoBehaviour
 {
     [Header("Materials")]
-    public Material soilMat, farmlandMat, wateredMat;
-    
+    [SerializeField] private Material soilMaterial;
+    [SerializeField] private Material farmlandMaterial;
+    [SerializeField] private Material wateredMaterial;
+
     [Header("Selection")]
-    public GameObject select;
-    
+    [SerializeField] private GameObject selectGameObject;
+
     [Header("Crops")]
-    public GameObject cropPrefab;
-    
+    [SerializeField] private GameObject cropPrefab;
+
     [Header("Obstacles")]
-    public GameObject rockPrefab, woodPrefab, weedsPrefab;
-    
-    // Private fields
+    [SerializeField] private GameObject rockPrefab;
+    [SerializeField] private GameObject woodPrefab;
+    [SerializeField] private GameObject weedsPrefab;
+
     private new Renderer renderer;
     private GameObject obstacleObject;
     private CropBehaviour cropPlanted = null;
@@ -25,64 +25,41 @@ public class LandView : MonoBehaviour
 
     void Start()
     {
-        // Get the renderer component
         renderer = GetComponent<Renderer>();
-        select.gameObject.SetActive(false); // Hide selection by default
-        
-        // Controller will be set by LandManager
+        selectGameObject.gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// Initialize the MVC components (called by LandManager)
-    /// </summary>
     public void InitializeMVC(int id)
     {
-        // Create model and controller
         LandModel model = new LandModel(id);
         controller = new LandController(model, this);
         controller.Initialize();
     }
 
-    public void LoadLandData(LandModel.LandStatus landStatusToSwitch, GameTimestamp lastWatered, LandModel.FarmObstacleStatus obstacleStatusToSwitch)
-    {
-        controller?.LoadLandData(landStatusToSwitch, lastWatered, obstacleStatusToSwitch);
-    }
+    public void LoadLandData(LandModel.LandStatus landStatusToSwitch, GameTimestamp lastWatered, LandModel.FarmObstacleStatus obstacleStatusToSwitch) => controller?.LoadLandData(landStatusToSwitch, lastWatered, obstacleStatusToSwitch);
 
-    public void SwitchLandStatus(LandModel.LandStatus statusToSwitch)
-    {
-        controller?.SwitchLandStatus(statusToSwitch);
-    }
+    public void SwitchLandStatus(LandModel.LandStatus statusToSwitch) => controller?.SwitchLandStatus(statusToSwitch);
 
-    public void SetObstacleStatus(LandModel.FarmObstacleStatus statusToSwitch)
-    {
-        controller?.SetObstacleStatus(statusToSwitch);
-    }
+    public void SetObstacleStatus(LandModel.FarmObstacleStatus statusToSwitch) => controller?.SetObstacleStatus(statusToSwitch);
 
-    public void Select(bool toggle)
-    {
-        controller?.Select(toggle);
-    }
+    public void Select(bool toggle) => controller?.Select(toggle);
 
-    public void Interact()
-    {
-        controller?.Interact();
-    }
+    public void Interact() => controller?.Interact();
 
-    // Visual update methods called by controller
     public void UpdateLandVisuals(LandModel.LandStatus landStatus)
     {
-        Material materialToSwitch = soilMat;
+        Material materialToSwitch = soilMaterial;
 
         switch (landStatus)
         {
             case LandModel.LandStatus.Soil:
-                materialToSwitch = soilMat;
+                materialToSwitch = soilMaterial;
                 break;
             case LandModel.LandStatus.Farmland:
-                materialToSwitch = farmlandMat;
+                materialToSwitch = farmlandMaterial;
                 break;
             case LandModel.LandStatus.Watered:
-                materialToSwitch = wateredMat;
+                materialToSwitch = wateredMaterial;
                 break;
         }
 
@@ -91,18 +68,15 @@ public class LandView : MonoBehaviour
 
     public void UpdateObstacleVisuals(LandModel.FarmObstacleStatus obstacleStatus)
     {
-        // Destroy existing obstacle
-        if (obstacleObject != null) 
+        if (obstacleObject != null)
         {
             Destroy(obstacleObject);
             obstacleObject = null;
         }
 
-        // Create new obstacle based on status
         switch (obstacleStatus)
         {
             case LandModel.FarmObstacleStatus.None:
-                // Already destroyed above
                 break;
             case LandModel.FarmObstacleStatus.Rock:
                 obstacleObject = Instantiate(rockPrefab, transform);
@@ -115,27 +89,16 @@ public class LandView : MonoBehaviour
                 break;
         }
 
-        // Position the obstacle
         if (obstacleObject != null)
-        {
             obstacleObject.transform.position = new Vector3(transform.position.x, 0.1f, transform.position.z);
-        }
     }
 
-    public void UpdateSelectionVisuals(bool isSelected)
-    {
-        select.SetActive(isSelected);
-    }
+    public void UpdateSelectionVisuals(bool isSelected) => selectGameObject.SetActive(isSelected);
 
-    // Crop-related methods
     public CropBehaviour SpawnCrop()
     {
-        // Instantiate the crop object parented to the land
         GameObject cropObject = Instantiate(cropPrefab, transform);
-        // Move the crop object to the top of the land gameobject
         cropObject.transform.position = new Vector3(transform.position.x, 0.1f, transform.position.z);
-
-        // Access the CropBehaviour of the crop we're going to plant
         cropPlanted = cropObject.GetComponent<CropBehaviour>();
         return cropPlanted;
     }
@@ -152,24 +115,18 @@ public class LandView : MonoBehaviour
     public void GrowCrop()
     {
         if (cropPlanted != null)
-        {
             cropPlanted.Grow();
-        }
     }
 
     public void WitherCrop()
     {
         if (cropPlanted != null)
         {
-            // If the crop has already germinated, start the withering
             if (cropPlanted.cropState != CropBehaviour.CropState.Seed)
-            {
                 cropPlanted.Wither();
-            }
         }
     }
 
-    // Public getters for accessing controller data (for LandManager)
     public int Id => controller?.Id ?? 0;
     public LandModel.LandStatus LandStatus => controller?.LandStatus ?? LandModel.LandStatus.Soil;
     public LandModel.FarmObstacleStatus ObstacleStatus => controller?.ObstacleStatus ?? LandModel.FarmObstacleStatus.None;
