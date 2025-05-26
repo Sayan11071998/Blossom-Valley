@@ -3,35 +3,11 @@
 [System.Serializable]
 public class GameTimestamp
 {
-    public enum Season
-    {
-        Spring,
-        Summer,
-        Fall,
-        Winter
-    }
-
-    public enum DayOfTheWeek
-    {
-        Saturday,
-        Sunday,
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday
-    }
-
     [SerializeField] public Season season;
     [SerializeField] public int year;
     [SerializeField] public int day;
     [SerializeField] public int hour;
     [SerializeField] public int minute;
-
-    // public int Year => year;
-    // public int Day => day;
-    // public int Hour => hour;
-    // public int Minute => minute;
 
     public GameTimestamp(int yearToSet, Season seasonToSet, int dayToSet, int hourToSet, int minuteToSet)
     {

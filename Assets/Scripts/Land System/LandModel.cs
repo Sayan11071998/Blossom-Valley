@@ -34,7 +34,7 @@ public class LandModel
         obstacleStatus = FarmObstacleStatus.None;
         isSelected = false;
         hasCrop = false;
-        timeWatered = new GameTimestamp(0, GameTimestamp.Season.Spring, 1, 0, 0);
+        timeWatered = new GameTimestamp(0, Season.Spring, 1, 0, 0);
     }
 
     public void SetLandStatus(LandStatus newStatus)
