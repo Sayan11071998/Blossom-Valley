@@ -89,8 +89,10 @@ public class LandController : ITimeTracker
                     landView.RemoveCrop();
                     landModel.SetCropState(false);
                 }
-                if (landModel.CanRemoveObstacle(LandModel.FarmObstacleStatus.Weeds))
+                else if (landModel.CanRemoveObstacle(LandModel.FarmObstacleStatus.Weeds))
+                {
                     SetObstacleStatus(LandModel.FarmObstacleStatus.None);
+                }
                 break;
 
             case EquipmentData.ToolType.Axe:
