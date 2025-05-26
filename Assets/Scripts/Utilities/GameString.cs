@@ -22,5 +22,9 @@ namespace BlossomValley.GameStrings
         public const string SpeedAnimationFloat = "Speed";
         public const string RunAminationBool = "Running";
         #endregion
+
+        #region Prompts
+        public const string SellPrompt = "Do you want to sell {0} ? ";
+        #endregion
     }
 }

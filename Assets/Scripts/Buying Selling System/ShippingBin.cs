@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BlossomValley.GameStrings;
 
 public class ShippingBin : InteractableObject
 {
@@ -11,7 +12,7 @@ public class ShippingBin : InteractableObject
 
         if (handSlotItem == null) return;
 
-        UIManager.Instance.TriggerYesNoPrompt($"Do you want to sell {handSlotItem.name} ? ", PlaceItemsInShippingBin);
+        UIManager.Instance.TriggerYesNoPrompt(string.Format(GameString.SellPrompt, handSlotItem.name), PlaceItemsInShippingBin);
     }
 
     private void PlaceItemsInShippingBin()
@@ -37,7 +38,6 @@ public class ShippingBin : InteractableObject
         int total = 0;
 
         foreach (ItemSlotData item in items)
-
             total += item.quantity * item.itemData.cost;
 
         return total;
