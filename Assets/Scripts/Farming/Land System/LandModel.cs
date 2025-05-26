@@ -7,14 +7,14 @@ using System;
 public class LandModel
 {
     public int id;
-    
+
     public enum LandStatus
     {
         Soil, Farmland, Watered
     }
 
-    public enum FarmObstacleStatus 
-    { 
+    public enum FarmObstacleStatus
+    {
         None, Rock, Wood, Weeds
     }
 
@@ -22,13 +22,13 @@ public class LandModel
     public LandStatus landStatus;
     public FarmObstacleStatus obstacleStatus;
     public bool isSelected;
-    
+
     // Time tracking
     public GameTimestamp timeWatered;
-    
+
     // Crop state
     public bool hasCrop;
-    
+
     // Events for notifying changes
     public event Action<LandStatus> OnLandStatusChanged;
     public event Action<FarmObstacleStatus> OnObstacleStatusChanged;

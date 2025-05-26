@@ -76,9 +76,9 @@ public class LandManager : MonoBehaviour
                 //Create a corresponding LandSaveState
                 landData.Add(new LandSaveState()); 
 
-                //Assign it an id based on its index
+                //Assign it an id based on its index and initialize MVC
                 int landId = landPlots.Count - 1;
-                landView.SetId(landId);
+                landView.InitializeMVC(landId);
             }
         }
     }
@@ -100,11 +100,7 @@ public class LandManager : MonoBehaviour
     //Update the corresponding Land Data on ever change to the Land's state
     public void OnLandStateChange(int id, LandModel.LandStatus landStatus, GameTimestamp lastWatered, LandModel.FarmObstacleStatus obstacleStatus)
     {
-        // Convert from model enums to original enums for save state compatibility
-        LandModel.LandStatus convertedLandStatus = (LandModel.LandStatus)landStatus;
-        LandModel.FarmObstacleStatus convertedObstacleStatus = (LandModel.FarmObstacleStatus)obstacleStatus;
-        
-        landData[id] = new LandSaveState(convertedLandStatus, lastWatered, convertedObstacleStatus);
+        landData[id] = new LandSaveState(landStatus, lastWatered, obstacleStatus);
     }
 
     //Update the corresponding Crop Data on ever change to the Land's state
@@ -127,12 +123,8 @@ public class LandManager : MonoBehaviour
             //Get the individual land save state
             LandSaveState landDataToLoad = landDatasetToLoad[i];
             
-            // Convert from original enums to model enums
-            LandModel.LandStatus convertedLandStatus = (LandModel.LandStatus)landDataToLoad.landStatus;
-            LandModel.FarmObstacleStatus convertedObstacleStatus = (LandModel.FarmObstacleStatus)landDataToLoad.obstacleStatus;
-            
             //Load it up onto the LandView instance
-            landPlots[i].LoadLandData(convertedLandStatus, landDataToLoad.lastWatered, convertedObstacleStatus);
+            landPlots[i].LoadLandData(landDataToLoad.landStatus, landDataToLoad.lastWatered, landDataToLoad.obstacleStatus);
         }
 
         landData = landDatasetToLoad; 

@@ -27,20 +27,20 @@ public class LandView : MonoBehaviour
     {
         // Get the renderer component
         renderer = GetComponent<Renderer>();
+        select.gameObject.SetActive(false); // Hide selection by default
         
-        // Initialize controller with model
-        LandModel model = new LandModel(0); // ID will be set by LandManager
-        controller = new LandController(model, this);
-        controller.Initialize();
+        // Controller will be set by LandManager
     }
 
-    public void SetId(int id)
+    /// <summary>
+    /// Initialize the MVC components (called by LandManager)
+    /// </summary>
+    public void InitializeMVC(int id)
     {
-        if (controller != null)
-        {
-            // Access model through controller's public property
-            // We need to set this before controller initialization
-        }
+        // Create model and controller
+        LandModel model = new LandModel(id);
+        controller = new LandController(model, this);
+        controller.Initialize();
     }
 
     public void LoadLandData(LandModel.LandStatus landStatusToSwitch, GameTimestamp lastWatered, LandModel.FarmObstacleStatus obstacleStatusToSwitch)
@@ -169,7 +169,7 @@ public class LandView : MonoBehaviour
         }
     }
 
-    // Public getters for accessing controller data
+    // Public getters for accessing controller data (for LandManager)
     public int Id => controller?.Id ?? 0;
     public LandModel.LandStatus LandStatus => controller?.LandStatus ?? LandModel.LandStatus.Soil;
     public LandModel.FarmObstacleStatus ObstacleStatus => controller?.ObstacleStatus ?? LandModel.FarmObstacleStatus.None;

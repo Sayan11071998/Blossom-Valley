@@ -7,19 +7,19 @@ public class LandController : ITimeTracker
 {
     private LandModel model;
     private LandView view;
-    
+
     public LandController(LandModel landModel, LandView landView)
     {
         model = landModel;
         view = landView;
-        
+
         // Subscribe to model events
         model.OnLandStatusChanged += HandleLandStatusChanged;
         model.OnObstacleStatusChanged += HandleObstacleStatusChanged;
         model.OnSelectionChanged += HandleSelectionChanged;
         model.OnTimeWateredChanged += HandleTimeWateredChanged;
         model.OnCropStateChanged += HandleCropStateChanged;
-        
+
         // Register for time updates
         TimeManager.Instance.RegisterTracker(this);
     }
@@ -41,12 +41,12 @@ public class LandController : ITimeTracker
     public void SwitchLandStatus(LandModel.LandStatus statusToSwitch)
     {
         model.SetLandStatus(statusToSwitch);
-        
+
         if (statusToSwitch == LandModel.LandStatus.Watered)
         {
             model.SetTimeWatered(TimeManager.Instance.GetGameTimestamp());
         }
-        
+
         // Notify LandManager of state change
         LandManager.Instance.OnLandStateChange(model.id, model.landStatus, model.timeWatered, model.obstacleStatus);
     }
@@ -54,7 +54,7 @@ public class LandController : ITimeTracker
     public void SetObstacleStatus(LandModel.FarmObstacleStatus statusToSwitch)
     {
         model.SetObstacleStatus(statusToSwitch);
-        
+
         // Notify LandManager of state change
         LandManager.Instance.OnLandStateChange(model.id, model.landStatus, model.timeWatered, model.obstacleStatus);
     }
@@ -87,7 +87,7 @@ public class LandController : ITimeTracker
 
         // Try casting the itemdata in the toolslot as SeedData
         SeedData seedTool = toolSlot as SeedData;
-        
+
         if (seedTool != null)
         {
             HandleSeedInteraction(seedTool);
@@ -103,7 +103,7 @@ public class LandController : ITimeTracker
             case EquipmentData.ToolType.Hoe:
                 SwitchLandStatus(LandModel.LandStatus.Farmland);
                 break;
-                
+
             case EquipmentData.ToolType.WateringCan:
                 if (model.CanUseWateringCan())
                 {
@@ -233,7 +233,7 @@ public class LandController : ITimeTracker
         }
     }
 
-    // Public getters for accessing model data
+    // Public getters for accessing model data (for LandManager)
     public int Id => model.id;
     public LandModel.LandStatus LandStatus => model.landStatus;
     public LandModel.FarmObstacleStatus ObstacleStatus => model.obstacleStatus;
