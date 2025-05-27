@@ -1,21 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class PlayerSaveState
 {
     public int money;
 
-    public PlayerSaveState(int money)
-    {
-        this.money = money;
-    }
+    public PlayerSaveState(int moneyValue) => money = moneyValue;
 
-    public void LoadData(PlayerModel playerModel)
-    {
-        playerModel.LoadStats(money);
-    }
+    public void LoadData(PlayerModel playerModelToLoad) => playerModelToLoad.LoadStats(money);
 
     public static PlayerSaveState Export()
     {

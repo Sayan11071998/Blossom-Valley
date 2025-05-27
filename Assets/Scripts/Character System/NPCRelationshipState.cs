@@ -1,31 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class NPCRelationshipState
 {
     public string name;
     public int friendshipPoints;
 
     public bool hasTalkedToday;
-    public bool giftGivenToday; 
+    public bool giftGivenToday;
 
-    public NPCRelationshipState(string name, int friendshipPoints)
+    public NPCRelationshipState(string nameValue, int friendshipPointsValue)
     {
-        this.name = name;
-        this.friendshipPoints = friendshipPoints;
+        name = nameValue;
+        friendshipPoints = friendshipPointsValue;
     }
 
-    public NPCRelationshipState(string name)
+    public NPCRelationshipState(string nameValue)
     {
-        this.name = name;
-        friendshipPoints = 0; 
+        name = nameValue;
+        friendshipPoints = 0;
     }
 
-    //Ever 250 friendship points is a heart
-    public float Hearts()
-    {
-        return friendshipPoints / 250; 
-    }
+    public float Hearts() => friendshipPoints / 250;
 }

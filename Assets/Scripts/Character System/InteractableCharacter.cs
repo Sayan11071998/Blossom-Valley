@@ -2,7 +2,8 @@
 
 public class InteractableCharacter : InteractableObject
 {
-    public CharacterScriptableObject characterData;
+    [SerializeField] private CharacterScriptableObject characterData;
+
     private NPCRelationshipState relationship;
     private CharacterRotationHandler rotationHandler;
     private DialogueContext dialogueContext;
@@ -12,9 +13,8 @@ public class InteractableCharacter : InteractableObject
     private void Start()
     {
         relationship = RelationshipStats.GetRelationship(characterData);
+
         rotationHandler = new CharacterRotationHandler(transform, this);
-        
-        // Initialize strategies
         dialogueContext = new DialogueContext();
         defaultStrategy = new DefaultDialogueStrategy();
         giftStrategy = new GiftDialogueStrategy();
@@ -23,25 +23,21 @@ public class InteractableCharacter : InteractableObject
     public override void Pickup()
     {
         rotationHandler.LookAtPlayer();
-        TriggerDialogue(); 
+        TriggerDialogue();
     }
 
     private void TriggerDialogue()
     {
-        System.Action onComplete = () => {
+        System.Action onComplete = () =>
+        {
             rotationHandler.ResetRotation();
-            // Refresh relationship state after dialogue
             relationship = RelationshipStats.GetRelationship(characterData);
         };
 
         if (InventoryManager.Instance.SlotEquipped(InventorySlot.InventoryType.Item))
-        {
             dialogueContext.SetStrategy(giftStrategy);
-        }
         else
-        {
             dialogueContext.SetStrategy(defaultStrategy);
-        }
 
         dialogueContext.ExecuteDialogue(characterData, relationship, onComplete);
     }

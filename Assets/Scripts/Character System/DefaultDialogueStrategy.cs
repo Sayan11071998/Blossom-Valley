@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class DefaultDialogueStrategy : IDialogueStrategy
 {
@@ -14,22 +13,20 @@ public class DefaultDialogueStrategy : IDialogueStrategy
         if (isFirstMeeting)
         {
             dialogueToHave = characterData.onFirstMeet;
-            onDialogueEnd += () => {
+            onDialogueEnd += () =>
+            {
                 RelationshipStats.UnlockCharacter(characterData);
             };
         }
 
         if (isFirstConversationOfDay)
         {
-            onDialogueEnd += () => {
-                Debug.Log("This is the first conversation of the day");
+            onDialogueEnd += () =>
+            {
                 RelationshipStats.AddFriendPoints(characterData, 20);
-                // Get the updated relationship after unlocking (in case it was first meeting)
                 NPCRelationshipState updatedRelationship = RelationshipStats.GetRelationship(characterData);
                 if (updatedRelationship != null)
-                {
                     updatedRelationship.hasTalkedToday = true;
-                }
             };
         }
 

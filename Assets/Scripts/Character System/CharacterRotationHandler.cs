@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class CharacterRotationHandler
 {
+    private MonoBehaviour coroutineRunner;
     private Transform characterTransform;
     private Quaternion defaultRotation;
+
     private bool isTurning = false;
-    private MonoBehaviour coroutineRunner;
 
     public CharacterRotationHandler(Transform transform, MonoBehaviour runner)
     {
@@ -18,36 +19,28 @@ public class CharacterRotationHandler
     public void LookAtPlayer()
     {
         Transform player = Object.FindAnyObjectByType<PlayerView>().transform;
-        Vector3 dir = player.position - characterTransform.position;
-        dir.y = 0;
-        Quaternion lookRot = Quaternion.LookRotation(dir);
+        Vector3 direction = player.position - characterTransform.position;
+        direction.y = 0;
+        Quaternion lookRot = Quaternion.LookRotation(direction);
         coroutineRunner.StartCoroutine(LookAt(lookRot));
     }
 
-    public void ResetRotation()
-    {
-        coroutineRunner.StartCoroutine(LookAt(defaultRotation));
-    }
+    public void ResetRotation() => coroutineRunner.StartCoroutine(LookAt(defaultRotation));
 
     private IEnumerator LookAt(Quaternion lookRot)
     {
         if (isTurning)
-        {
             isTurning = false;
-        }
         else
-        {
-            isTurning = true; 
-        }
+            isTurning = true;
+
         while (characterTransform.rotation != lookRot)
         {
-            if (!isTurning)
-            {
-                yield break; 
-            }
+            if (!isTurning) yield break;
             characterTransform.rotation = Quaternion.RotateTowards(characterTransform.rotation, lookRot, 720 * Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate(); 
+            yield return new WaitForFixedUpdate();
         }
-        isTurning = false; 
+
+        isTurning = false;
     }
 }

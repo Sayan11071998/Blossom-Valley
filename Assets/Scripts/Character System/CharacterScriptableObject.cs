@@ -1,27 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Character/Character")]
+[CreateAssetMenu(fileName = "CharacterScriptableObject", menuName = "Character/Character")]
 public class CharacterScriptableObject : ScriptableObject
 {
-    public Sprite portrait; 
+    [Header("Character Information")]
+    public Sprite portrait;
     public GameTimestamp birthday;
     public List<ItemData> likes;
-    public List<ItemData> dislikes; 
+    public List<ItemData> dislikes;
 
-    [Header("Dialogue")]
-    //The dialogue to have when the player first meets this character
+    [Header("Default Dialogues")]
     public List<DialogueLine> onFirstMeet;
-    //What the character says by default
     public List<DialogueLine> defaultDialogue;
 
-    //Gift reactions
-    public List<DialogueLine> likedGiftDialogue; 
-    public List<DialogueLine> dislikedGiftDialogue; 
+    [Header("Gift Dialogues")]
+    public List<DialogueLine> likedGiftDialogue;
+    public List<DialogueLine> dislikedGiftDialogue;
     public List<DialogueLine> neutralGiftDialogue;
 
-    //Birthdays
+    [Header("Birthday Dialogues")]
     public List<DialogueLine> birthdayLikedGiftDialogue;
     public List<DialogueLine> birthdayDislikedGiftDialogue;
     public List<DialogueLine> birthdayNeutralGiftDialogue;

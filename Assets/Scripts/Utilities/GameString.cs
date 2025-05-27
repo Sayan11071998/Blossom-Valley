@@ -23,9 +23,14 @@ namespace BlossomValley.GameStrings
         public const string RunAminationBool = "Running";
         #endregion
 
-        #region Prompts
+        #region UI Prompts
         public const string SellPrompt = "Do you want to sell {0} ? ";
         public const string ShipPrompt = "How many {0} would you like to ship?";
+        #endregion
+
+        #region Dialogue Prompts
+        public const string CharacterNotUnlockedPrompt = "You have not unlocked this character yet.";
+        public const string AlreadyGiftedMessage = "You have already given {0} a gift today.";
         #endregion
     }
 }
