@@ -75,16 +75,27 @@ public class UIManager : MonoBehaviour, ITimeTracker
         if (namingPrompt.gameObject.activeSelf)
         {
             namingPrompt.QueuePromptAction(() => TriggerNamingPrompt(message, onConfirmCallback));
-            return; 
+            return;
         }
         namingPrompt.gameObject.SetActive(true);
-        namingPrompt.CreatePrompt(message, onConfirmCallback); 
+        namingPrompt.CreatePrompt(message, onConfirmCallback);
     }
 
     public void TriggerYesNoPrompt(string message, System.Action onYesCallback)
     {
         yesNoPrompt.gameObject.SetActive(true);
-        yesNoPrompt.CreatePrompt(message, onYesCallback); 
+        yesNoPrompt.CreatePrompt(message, onYesCallback);
+    }
+
+    public void TriggerQuantityPrompt(string message, int maxQuantity, System.Action<int> onConfirmCallback)
+    {
+        if (yesNoPrompt.gameObject.activeSelf)
+        {
+            // You might want to implement a queue system here too, similar to the naming prompt
+            return;
+        }
+        yesNoPrompt.gameObject.SetActive(true);
+        yesNoPrompt.CreateQuantityPrompt(message, maxQuantity, onConfirmCallback);
     }
     #endregion
 
@@ -93,7 +104,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     {
         menuScreen.SetActive(!menuScreen.activeSelf);
         OpenWindow(selectedTab);
-        TabBehaviour.onTabStateChange?.Invoke(); 
+        TabBehaviour.onTabStateChange?.Invoke();
     }
 
     public void OpenWindow(Tab windowToOpen)
@@ -106,18 +117,18 @@ public class UIManager : MonoBehaviour, ITimeTracker
         {
             case Tab.Inventory:
                 inventoryPanel.SetActive(true);
-                RenderInventory(); 
+                RenderInventory();
                 break;
             case Tab.Relationships:
                 relationshipListingManager.gameObject.SetActive(true);
-                relationshipListingManager.Render(RelationshipStats.relationships); 
+                relationshipListingManager.Render(RelationshipStats.relationships);
                 break;
             case Tab.Animals:
                 animalRelationshipListingManager.gameObject.SetActive(true);
                 animalRelationshipListingManager.Render(AnimalStats.animalRelationships);
                 break;
         }
-        selectedTab = windowToOpen; 
+        selectedTab = windowToOpen;
     }
     #endregion
 
@@ -129,12 +140,12 @@ public class UIManager : MonoBehaviour, ITimeTracker
 
     public void FadeInScreen()
     {
-        fadeIn.SetActive(true); 
+        fadeIn.SetActive(true);
     }
 
     public void OnFadeInComplete()
     {
-        fadeIn.SetActive(false); 
+        fadeIn.SetActive(false);
     }
 
     public void ResetFadeDefaults()
@@ -198,12 +209,12 @@ public class UIManager : MonoBehaviour, ITimeTracker
         {
             itemNameText.text = "";
             itemDescriptionText.text = "";
-            itemInfoBox.SetActive(false); 
+            itemInfoBox.SetActive(false);
             return;
         }
-        itemInfoBox.SetActive(true); 
+        itemInfoBox.SetActive(true);
         itemNameText.text = data.name;
-        itemDescriptionText.text = data.description; 
+        itemDescriptionText.text = data.description;
     }
     #endregion
 
@@ -211,7 +222,7 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public void ClockUpdate(GameTimestamp timestamp)
     {
         int hours = timestamp.hour;
-        int minutes = timestamp.minute; 
+        int minutes = timestamp.minute;
         string prefix = "AM ";
         if (hours > 12)
         {
@@ -222,20 +233,20 @@ public class UIManager : MonoBehaviour, ITimeTracker
         int day = timestamp.day;
         string season = timestamp.season.ToString();
         string dayOfTheWeek = timestamp.GetDayOfTheWeek().ToString();
-        dateText.text = season + " " + day + " (" + dayOfTheWeek +")";
+        dateText.text = season + " " + day + " (" + dayOfTheWeek + ")";
     }
     #endregion
 
     public void RenderPlayerStats()
     {
         PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
-        moneyText.text = playerModel.Money + PlayerModel.CURRENCY; 
+        moneyText.text = playerModel.Money + PlayerModel.CURRENCY;
     }
 
     public void OpenShop(List<ItemData> shopItems)
     {
         shopListingManager.gameObject.SetActive(true);
-        shopListingManager.Render(shopItems); 
+        shopListingManager.Render(shopItems);
     }
 
     public void ToggleRelationshipPanel()
@@ -245,6 +256,6 @@ public class UIManager : MonoBehaviour, ITimeTracker
         if (panel.activeSelf)
         {
             relationshipListingManager.Render(RelationshipStats.relationships);
-        }        
+        }
     }
 }
