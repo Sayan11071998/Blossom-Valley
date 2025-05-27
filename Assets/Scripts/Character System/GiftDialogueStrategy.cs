@@ -5,7 +5,7 @@ public class GiftDialogueStrategy : IDialogueStrategy
 {
     public void ExecuteDialogue(CharacterScriptableObject characterData, NPCRelationshipState relationship, System.Action onComplete)
     {
-        if (!IsEligibleForGift(characterData))
+        if (!IsEligibleForGift(characterData, onComplete))
             return;
 
         ItemSlotData handSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
@@ -50,17 +50,17 @@ public class GiftDialogueStrategy : IDialogueStrategy
         DialogueManager.Instance.StartDialogue(dialogueToHave, onDialogueEnd);
     }
 
-    private bool IsEligibleForGift(CharacterScriptableObject characterData)
+    private bool IsEligibleForGift(CharacterScriptableObject characterData, System.Action onComplete)
     {
         if (RelationshipStats.FirstMeeting(characterData))
         {
-            DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage("You have not unlocked this character yet.")); 
+            DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage("You have not unlocked this character yet."), onComplete); 
             return false; 
         }
 
         if (RelationshipStats.GiftGivenToday(characterData))
         {
-            DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage($"You have already given {characterData.name} a gift today."));
+            DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage($"You have already given {characterData.name} a gift today."), onComplete);
             return false; 
         }
         return true; 
