@@ -1,36 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class GameSaveState
 {
-    //Farm Data
     public FarmSaveState farmSaveState;
-    //Inventory
     public InventorySaveState inventorySaveState;
-    //Time
     public GameTimestamp timestamp;
-
-    //PlayerStats
     public PlayerSaveState playerSaveState;
-
-    //Relationships
     public RelationshipSaveState relationshipSaveState;
 
-    public GameSaveState(
-        FarmSaveState farmSaveState,
-        InventorySaveState inventorySaveState,
-        GameTimestamp timestamp,
-        PlayerSaveState playerSaveState,
-        RelationshipSaveState relationshipSaveState
-        )
-        
+    public GameSaveState(FarmSaveState farmSaveStateValue, InventorySaveState inventorySaveStateValue, GameTimestamp timestampValue, PlayerSaveState playerSaveStateValue, RelationshipSaveState relationshipSaveStateValue)
     {
-        this.farmSaveState = farmSaveState;
-        this.inventorySaveState = inventorySaveState;
-        this.timestamp = timestamp;
-        this.playerSaveState = playerSaveState;
-        this.relationshipSaveState = relationshipSaveState;
+        farmSaveState = farmSaveStateValue;
+        inventorySaveState = inventorySaveStateValue;
+        timestamp = timestampValue;
+        playerSaveState = playerSaveStateValue;
+        relationshipSaveState = relationshipSaveStateValue;
     }
 }

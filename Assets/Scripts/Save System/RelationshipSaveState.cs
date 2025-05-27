@@ -1,24 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+
 [System.Serializable]
-public class RelationshipSaveState 
+public class RelationshipSaveState
 {
     public List<NPCRelationshipState> relationships;
     public List<AnimalRelationshipState> animals;
 
-    public RelationshipSaveState(
-        List<NPCRelationshipState> relationships,
-        List<AnimalRelationshipState> animals)
+    public RelationshipSaveState(List<NPCRelationshipState> relationshipsValue, List<AnimalRelationshipState> animalsValue)
     {
-        this.relationships = relationships;
-        this.animals = animals;
+        relationships = relationshipsValue;
+        animals = animalsValue;
     }
 
-    public static RelationshipSaveState Export()
-    {
-        return new RelationshipSaveState(RelationshipStats.relationships, AnimalStats.animalRelationships);
-    }
+    public static RelationshipSaveState Export() => new RelationshipSaveState(RelationshipStats.relationships, AnimalStats.animalRelationships);
 
     public void LoadData()
     {
