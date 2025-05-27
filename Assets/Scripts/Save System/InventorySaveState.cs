@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
-public class InventorySaveState 
+﻿[System.Serializable]
+public class InventorySaveState
 {
     public ItemSlotSaveData[] toolSlots;
     public ItemSlotSaveData[] itemSlots;
@@ -11,32 +7,24 @@ public class InventorySaveState
     public ItemSlotSaveData equippedItemSlot;
     public ItemSlotSaveData equippedToolSlot;
 
-    public InventorySaveState(
-        ItemSlotData[] toolSlots,
-        ItemSlotData[] itemSlots,
-        ItemSlotData equippedItemSlot,
-        ItemSlotData equippedToolSlot
-        )
+    public InventorySaveState(ItemSlotData[] toolSlotsValue, ItemSlotData[] itemSlotsValue, ItemSlotData equippedItemSlotValue, ItemSlotData equippedToolSlotValue)
     {
-        this.toolSlots = ItemSlotData.SerializeArray(toolSlots);
-        this.itemSlots = ItemSlotData.SerializeArray(itemSlots);
-        this.equippedItemSlot = ItemSlotData.SerializeData(equippedItemSlot);
-        this.equippedToolSlot = ItemSlotData.SerializeData(equippedToolSlot);
+        toolSlots = ItemSlotData.SerializeArray(toolSlotsValue);
+        itemSlots = ItemSlotData.SerializeArray(itemSlotsValue);
+        equippedItemSlot = ItemSlotData.SerializeData(equippedItemSlotValue);
+        equippedToolSlot = ItemSlotData.SerializeData(equippedToolSlotValue);
     }
 
-    //Retrieve information from the current game for saving purposes
     public static InventorySaveState Export()
     {
-        //Retrieve Inventory Data 
         ItemSlotData[] toolSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Tool);
         ItemSlotData[] itemSlots = InventoryManager.Instance.GetInventorySlots(InventorySlot.InventoryType.Item);
 
         ItemSlotData equippedToolSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Tool);
         ItemSlotData equippedItemSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
-        return new InventorySaveState(toolSlots, itemSlots, equippedItemSlot, equippedToolSlot); 
+        return new InventorySaveState(toolSlots, itemSlots, equippedItemSlot, equippedToolSlot);
     }
 
-    //Put the save data into the game
     public void LoadData()
     {
         ItemSlotData[] toolSlots = ItemSlotData.DeserializeArray(this.toolSlots);
