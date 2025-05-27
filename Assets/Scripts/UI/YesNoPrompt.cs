@@ -1,52 +1,47 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class YesNoPrompt : MonoBehaviour
 {
-    [SerializeField] Text promptText;
-    [SerializeField] Text quantityText;
-    [SerializeField] Button plusButton;
-    [SerializeField] Button minusButton;
-    [SerializeField] GameObject quantityControls; // Parent object containing quantity UI elements
-    
-    Action onYesSelected = null;
-    Action<int> onYesSelectedWithQuantity = null;
-    
+    [SerializeField] private Text promptText;
+    [SerializeField] private Text quantityText;
+    [SerializeField] private Button plusButton;
+    [SerializeField] private Button minusButton;
+    [SerializeField] private GameObject quantityControls;
+
+    private Action onYesSelected = null;
+    private Action<int> onYesSelectedWithQuantity = null;
+
     private int currentQuantity = 1;
     private int maxQuantity = 1;
 
-    void Start()
+    private void Start()
     {
-        // Set up button listeners
         plusButton.onClick.AddListener(IncreaseQuantity);
         minusButton.onClick.AddListener(DecreaseQuantity);
     }
 
-    // Original method for simple yes/no prompts
-    public void CreatePrompt(string message, Action onYesSelected)
+    public void CreatePrompt(string message, Action onYesSelectedAction)
     {
-        this.onYesSelected = onYesSelected;
-        this.onYesSelectedWithQuantity = null;
-        
+        onYesSelected = onYesSelectedAction;
+        onYesSelectedWithQuantity = null;
+
         promptText.text = message;
-        quantityControls.SetActive(false); // Hide quantity controls for simple prompts
+        quantityControls.SetActive(false);
         gameObject.SetActive(true);
     }
 
-    // New method for quantity-based prompts
-    public void CreateQuantityPrompt(string message, int maxQuantity, Action<int> onYesSelectedWithQuantity)
+    public void CreateQuantityPrompt(string message, int maxQuantityValue, Action<int> onYesSelectedWithQuantityValue)
     {
-        this.onYesSelected = null;
-        this.onYesSelectedWithQuantity = onYesSelectedWithQuantity;
-        this.maxQuantity = maxQuantity;
-        this.currentQuantity = 1;
-        
+        onYesSelected = null;
+        onYesSelectedWithQuantity = onYesSelectedWithQuantityValue;
+        maxQuantity = maxQuantityValue;
+        currentQuantity = 1;
+
         promptText.text = message;
         UpdateQuantityDisplay();
-        quantityControls.SetActive(true); // Show quantity controls
+        quantityControls.SetActive(true);
         gameObject.SetActive(true);
     }
 
@@ -71,8 +66,6 @@ public class YesNoPrompt : MonoBehaviour
     private void UpdateQuantityDisplay()
     {
         quantityText.text = currentQuantity.ToString();
-        
-        // Update button interactability
         minusButton.interactable = currentQuantity > 1;
         plusButton.interactable = currentQuantity < maxQuantity;
     }
@@ -81,23 +74,16 @@ public class YesNoPrompt : MonoBehaviour
     {
         if (yes)
         {
-            // Execute appropriate action based on which type of prompt this is
             if (onYesSelected != null)
-            {
                 onYesSelected();
-            }
             else if (onYesSelectedWithQuantity != null)
-            {
                 onYesSelectedWithQuantity(currentQuantity);
-            }
         }
 
-        // Reset everything
         onYesSelected = null;
         onYesSelectedWithQuantity = null;
         currentQuantity = 1;
         maxQuantity = 1;
-        
         gameObject.SetActive(false);
     }
 }

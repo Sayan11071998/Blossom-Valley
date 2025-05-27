@@ -25,6 +25,7 @@ namespace BlossomValley.GameStrings
 
         #region Prompts
         public const string SellPrompt = "Do you want to sell {0} ? ";
+        public const string ShipPrompt = "How many {0} would you like to ship?";
         #endregion
     }
 }
