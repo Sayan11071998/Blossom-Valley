@@ -13,7 +13,7 @@ public class NPCRelationshipListing : MonoBehaviour
     public Text nameText;
     public Image[] hearts; 
 
-    public void Display(CharacterData characterData, NPCRelationshipState relationship)
+    public void Display(CharacterScriptableObject characterData, NPCRelationshipState relationship)
     {
         portraitImage.sprite = characterData.portrait;
         nameText.text = relationship.name;

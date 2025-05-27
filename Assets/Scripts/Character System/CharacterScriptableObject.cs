@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName ="Character/Character")]
-public class CharacterData : ScriptableObject
+public class CharacterScriptableObject : ScriptableObject
 {
     public Sprite portrait; 
     public GameTimestamp birthday;

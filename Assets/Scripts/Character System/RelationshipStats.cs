@@ -23,13 +23,13 @@ public class RelationshipStats : MonoBehaviour
     }
 
     //Check if the player has met this NPC. 
-    public static bool FirstMeeting(CharacterData character)
+    public static bool FirstMeeting(CharacterScriptableObject character)
     {
         return !relationships.Exists(i => i.name == character.name);
     }
 
     //Get relationship information about a character
-    public static NPCRelationshipState GetRelationship(CharacterData character)
+    public static NPCRelationshipState GetRelationship(CharacterScriptableObject character)
     {
         //Check if it is the first meeting
         if (FirstMeeting(character)) return null;
@@ -38,13 +38,13 @@ public class RelationshipStats : MonoBehaviour
     }
 
     //Add the character to the relationships data
-    public static void UnlockCharacter(CharacterData character)
+    public static void UnlockCharacter(CharacterScriptableObject character)
     {
         relationships.Add(new NPCRelationshipState(character.name)); 
     }
 
     //Improve the relationship with an NPC
-    public static void AddFriendPoints(CharacterData character, int points)
+    public static void AddFriendPoints(CharacterScriptableObject character, int points)
     {
         if (FirstMeeting(character))
         {
@@ -56,7 +56,7 @@ public class RelationshipStats : MonoBehaviour
     }
 
     //Check if this is the first conversation the player is having with the NPC today
-    public static bool IsFirstConversationOfTheDay(CharacterData character)
+    public static bool IsFirstConversationOfTheDay(CharacterScriptableObject character)
     {
         //If the player is meeting him for the first time, definitely is
         if (FirstMeeting(character)) return true;
@@ -66,13 +66,13 @@ public class RelationshipStats : MonoBehaviour
     }
 
     //Check if the player has already given this character a gift today
-    public static bool GiftGivenToday(CharacterData character)
+    public static bool GiftGivenToday(CharacterScriptableObject character)
     {
         NPCRelationshipState npc = GetRelationship(character);
         return npc.giftGivenToday; 
     }
 
-    public static GiftReaction GetReactionToGift(CharacterData character, ItemData item)
+    public static GiftReaction GetReactionToGift(CharacterScriptableObject character, ItemData item)
     {
         //If it's in the list of liked items, it means the character likes it
         if (character.likes.Contains(item)) return GiftReaction.Like;
@@ -80,16 +80,14 @@ public class RelationshipStats : MonoBehaviour
         if (character.dislikes.Contains(item)) return GiftReaction.Dislike;
 
         return GiftReaction.Neutral; 
-
     }
 
     //Check if it's the character's birthday
-    public static bool IsBirthday(CharacterData character)
+    public static bool IsBirthday(CharacterScriptableObject character)
     {
         GameTimestamp birthday = character.birthday;
         GameTimestamp today = TimeManager.Instance.GetGameTimestamp();
 
         return (today.day == birthday.day) && (today.season == birthday.season);
     }
-
 }
