@@ -43,6 +43,12 @@ public class MainMenu : MonoBehaviour
         // Clear any existing farm data
         LandManager.farmData = null;
         
+        // Reset all relationship data for new game
+        RelationshipStats.ResetAllRelationships();
+        
+        // If you have AnimalStats as well, you might want to reset that too
+        // AnimalStats.ResetAllAnimalRelationships(); // if such method exists
+        
         // You might also want to reset other managers here
         // For example:
         // InventoryManager.Instance.ClearInventory(); // if such method exists

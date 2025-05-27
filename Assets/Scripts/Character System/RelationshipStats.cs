@@ -12,6 +12,13 @@ public class RelationshipStats : MonoBehaviour
         Like, Dislike, Neutral
     }
 
+    // Add this method to reset all relationship data for new games
+    public static void ResetAllRelationships()
+    {
+        relationships = new List<NPCRelationshipState>();
+        Debug.Log("All relationship data has been reset for new game");
+    }
+
     public static void LoadStats(List<NPCRelationshipState> relationshipsToLoad)
     {
         if (relationshipsToLoad == null)
