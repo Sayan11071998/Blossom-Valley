@@ -75,11 +75,12 @@ public class LandController : ITimeTracker
         switch (toolType)
         {
             case EquipmentData.ToolType.Hoe:
-                SwitchLandStatus(LandModel.LandStatus.Farmland);
+                if (landModel.obstacleStatus == LandModel.FarmObstacleStatus.None)
+                    SwitchLandStatus(LandModel.LandStatus.Farmland);
                 break;
 
             case EquipmentData.ToolType.WateringCan:
-                if (landModel.CanUseWateringCan())
+                if (landModel.obstacleStatus == LandModel.FarmObstacleStatus.None && landModel.CanUseWateringCan())
                     SwitchLandStatus(LandModel.LandStatus.Watered);
                 break;
 
