@@ -3984,6 +3984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7066737237370393316}
   - component: {fileID: 7066737237370393317}
+  - component: {fileID: 5761368237201138496}
   - component: {fileID: 7066737237370393323}
   - component: {fileID: 7066737237370393322}
   - component: {fileID: 722042198375827311}
@@ -4023,34 +4024,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c9755032fa1c488fab533a6d3841b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5761368237201138496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7066737237370393318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26f6398efa2476438f815f71bad163f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   toolSlots:
   - itemData: {fileID: 11400000, guid: ed34074676969d340bf4d18041e0a87e, type: 2}
     quantity: 1
   - itemData: {fileID: 11400000, guid: e7e3d43e86e2eb24e99d38735dbfd77a, type: 2}
     quantity: 1
-  - itemData: {fileID: 11400000, guid: f9d2fa745dbb6df49a3b497f82890c1c, type: 2}
-    quantity: 6
-  - itemData: {fileID: 11400000, guid: ad5bbed7903bbd549a8dd1de912c3ea3, type: 2}
-    quantity: 6
-  - itemData: {fileID: 11400000, guid: 15e2cfe31657fbc4d90ea40ceb0cceb3, type: 2}
-    quantity: 1
   - itemData: {fileID: 11400000, guid: 16a54705ba90e384da03ab265a637a55, type: 2}
     quantity: 1
   - itemData: {fileID: 11400000, guid: a208249412be15d478feb96e75f1a6fc, type: 2}
     quantity: 1
-  - itemData: {fileID: 0}
+  - itemData: {fileID: 11400000, guid: 15e2cfe31657fbc4d90ea40ceb0cceb3, type: 2}
     quantity: 1
+  - itemData: {fileID: 11400000, guid: f9d2fa745dbb6df49a3b497f82890c1c, type: 2}
+    quantity: 5
+  - itemData: {fileID: 11400000, guid: ad5bbed7903bbd549a8dd1de912c3ea3, type: 2}
+    quantity: 5
+  - itemData: {fileID: 0}
+    quantity: 0
   equippedToolSlot:
     itemData: {fileID: 0}
     quantity: 0
   itemSlots:
-  - itemData: {fileID: 11400000, guid: 6abe74226a59b9944aa054d8f314b29a, type: 2}
-    quantity: 5
   - itemData: {fileID: 11400000, guid: 7c5d10f9731296d4f995bc32cb72b1fe, type: 2}
     quantity: 5
-  - itemData: {fileID: 11400000, guid: cf9fc427e8129774bb161e27e8675c8e, type: 2}
+  - itemData: {fileID: 11400000, guid: 6abe74226a59b9944aa054d8f314b29a, type: 2}
     quantity: 5
   - itemData: {fileID: 11400000, guid: 98eb918a7759b0d4fa2f2eb75bc79fcb, type: 2}
+    quantity: 5
+  - itemData: {fileID: 11400000, guid: cf9fc427e8129774bb161e27e8675c8e, type: 2}
     quantity: 5
   - itemData: {fileID: 0}
     quantity: 0
