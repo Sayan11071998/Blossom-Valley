@@ -46,8 +46,14 @@ public class MainMenu : MonoBehaviour
         // Reset all relationship data for new game
         RelationshipStats.ResetAllRelationships();
         
-        // If you have AnimalStats as well, you might want to reset that too
-        // AnimalStats.ResetAllAnimalRelationships(); // if such method exists
+        // Reset all animal relationships for new game - THIS WAS MISSING!
+        AnimalStats.ResetAllAnimalRelationships();
+        
+        // Reset feedbox status for new game
+        AnimalFeedManager.ResetFeedboxes();
+        
+        // Reset egg incubation data for new game
+        IncubationManager.eggsIncubating = new System.Collections.Generic.List<EggIncubationSaveState>();
         
         // You might also want to reset other managers here
         // For example:

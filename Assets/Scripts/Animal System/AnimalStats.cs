@@ -26,6 +26,12 @@ public class AnimalStats : MonoBehaviour
         animalRelationships = relationshipsToLoad;
     }
 
+    public static void ResetAllAnimalRelationships()
+    {
+        animalRelationships = new List<AnimalRelationshipState>();
+        Debug.Log("All animal relationships have been reset for new game");
+    }
+
     public static List<AnimalRelationshipState> GetAnimalsByType(string animalTypeName) => animalRelationships.FindAll(x => x.animalType == animalTypeName);
 
     public static List<AnimalRelationshipState> GetAnimalsByType(AnimalData animalType) => GetAnimalsByType(animalType.name);
