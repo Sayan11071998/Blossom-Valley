@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class UIView : MonoBehaviour
 
     [Header("Status Bar")]
     [SerializeField] public Image toolEquipSlot;
-    [SerializeField] public Text toolQuantityText;
+    [SerializeField] public TextMeshProUGUI toolQuantityText;
     [SerializeField] public Text timeText;
     [SerializeField] public Text dateText;
 
