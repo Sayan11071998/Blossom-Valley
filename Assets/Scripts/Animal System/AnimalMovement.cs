@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class AnimalMovement : MonoBehaviour
 {
     [SerializeField] private float cooldownTime;
+    [SerializeField] private float wanderRadius = 5f;
 
     private NavMeshAgent agent;
     private float cooldownTimer;
@@ -27,13 +28,15 @@ public class AnimalMovement : MonoBehaviour
             return;
         }
 
+        if (agent == null || !agent.enabled || !agent.isOnNavMesh) return;
+
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            Vector3 randomDirection = Random.insideUnitSphere * 10f;
+            Vector3 randomDirection = Random.insideUnitSphere * wanderRadius;
             randomDirection += transform.position;
 
             NavMeshHit hit;
-            NavMesh.SamplePosition(randomDirection, out hit, 10f, NavMesh.AllAreas);
+            NavMesh.SamplePosition(randomDirection, out hit, wanderRadius, NavMesh.AllAreas);
 
             Vector3 targetPos = hit.position;
             agent.SetDestination(targetPos);
