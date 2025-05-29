@@ -4,42 +4,42 @@ using UnityEngine.UI;
 public class UIView : MonoBehaviour
 {
     [Header("Screen Management")]
-    public GameObject menuScreen;
-    public UIManager.Tab selectedTab;
+    [SerializeField] public GameObject menuScreen;
+    [SerializeField] public UIManager.Tab selectedTab;
 
     [Header("Status Bar")]
-    public Image toolEquipSlot;
-    public Text toolQuantityText;
-    public Text timeText;
-    public Text dateText;
+    [SerializeField] public Image toolEquipSlot;
+    [SerializeField] public Text toolQuantityText;
+    [SerializeField] public Text timeText;
+    [SerializeField] public Text dateText;
 
     [Header("Inventory System")]
-    public GameObject inventoryPanel;
-    public HandInventorySlot toolHandSlot;
-    public InventorySlot[] toolSlots;
-    public HandInventorySlot itemHandSlot;
-    public InventorySlot[] itemSlots;
+    [SerializeField] public GameObject inventoryPanel;
+    [SerializeField] public HandInventorySlot toolHandSlot;
+    [SerializeField] public InventorySlot[] toolSlots;
+    [SerializeField] public HandInventorySlot itemHandSlot;
+    [SerializeField] public InventorySlot[] itemSlots;
 
     [Header("Item info box")]
-    public GameObject itemInfoBox;
-    public Text itemNameText;
-    public Text itemDescriptionText;
+    [SerializeField] public GameObject itemInfoBox;
+    [SerializeField] public Text itemNameText;
+    [SerializeField] public Text itemDescriptionText;
 
     [Header("Screen Transitions")]
-    public GameObject fadeIn;
-    public GameObject fadeOut;
+    [SerializeField] public GameObject fadeIn;
+    [SerializeField] public GameObject fadeOut;
 
     [Header("Prompts")]
-    public YesNoPrompt yesNoPrompt;
-    public NamingPrompt namingPrompt;
+    [SerializeField] public YesNoPrompt yesNoPrompt;
+    [SerializeField] public NamingPrompt namingPrompt;
 
     [Header("Player Stats")]
-    public Text moneyText;
+    [SerializeField] public Text moneyText;
 
     [Header("Shop")]
-    public ShopListingManager shopListingManager;
+    [SerializeField] public ShopListingManager shopListingManager;
 
     [Header("Relationships")]
-    public RelationshipListingManager relationshipListingManager;
-    public AnimalListingManager animalRelationshipListingManager;
+    [SerializeField] public RelationshipListingManager relationshipListingManager;
+    [SerializeField] public AnimalListingManager animalRelationshipListingManager;
 }

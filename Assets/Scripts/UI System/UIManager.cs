@@ -16,14 +16,10 @@ public class UIManager : MonoBehaviour, ITimeTracker
     private void Awake()
     {
         if (Instance != null && Instance != this)
-        {
             Destroy(this);
-        }
         else
-        {
             Instance = this;
-        }
-        
+
         uiView = GetComponent<UIView>();
         uiController = new UIController(uiView);
     }
@@ -37,15 +33,11 @@ public class UIManager : MonoBehaviour, ITimeTracker
         TimeManager.Instance.RegisterTracker(this);
     }
 
-    #region Public Interface - Entry Points
-    public void TriggerNamingPrompt(string message, System.Action<string> onConfirmCallback)
-        => uiController.TriggerNamingPrompt(message, onConfirmCallback);
+    public void TriggerNamingPrompt(string message, System.Action<string> onConfirmCallback) => uiController.TriggerNamingPrompt(message, onConfirmCallback);
 
-    public void TriggerYesNoPrompt(string message, System.Action onYesCallback)
-        => uiController.TriggerYesNoPrompt(message, onYesCallback);
+    public void TriggerYesNoPrompt(string message, System.Action onYesCallback) => uiController.TriggerYesNoPrompt(message, onYesCallback);
 
-    public void TriggerQuantityPrompt(string message, int maxQuantity, System.Action<int> onConfirmCallback)
-        => uiController.TriggerQuantityPrompt(message, maxQuantity, onConfirmCallback);
+    public void TriggerQuantityPrompt(string message, int maxQuantity, System.Action<int> onConfirmCallback) => uiController.TriggerQuantityPrompt(message, maxQuantity, onConfirmCallback);
 
     public void ToggleMenuPanel() => uiController.ToggleMenuPanel();
 
@@ -72,5 +64,4 @@ public class UIManager : MonoBehaviour, ITimeTracker
     public void OpenShop(List<ItemData> shopItems) => uiController.OpenShop(shopItems);
 
     public void ToggleRelationshipPanel() => uiController.ToggleRelationshipPanel();
-    #endregion
 }

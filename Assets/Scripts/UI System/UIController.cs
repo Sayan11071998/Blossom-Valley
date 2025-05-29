@@ -5,12 +5,8 @@ public class UIController
 {
     private UIView uiView;
 
-    public UIController(UIView view)
-    {
-        uiView = view;
-    }
+    public UIController(UIView viewToSet) => uiView = viewToSet;
 
-    #region Prompts
     public void TriggerNamingPrompt(string message, System.Action<string> onConfirmCallback)
     {
         if (uiView.namingPrompt.gameObject.activeSelf)
@@ -18,6 +14,7 @@ public class UIController
             uiView.namingPrompt.QueuePromptAction(() => TriggerNamingPrompt(message, onConfirmCallback));
             return;
         }
+
         uiView.namingPrompt.gameObject.SetActive(true);
         uiView.namingPrompt.CreatePrompt(message, onConfirmCallback);
     }
@@ -30,17 +27,12 @@ public class UIController
 
     public void TriggerQuantityPrompt(string message, int maxQuantity, System.Action<int> onConfirmCallback)
     {
-        if (uiView.yesNoPrompt.gameObject.activeSelf)
-        {
-            // You might want to implement a queue system here too, similar to the naming prompt
-            return;
-        }
+        if (uiView.yesNoPrompt.gameObject.activeSelf) return;
+
         uiView.yesNoPrompt.gameObject.SetActive(true);
         uiView.yesNoPrompt.CreateQuantityPrompt(message, maxQuantity, onConfirmCallback);
     }
-    #endregion
 
-    #region Tab Management
     public void ToggleMenuPanel()
     {
         uiView.menuScreen.SetActive(!uiView.menuScreen.activeSelf);
@@ -71,32 +63,19 @@ public class UIController
         }
         uiView.selectedTab = windowToOpen;
     }
-    #endregion
 
-    #region Fadein Fadeout Transitions
-    public void FadeOutScreen()
-    {
-        uiView.fadeOut.SetActive(true);
-    }
+    public void FadeOutScreen() => uiView.fadeOut.SetActive(true);
 
-    public void FadeInScreen()
-    {
-        uiView.fadeIn.SetActive(true);
-    }
+    public void FadeInScreen() => uiView.fadeIn.SetActive(true);
 
-    public void OnFadeInComplete()
-    {
-        uiView.fadeIn.SetActive(false);
-    }
+    public void OnFadeInComplete() => uiView.fadeIn.SetActive(false);
 
     public void ResetFadeDefaults()
     {
         uiView.fadeOut.SetActive(false);
         uiView.fadeIn.SetActive(true);
     }
-    #endregion
 
-    #region Inventory
     public void AssignSlotIndexes()
     {
         for (int i = 0; i < uiView.toolSlots.Length; i++)
@@ -121,10 +100,10 @@ public class UIController
             uiView.toolEquipSlot.sprite = equippedTool.thumbnail;
             uiView.toolEquipSlot.gameObject.SetActive(true);
             int quantity = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Tool).quantity;
+
             if (quantity > 1)
-            {
                 uiView.toolQuantityText.text = quantity.ToString();
-            }
+
             return;
         }
         uiView.toolEquipSlot.gameObject.SetActive(false);
@@ -133,9 +112,7 @@ public class UIController
     void RenderInventoryPanel(ItemSlotData[] slots, InventorySlot[] uiSlots)
     {
         for (int i = 0; i < uiSlots.Length; i++)
-        {
             uiSlots[i].Display(slots[i]);
-        }
     }
 
     public void ToggleInventoryPanel()
@@ -157,9 +134,7 @@ public class UIController
         uiView.itemNameText.text = data.name;
         uiView.itemDescriptionText.text = data.description;
     }
-    #endregion
 
-    #region Time
     public void ClockUpdate(GameTimestamp timestamp)
     {
         int hours = timestamp.hour;
@@ -176,7 +151,6 @@ public class UIController
         string dayOfTheWeek = timestamp.GetDayOfTheWeek().ToString();
         uiView.dateText.text = season + " " + day + " (" + dayOfTheWeek + ")";
     }
-    #endregion
 
     public void RenderPlayerStats()
     {
@@ -195,8 +169,6 @@ public class UIController
         GameObject panel = uiView.relationshipListingManager.gameObject;
         panel.SetActive(!panel.activeSelf);
         if (panel.activeSelf)
-        {
             uiView.relationshipListingManager.Render(RelationshipStats.relationships);
-        }
     }
 }
