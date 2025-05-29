@@ -3989,6 +3989,7 @@ GameObject:
   - component: {fileID: 7066737237370393322}
   - component: {fileID: 722042198375827311}
   - component: {fileID: 5453764427447712582}
+  - component: {fileID: 3683205796595805483}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4089,44 +4090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022ccb95c621d8743b199d97cda34983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuScreen: {fileID: 697397677155343968}
-  selectedTab: 0
-  toolEquipSlot: {fileID: 7066737239226829091}
-  toolQuantityText: {fileID: 7066737238936922746}
-  timeText: {fileID: 7066737238716687520}
-  dateText: {fileID: 7066737238005415508}
-  inventoryPanel: {fileID: 7066737238262775271}
-  toolHandSlot: {fileID: 7066737239352544699}
-  toolSlots:
-  - {fileID: 3427525391817599679}
-  - {fileID: 9058205127993951084}
-  - {fileID: 9058205127305540000}
-  - {fileID: 9058205128435831052}
-  - {fileID: 9058205128014827033}
-  - {fileID: 9058205128145377242}
-  - {fileID: 9058205127814246602}
-  - {fileID: 9058205126747549587}
-  itemHandSlot: {fileID: 7066737237926593028}
-  itemSlots:
-  - {fileID: 9058205128762087695}
-  - {fileID: 9058205127328880288}
-  - {fileID: 9058205127758063511}
-  - {fileID: 9058205127510190301}
-  - {fileID: 9058205126929714168}
-  - {fileID: 9058205127953107414}
-  - {fileID: 9058205127938835294}
-  - {fileID: 9058205128850871816}
-  itemInfoBox: {fileID: 7066737239140449505}
-  itemNameText: {fileID: 7066737238891370901}
-  itemDescriptionText: {fileID: 7066737238064261735}
-  fadeIn: {fileID: 7880152112196569830}
-  fadeOut: {fileID: 9020109879325982081}
-  yesNoPrompt: {fileID: 6451067642599547853}
-  namingPrompt: {fileID: 277917620897572697}
-  moneyText: {fileID: 5010803714938501658}
-  shopListingManager: {fileID: 3510466779697730982}
-  relationshipListingManager: {fileID: 1171188386237178667}
-  animalRelationshipListingManager: {fileID: 2414124365579753146}
 --- !u!114 &7066737237370393322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4174,6 +4137,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61400a90e64de4439add776c76b5b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3683205796595805483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7066737237370393318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67a93bc5d6febc48a938effde590c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuScreen: {fileID: 697397677155343968}
+  selectedTab: 0
+  toolEquipSlot: {fileID: 7066737239226829091}
+  toolQuantityText: {fileID: 7066737238936922746}
+  timeText: {fileID: 7066737238716687520}
+  dateText: {fileID: 7066737238005415508}
+  inventoryPanel: {fileID: 7066737238262775271}
+  toolHandSlot: {fileID: 7066737239352544699}
+  toolSlots:
+  - {fileID: 3427525391817599679}
+  - {fileID: 9058205127993951084}
+  - {fileID: 9058205127305540000}
+  - {fileID: 9058205128435831052}
+  - {fileID: 9058205128014827033}
+  - {fileID: 9058205128145377242}
+  - {fileID: 9058205127814246602}
+  - {fileID: 9058205126747549587}
+  itemHandSlot: {fileID: 7066737237926593028}
+  itemSlots:
+  - {fileID: 9058205128762087695}
+  - {fileID: 9058205127328880288}
+  - {fileID: 9058205127758063511}
+  - {fileID: 9058205127510190301}
+  - {fileID: 9058205126929714168}
+  - {fileID: 9058205127953107414}
+  - {fileID: 9058205127938835294}
+  - {fileID: 9058205128850871816}
+  itemInfoBox: {fileID: 7066737239140449505}
+  itemNameText: {fileID: 7066737238891370901}
+  itemDescriptionText: {fileID: 7066737238064261735}
+  fadeIn: {fileID: 7880152112196569830}
+  fadeOut: {fileID: 9020109879325982081}
+  yesNoPrompt: {fileID: 6451067642599547853}
+  namingPrompt: {fileID: 277917620897572697}
+  moneyText: {fileID: 5010803714938501658}
+  shopListingManager: {fileID: 3510466779697730982}
+  relationshipListingManager: {fileID: 1171188386237178667}
+  animalRelationshipListingManager: {fileID: 2414124365579753146}
 --- !u!1 &7066737237667664583
 GameObject:
   m_ObjectHideFlags: 0

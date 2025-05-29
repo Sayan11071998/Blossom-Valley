@@ -27,6 +27,10 @@ namespace BlossomValley.GameStrings
         public const string SellPrompt = "Do you want to sell {0} ? ";
         public const string ShipPrompt = "How many {0} would you like to ship?";
         public const string AnimalNamingPrompt = "Give your new {0} a name.";
+        public const string BuyConfirmationPrompt = "Buy {0}?";
+        public const string MultiplyString = "x";
+        public const string InsufficientFunds = "You do not have enough money to buy this item.";
+        public const string CostCalculation = "{0}$ > {1}$";
         #endregion
 
         #region NPC Dialogue Prompts
