@@ -1,64 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using BlossomValley.GameStrings;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class ShopListingManager : ListingManager<ItemData>
 {
-    ItemData itemToBuy;
-    int quantity; 
-
     [Header("Confirmation Screen")]
-    public GameObject confirmationScreen;
-    public Text confirmationPrompt;
-    public Text quantityText;
-    public Text costCalculationText;
-    public Button purchaseButton;
+    [SerializeField] private GameObject confirmationScreen;
+    [SerializeField] private Text confirmationPrompt;
+    [SerializeField] private Text quantityText;
+    [SerializeField] private Text costCalculationText;
+    [SerializeField] private Button purchaseButton;
 
-    protected override void DisplayListing(ItemData listingItem, GameObject listingGameObject)
-    {
-        listingGameObject.GetComponent<ShopListing>().Display(listingItem); 
-    }
+    private ItemData itemToBuy;
+    private int quantity;
+
+    protected override void DisplayListing(ItemData listingItem, GameObject listingGameObject) => listingGameObject.GetComponent<ShopListing>().Display(listingItem);
 
     public void OpenConfirmationScreen(ItemData item)
     {
         itemToBuy = item;
         quantity = 1;
-        RenderConfirmationScreen(); 
+        RenderConfirmationScreen();
     }
 
     public void RenderConfirmationScreen()
     {
         confirmationScreen.SetActive(true);
-        confirmationPrompt.text = $"Buy {itemToBuy.name}?";
-        quantityText.text = "x" + quantity;
+        confirmationPrompt.text = string.Format(GameString.BuyConfirmationPrompt, itemToBuy.name);
+        quantityText.text = GameString.MultiplyString + quantity;
         int cost = itemToBuy.cost * quantity;
         PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
         int playerMoneyLeft = playerModel.Money - cost;
 
         if (playerMoneyLeft < 0)
         {
-            costCalculationText.text = "Insufficient funds.";
+            costCalculationText.text = GameString.InsufficientFunds;
             purchaseButton.interactable = false;
-            return; 
+            return;
         }
-        purchaseButton.interactable = true; 
-        costCalculationText.text = $"{playerModel.Money} > {playerMoneyLeft} ";
+        purchaseButton.interactable = true;
+        costCalculationText.text = string.Format(GameString.CostCalculation, playerModel.Money, playerMoneyLeft);
     }
 
     public void AddQuantity()
     {
         quantity++;
-        RenderConfirmationScreen(); 
+        RenderConfirmationScreen();
     }
 
     public void SubtractQuantity()
     {
         if (quantity > 1)
-        {
             quantity--;
-        }
-        RenderConfirmationScreen(); 
+
+        RenderConfirmationScreen();
     }
 
     public void ConfirmPurchase()
@@ -67,8 +62,5 @@ public class ShopListingManager : ListingManager<ItemData>
         confirmationScreen.SetActive(false);
     }
 
-    public void CancelPurchase()
-    {
-        confirmationScreen.SetActive(false);
-    }
+    public void CancelPurchase() => confirmationScreen.SetActive(false);
 }

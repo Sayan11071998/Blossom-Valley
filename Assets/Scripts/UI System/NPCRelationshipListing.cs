@@ -1,25 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI; 
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCRelationshipListing : MonoBehaviour
 {
     [Header("Sprites")]
-    public Sprite emptyHeart, fullHeart;
+    [SerializeField] private Sprite emptyHeart;
+    [SerializeField] private Sprite fullHeart;
 
     [Header("UI Elements")]
-    public Image portraitImage;
-    public Text nameText;
-    public Image[] hearts; 
+    [SerializeField] private Image portraitImage;
+    [SerializeField] private Text nameText;
+    [SerializeField] private Image[] hearts;
 
     public void Display(CharacterScriptableObject characterData, NPCRelationshipState relationship)
     {
         portraitImage.sprite = characterData.portrait;
         nameText.text = relationship.name;
 
-        DisplayHearts(relationship.Hearts()); 
-
+        DisplayHearts(relationship.Hearts());
     }
 
     public void Display(AnimalData animalData, AnimalRelationshipState relationship)
@@ -30,18 +28,12 @@ public class NPCRelationshipListing : MonoBehaviour
         DisplayHearts(relationship.Hearts());
     }
 
-    void DisplayHearts(float number)
+    private void DisplayHearts(float number)
     {
-        //Set everything to empty
-        foreach(Image heart in hearts)
-        {
-            heart.sprite = emptyHeart; 
-        }
+        foreach (Image heart in hearts)
+            heart.sprite = emptyHeart;
 
-        //Set the full hearts according to the number given
-        for(int i =0; i < number; i++)
-        {
-            hearts[i].sprite = fullHeart; 
-        }
+        for (int i = 0; i < number; i++)
+            hearts[i].sprite = fullHeart;
     }
 }

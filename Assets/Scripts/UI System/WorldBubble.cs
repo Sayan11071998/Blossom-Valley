@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldBubble : MonoBehaviour
 {
-    Transform cameraPos;
-    [SerializeField]
-    Animator speechAnimator; 
+
+    [SerializeField] private Animator speechAnimator;
+
+    private Transform cameraPos;
 
     public enum Emote
     {
@@ -14,54 +14,34 @@ public class WorldBubble : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        cameraPos = FindObjectOfType<CameraController>().transform;
-        
-    }
+    private void Start() => cameraPos = FindAnyObjectByType<CameraController>().transform;
 
     public void Display(Emote mood)
     {
         ResetAnimator();
-        speechAnimator.SetBool(mood.ToString(), true); 
+        speechAnimator.SetBool(mood.ToString(), true);
     }
 
     public void Display(Emote mood, float time)
     {
         Display(mood);
-        StartCoroutine(Delay(time)); 
+        StartCoroutine(Delay(time));
     }
 
-    IEnumerator Delay(float time)
+    private IEnumerator Delay(float time)
     {
         yield return new WaitForSeconds(time);
         ResetAnimator();
-        gameObject.SetActive(false); 
+        gameObject.SetActive(false);
     }
 
-    void ResetAnimator()
+    private void ResetAnimator()
     {
-        foreach(AnimatorControllerParameter param in speechAnimator.parameters)
-        {
-            speechAnimator.SetBool(param.name, false); 
-        }
+        foreach (AnimatorControllerParameter param in speechAnimator.parameters)
+            speechAnimator.SetBool(param.name, false);
     }
 
-    private void OnDisable()
-    {
-        ResetAnimator();
-    }
+    private void OnDisable() => ResetAnimator();
 
-
-
-    private void Update()
-    {
-
-        //Look at camera
-        transform.rotation = cameraPos.rotation;
-
-        
-    }
-
+    private void Update() => transform.rotation = cameraPos.rotation;
 }
