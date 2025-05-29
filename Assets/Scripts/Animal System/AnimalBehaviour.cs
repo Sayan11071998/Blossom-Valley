@@ -1,35 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using BlossomValley.GameStrings;
 using UnityEngine;
 
 [RequireComponent(typeof(AnimalMovement))]
 public class AnimalBehaviour : InteractableObject
 {
+    [SerializeField] protected WorldBubble speechBubble;
+
     protected AnimalRelationshipState relationship;
     protected AnimalMovement movement;
     protected AnimalRenderer animalRenderer;
-    [SerializeField]
-    protected WorldBubble speechBubble;
 
-    protected virtual void Start()
-    { 
-        movement = GetComponent<AnimalMovement>();
-    }
+    protected virtual void Start() => movement = GetComponent<AnimalMovement>();
 
-    public void LoadRelationship(AnimalRelationshipState relationship)
+    public void LoadRelationship(AnimalRelationshipState relationshipToLoad)
     {
-        this.relationship = relationship;
+        relationship = relationshipToLoad;
         animalRenderer = GetComponent<AnimalRenderer>();
-        animalRenderer.RenderAnimal(relationship.age, relationship.animalType);
+        animalRenderer.RenderAnimal(relationshipToLoad.age, relationshipToLoad.animalType);
     }
 
     public override void Pickup()
     {
-        if (relationship == null)
-        {
-            Debug.LogError("Relationship not set");
-            return;
-        }
+        if (relationship == null) return;
         TriggerDialogue();
     }
 
@@ -37,33 +29,23 @@ public class AnimalBehaviour : InteractableObject
     {
         movement.ToggleMovement(false);
 
-        //Get the mood
         int mood = relationship.Mood;
+        string dialogueLine = string.Format(GameString.RelationshipStatusPrefix, relationship.name);
 
-        //The dialogue string to output in the end 
-        string dialogueLine = $"{relationship.name} seems ";
-
-        //The action to execute upon dialogue end
         System.Action onDialogueEnd = () =>
         {
             movement.ToggleMovement(true);
         };
 
-        //Check if the player has talked with the animal
         if (!relationship.hasTalkedToday)
-        {
-            onDialogueEnd += OnFirstConversation; 
-        }
+            onDialogueEnd += OnFirstConversation;
 
-        if(mood >= 200 && mood <= 255)
-        {
-            dialogueLine += "really happy today!";
-        } else if(mood >= 30 && mood < 200)
-        {
-            dialogueLine += "fine.";
-        } else {
-            dialogueLine += "sad"; 
-        }
+        if (mood >= 200 && mood <= 255)
+            dialogueLine += GameString.MoodHappy;
+        else if (mood >= 30 && mood < 200)
+            dialogueLine += GameString.MoodNeutral;
+        else
+            dialogueLine += GameString.MoodSad;
 
         DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage(dialogueLine), onDialogueEnd);
     }
@@ -72,12 +54,8 @@ public class AnimalBehaviour : InteractableObject
     {
         relationship.Mood += 30;
         relationship.hasTalkedToday = true;
-
-        //Set the speech bubble to true
         speechBubble.gameObject.SetActive(true);
-
         WorldBubble.Emote emote = WorldBubble.Emote.Thinking;
-
 
         switch (relationship.Mood)
         {
@@ -97,8 +75,5 @@ public class AnimalBehaviour : InteractableObject
         }
 
         speechBubble.Display(emote, 3f);
-
-        Debug.Log($"{relationship.name} is now of mood {relationship.Mood}");
-
     }
 }

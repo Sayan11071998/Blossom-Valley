@@ -4051,8 +4051,8 @@ MonoBehaviour:
     quantity: 5
   - itemData: {fileID: 11400000, guid: ad5bbed7903bbd549a8dd1de912c3ea3, type: 2}
     quantity: 5
-  - itemData: {fileID: 0}
-    quantity: 0
+  - itemData: {fileID: 11400000, guid: 28fb2d0841b606b43a643e0c9bd9bf57, type: 2}
+    quantity: 50
   equippedToolSlot:
     itemData: {fileID: 0}
     quantity: 0

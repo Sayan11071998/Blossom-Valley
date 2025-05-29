@@ -26,11 +26,20 @@ namespace BlossomValley.GameStrings
         #region UI Prompts
         public const string SellPrompt = "Do you want to sell {0} ? ";
         public const string ShipPrompt = "How many {0} would you like to ship?";
+        public const string AnimalNamingPrompt = "Give your new {0} a name.";
         #endregion
 
-        #region Dialogue Prompts
+        #region NPC Dialogue Prompts
         public const string CharacterNotUnlockedPrompt = "You have not unlocked this character yet.";
         public const string AlreadyGiftedMessage = "You have already given {0} a gift today.";
+        #endregion
+
+        #region  Animal
+        public const string AnimalAnimationWalk = "Walk";
+        public const string RelationshipStatusPrefix = "{0} seems ";
+        public const string MoodHappy = "really happy today!";
+        public const string MoodNeutral = "fine.";
+        public const string MoodSad = "sad.";
         #endregion
     }
 }
