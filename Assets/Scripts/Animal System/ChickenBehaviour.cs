@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChickenBehaviour : AnimalBehaviour
 {
@@ -10,24 +8,17 @@ public class ChickenBehaviour : AnimalBehaviour
         LayEgg();
     }
 
-    void LayEgg()
+    private void LayEgg()
     {
-        //Check the age 
         AnimalData animalType = AnimalStats.GetAnimalTypeFromString(relationship.animalType);
 
-        //If not an adult, it cant lay eggs
-        if(relationship.age < animalType.daysToMature)
-        {
-            return; 
-        }
+        if (relationship.age < animalType.daysToMature) return;
 
-        //As long as the chicken is not sad
         if (relationship.Mood > 30 && !relationship.givenProduceToday)
         {
-            //Lay an egg 
             ItemData egg = InventoryManager.Instance.GetItemFromString("Egg");
             Instantiate(egg.gameModel, transform.position, Quaternion.identity);
-            relationship.givenProduceToday = true; 
+            relationship.givenProduceToday = true;
         }
     }
 }

@@ -1,22 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class AnimalRenderer : MonoBehaviour
 {
-    NavMeshAgent agent;
-    [SerializeField]
-    Animator childModel, adultModel;
 
-    Animator animatorToWorkWith; 
-    int age;
-    AnimalData animalType;
+    [SerializeField] private Animator childModel, adultModel;
 
-    private void Start()
-    {
-        agent = GetComponent<NavMeshAgent>(); 
-    }
+    private NavMeshAgent agent;
+    private Animator animatorToWorkWith;
+    private int age;
+    private AnimalData animalType;
+
+    private void Start() => agent = GetComponent<NavMeshAgent>();
 
     public void RenderAnimal(int age, string animalName)
     {
@@ -27,16 +22,12 @@ public class AnimalRenderer : MonoBehaviour
 
         childModel.gameObject.SetActive(false);
         adultModel.gameObject.SetActive(false);
-
-        //This is the model we will work with
-        animatorToWorkWith.gameObject.SetActive(true); 
+        animatorToWorkWith.gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        if(animatorToWorkWith != null)
-        {
+        if (animatorToWorkWith != null)
             animatorToWorkWith.SetBool("Walk", agent.velocity.sqrMagnitude > 0);
-        }
     }
 }
