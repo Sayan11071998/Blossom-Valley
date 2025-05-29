@@ -48,6 +48,7 @@ public class AnimalStats : MonoBehaviour
             if (animal.giftGivenToday)
             {
                 animal.Mood += 15;
+                animal.friendshipPoints += 20;
             }
             else
             {
