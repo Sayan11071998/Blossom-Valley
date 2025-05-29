@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlossomValley.GameStrings;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class AnimalRenderer : MonoBehaviour
@@ -28,6 +29,6 @@ public class AnimalRenderer : MonoBehaviour
     private void Update()
     {
         if (animatorToWorkWith != null)
-            animatorToWorkWith.SetBool("Walk", agent.velocity.sqrMagnitude > 0);
+            animatorToWorkWith.SetBool(GameString.AnimalAnimationWalk, agent.velocity.sqrMagnitude > 0);
     }
 }

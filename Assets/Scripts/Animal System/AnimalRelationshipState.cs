@@ -7,11 +7,11 @@ public class AnimalRelationshipState : NPCRelationshipState
 
     private const int MAX_MOOD = 255;
 
-    private int _mood;
+    private int mood;
     public int Mood
     {
-        get => _mood;
-        set => _mood = Mathf.Clamp(value, 0, MAX_MOOD);
+        get => mood;
+        set => mood = Mathf.Clamp(value, 0, MAX_MOOD);
     }
 
     public int age;

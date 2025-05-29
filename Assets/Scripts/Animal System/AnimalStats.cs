@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BlossomValley.GameStrings;
 using UnityEngine;
 
 public class AnimalStats : MonoBehaviour
@@ -10,10 +11,12 @@ public class AnimalStats : MonoBehaviour
 
     public static void StartAnimalCreation(AnimalData animalType)
     {
-        UIManager.Instance.TriggerNamingPrompt($"Give your new {animalType.name} a name.", (inputString) =>
+        string prompt = string.Format(GameString.AnimalNamingPrompt, animalType.name);
+        UIManager.Instance.TriggerNamingPrompt(prompt, (inputString) =>
         {
             animalRelationships.Add(new AnimalRelationshipState(inputString, animalType));
         });
+
     }
 
     public static void LoadStats(List<AnimalRelationshipState> relationshipsToLoad)
@@ -26,11 +29,7 @@ public class AnimalStats : MonoBehaviour
         animalRelationships = relationshipsToLoad;
     }
 
-    public static void ResetAllAnimalRelationships()
-    {
-        animalRelationships = new List<AnimalRelationshipState>();
-        Debug.Log("All animal relationships have been reset for new game");
-    }
+    public static void ResetAllAnimalRelationships() => animalRelationships = new List<AnimalRelationshipState>();
 
     public static List<AnimalRelationshipState> GetAnimalsByType(string animalTypeName) => animalRelationships.FindAll(x => x.animalType == animalTypeName);
 

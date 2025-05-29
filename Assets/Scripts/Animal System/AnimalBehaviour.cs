@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlossomValley.GameStrings;
+using UnityEngine;
 
 [RequireComponent(typeof(AnimalMovement))]
 public class AnimalBehaviour : InteractableObject
@@ -29,7 +30,7 @@ public class AnimalBehaviour : InteractableObject
         movement.ToggleMovement(false);
 
         int mood = relationship.Mood;
-        string dialogueLine = $"{relationship.name} seems ";
+        string dialogueLine = string.Format(GameString.RelationshipStatusPrefix, relationship.name);
 
         System.Action onDialogueEnd = () =>
         {
@@ -40,11 +41,11 @@ public class AnimalBehaviour : InteractableObject
             onDialogueEnd += OnFirstConversation;
 
         if (mood >= 200 && mood <= 255)
-            dialogueLine += "really happy today!";
+            dialogueLine += GameString.MoodHappy;
         else if (mood >= 30 && mood < 200)
-            dialogueLine += "fine.";
+            dialogueLine += GameString.MoodNeutral;
         else
-            dialogueLine += "sad";
+            dialogueLine += GameString.MoodSad;
 
         DialogueManager.Instance.StartDialogue(DialogueManager.CreateSimpleMessage(dialogueLine), onDialogueEnd);
     }
@@ -74,6 +75,5 @@ public class AnimalBehaviour : InteractableObject
         }
 
         speechBubble.Display(emote, 3f);
-        Debug.Log($"{relationship.name} is now of mood {relationship.Mood}");
     }
 }

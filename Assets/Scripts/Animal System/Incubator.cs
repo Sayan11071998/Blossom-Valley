@@ -2,8 +2,8 @@
 
 public class Incubator : InteractableObject
 {
-    public int incubationID;
-    public GameObject displayEgg;
+    [SerializeField] public int incubationID;
+    [SerializeField] private GameObject displayEgg;
 
     private bool containsEgg;
     private int timeToIncubate;

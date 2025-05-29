@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class EggIncubationSaveState
 {
     public int incubatorID;
@@ -12,9 +10,5 @@ public class EggIncubationSaveState
         this.timeToIncubate = timeToIncubate;
     }
 
-    public void Tick()
-    {
-        timeToIncubate--;
-        Debug.Log($"Incubator {incubatorID} has {timeToIncubate} mins remaining ");
-    }
+    public void Tick() => timeToIncubate--;
 }

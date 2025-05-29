@@ -25,7 +25,6 @@ public class AnimalFeedManager : MonoBehaviour
             if (!a.giftGivenToday)
             {
                 a.giftGivenToday = true;
-                Debug.Log(a.name + " is fed.");
                 break;
             }
         }
