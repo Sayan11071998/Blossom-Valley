@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using BlossomValley.CropSystem;
+
+[System.Serializable]
 public struct CropSaveState
 {
     public int landID;
