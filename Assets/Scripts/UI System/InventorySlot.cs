@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     [SerializeField] private Image itemDisplayImage;
-    [SerializeField] private Text quantityText;
+    [SerializeField] private TextMeshProUGUI quantityText;
     [SerializeField] public InventoryType inventoryType;
 
     private ItemData itemToDisplay;
