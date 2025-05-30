@@ -3,6 +3,7 @@ using BlossomValley.InventorySystem;
 using BlossomValley.SoundSystem;
 using BlossomValley.TimeSystem;
 using BlossomValley.UISystem;
+using BlossomValley.WeatherSystem;
 
 namespace BlossomValley.LandSystem
 {
