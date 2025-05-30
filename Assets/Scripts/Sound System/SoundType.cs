@@ -5,5 +5,6 @@ public enum SoundType
     PickaxeSwing,
     ShovelSwing,
     HoeSwing,
-    WateringCan
+    WateringCan,
+    Raining
 }

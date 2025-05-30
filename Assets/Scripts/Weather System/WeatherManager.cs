@@ -25,6 +25,9 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
     [SerializeField] private bool enableRandomRain = true;
     [SerializeField] private float randomRainCheckInterval = 60f;
 
+    [Header("Rain Audio")]
+    [SerializeField] private AudioSource rainAudioSource;
+
     private GameTimestamp lastRainCheck;
     private bool wasRainTime = false;
 
@@ -43,6 +46,13 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
 
         if (rainParticleSystem != null)
             rainParticleSystem.Stop();
+
+        if (rainAudioSource == null)
+        {
+            rainAudioSource = gameObject.AddComponent<AudioSource>();
+            rainAudioSource.loop = true;
+            rainAudioSource.playOnAwake = false;
+        }
 
         lastRainCheck = new GameTimestamp(0, Season.Spring, 1, 0, 0);
     }
@@ -132,6 +142,7 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
         {
             isRaining = true;
             rainParticleSystem.Play();
+            StartRainSound();
         }
     }
 
@@ -141,7 +152,20 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
         {
             isRaining = false;
             rainParticleSystem.Stop();
+            StopRainSound();
         }
+    }
+
+    private void StartRainSound()
+    {
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayMusic(SoundType.Raining);
+    }
+
+    private void StopRainSound()
+    {
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.StopMusic();
     }
 
     private IEnumerator StopRainAfterDuration(int durationInMinutes)
