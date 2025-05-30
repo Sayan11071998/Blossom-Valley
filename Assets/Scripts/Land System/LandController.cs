@@ -75,16 +75,20 @@ public class LandController : ITimeTracker
         switch (toolType)
         {
             case EquipmentData.ToolType.Hoe:
+                SoundManager.Instance.PlaySFX(SoundType.HoeSwing);
                 if (landModel.obstacleStatus == LandModel.FarmObstacleStatus.None)
                     SwitchLandStatus(LandModel.LandStatus.Farmland);
                 break;
 
             case EquipmentData.ToolType.WateringCan:
+                SoundManager.Instance.PlaySFX(SoundType.WateringCan);
                 if (landModel.obstacleStatus == LandModel.FarmObstacleStatus.None && landModel.CanUseWateringCan())
                     SwitchLandStatus(LandModel.LandStatus.Watered);
                 break;
 
             case EquipmentData.ToolType.Shovel:
+                SoundManager.Instance.PlaySFX(SoundType.ShovelSwing);
+
                 if (landModel.hasCrop)
                 {
                     landView.RemoveCrop();
@@ -97,11 +101,13 @@ public class LandController : ITimeTracker
                 break;
 
             case EquipmentData.ToolType.Axe:
+                SoundManager.Instance.PlaySFX(SoundType.AxeSwing);
                 if (landModel.CanRemoveObstacle(LandModel.FarmObstacleStatus.Wood))
                     SetObstacleStatus(LandModel.FarmObstacleStatus.None);
                 break;
 
             case EquipmentData.ToolType.Pickaxe:
+                SoundManager.Instance.PlaySFX(SoundType.PickaxeSwing);
                 if (landModel.CanRemoveObstacle(LandModel.FarmObstacleStatus.Rock))
                     SetObstacleStatus(LandModel.FarmObstacleStatus.None);
                 break;
