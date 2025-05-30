@@ -11,8 +11,8 @@ public class UIView : MonoBehaviour
     [Header("Status Bar")]
     [SerializeField] public Image toolEquipSlot;
     [SerializeField] public TextMeshProUGUI toolQuantityText;
-    [SerializeField] public Text timeText;
-    [SerializeField] public Text dateText;
+    [SerializeField] public TextMeshProUGUI timeText;
+    [SerializeField] public TextMeshProUGUI dateText;
 
     [Header("Inventory System")]
     [SerializeField] public GameObject inventoryPanel;
