@@ -9,6 +9,7 @@ using BlossomValley.CropSystem;
 using BlossomValley.LandSystem;
 using BlossomValley.PlayerSystem;
 using BlossomValley.SaveSystem;
+using BlossomValley.SceneTransitionSystem;
 
 public class GameStateManager : MonoBehaviour, ITimeTracker
 {

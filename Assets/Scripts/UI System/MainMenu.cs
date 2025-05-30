@@ -9,6 +9,7 @@ using BlossomValley.IncubationSystem;
 using BlossomValley.CharacterSystem;
 using BlossomValley.LandSystem;
 using BlossomValley.SaveSystem;
+using BlossomValley.SceneTransitionSystem;
 
 public class MainMenu : MonoBehaviour
 {

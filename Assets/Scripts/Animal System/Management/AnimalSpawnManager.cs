@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using BlossomValley.SceneTransitionSystem;
 
 namespace BlossomValley.AnimalSystem
 {
