@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BlossomValley.AnimalSystem;
-using BlossomValley.GameStrings;
+using BlossomValley.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 using BlossomValley.UISystem;

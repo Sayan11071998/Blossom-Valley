@@ -1,4 +1,4 @@
-﻿using BlossomValley.GameStrings;
+﻿using BlossomValley.Utilities;
 using UnityEngine;
 using UnityEngine.AI;
 

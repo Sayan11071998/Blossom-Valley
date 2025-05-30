@@ -1,5 +1,6 @@
 ﻿using BlossomValley.InventorySystem;
 using BlossomValley.UISystem;
+using BlossomValley.Utilities;
 
 namespace BlossomValley.SceneTransitionSystem
 {

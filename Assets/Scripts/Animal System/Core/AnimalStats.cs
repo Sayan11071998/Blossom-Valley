@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BlossomValley.GameStrings;
+using BlossomValley.Utilities;
 using UnityEngine;
 using BlossomValley.UISystem;
 

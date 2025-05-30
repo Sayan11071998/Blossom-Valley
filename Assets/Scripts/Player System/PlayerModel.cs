@@ -1,5 +1,5 @@
 using System;
-using BlossomValley.GameStrings;
+using BlossomValley.Utilities;
 
 namespace BlossomValley.PlayerSystem
 {

@@ -1,3 +1,5 @@
+using BlossomValley.Utilities;
+
 namespace BlossomValley.SceneTransitionSystem
 {
     public class SleepTransitionCommand : ITransitionCommand

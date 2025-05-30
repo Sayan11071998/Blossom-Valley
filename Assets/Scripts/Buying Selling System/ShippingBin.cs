@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BlossomValley.GameStrings;
+using BlossomValley.Utilities;
 using BlossomValley.InventorySystem;
 using BlossomValley.PlayerSystem;
 using BlossomValley.UISystem;

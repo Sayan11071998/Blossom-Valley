@@ -14,133 +14,136 @@ using BlossomValley.SoundSystem;
 using BlossomValley.TimeSystem;
 using BlossomValley.UISystem;
 
-public class GameStateManager : MonoBehaviour, ITimeTracker
+namespace BlossomValley.Utilities
 {
-    public static GameStateManager Instance { get; private set; }
-
-    private bool screenFadedOut;
-
-    private void Awake()
+    public class GameStateManager : MonoBehaviour, ITimeTracker
     {
-        if (Instance != null && Instance != this)
-            Destroy(this);
-        else
-            Instance = this;
+        public static GameStateManager Instance { get; private set; }
 
-        FadeEventManager.OnFadeOutComplete += OnFadeOutComplete;
-    }
+        private bool screenFadedOut;
 
-    private void OnDestroy() => FadeEventManager.OnFadeOutComplete -= OnFadeOutComplete;
-
-    private void Start()
-    {
-        SoundManager.Instance.PlayMusic(SoundType.BackgroundMusic);
-        TimeManager.Instance.RegisterTracker(this);
-    }
-
-    public void ClockUpdate(GameTimestamp timestamp)
-    {
-        UpdateShippingState(timestamp);
-        UpdateFarmState(timestamp);
-        IncubationManager.UpdateEggs();
-
-        if (timestamp.hour == 0 && timestamp.minute == 0)
-            OnDayReset();
-    }
-
-    private void OnDayReset()
-    {
-        foreach (NPCRelationshipState npc in RelationshipStats.relationships)
+        private void Awake()
         {
-            npc.hasTalkedToday = false;
-            npc.giftGivenToday = false;
+            if (Instance != null && Instance != this)
+                Destroy(this);
+            else
+                Instance = this;
+
+            FadeEventManager.OnFadeOutComplete += OnFadeOutComplete;
         }
 
-        AnimalFeedManager.ResetFeedboxes();
-        AnimalStats.OnDayReset();
-    }
+        private void OnDestroy() => FadeEventManager.OnFadeOutComplete -= OnFadeOutComplete;
 
-    private void UpdateShippingState(GameTimestamp timestamp)
-    {
-        if (timestamp.hour == ShippingBin.hourToShip && timestamp.minute == 0)
-            ShippingBin.ShipItems();
-    }
-
-    private void UpdateFarmState(GameTimestamp timestamp)
-    {
-        if (SceneTransitionManager.Instance.currentLocation != SceneTransitionManager.Location.Farm)
+        private void Start()
         {
-            if (LandManager.farmData == null) return;
+            SoundManager.Instance.PlayMusic(SoundType.BackgroundMusic);
+            TimeManager.Instance.RegisterTracker(this);
+        }
 
-            List<LandSaveState> landData = LandManager.farmData.Item1;
-            List<CropSaveState> cropData = LandManager.farmData.Item2;
+        public void ClockUpdate(GameTimestamp timestamp)
+        {
+            UpdateShippingState(timestamp);
+            UpdateFarmState(timestamp);
+            IncubationManager.UpdateEggs();
 
-            if (cropData.Count == 0) return;
+            if (timestamp.hour == 0 && timestamp.minute == 0)
+                OnDayReset();
+        }
 
-            for (int i = 0; i < cropData.Count; i++)
+        private void OnDayReset()
+        {
+            foreach (NPCRelationshipState npc in RelationshipStats.relationships)
             {
-                CropSaveState crop = cropData[i];
-                LandSaveState land = landData[crop.landID];
+                npc.hasTalkedToday = false;
+                npc.giftGivenToday = false;
+            }
 
-                if (crop.cropState == CropBehaviour.CropState.Wilted) continue;
+            AnimalFeedManager.ResetFeedboxes();
+            AnimalStats.OnDayReset();
+        }
 
-                land.ClockUpdate(timestamp);
+        private void UpdateShippingState(GameTimestamp timestamp)
+        {
+            if (timestamp.hour == ShippingBin.hourToShip && timestamp.minute == 0)
+                ShippingBin.ShipItems();
+        }
 
-                if (land.landStatus == LandModel.LandStatus.Watered)
-                    crop.Grow();
-                else if (crop.cropState != CropBehaviour.CropState.Seed)
-                    crop.Wither();
+        private void UpdateFarmState(GameTimestamp timestamp)
+        {
+            if (SceneTransitionManager.Instance.currentLocation != SceneTransitionManager.Location.Farm)
+            {
+                if (LandManager.farmData == null) return;
 
-                cropData[i] = crop;
-                landData[crop.landID] = land;
+                List<LandSaveState> landData = LandManager.farmData.Item1;
+                List<CropSaveState> cropData = LandManager.farmData.Item2;
+
+                if (cropData.Count == 0) return;
+
+                for (int i = 0; i < cropData.Count; i++)
+                {
+                    CropSaveState crop = cropData[i];
+                    LandSaveState land = landData[crop.landID];
+
+                    if (crop.cropState == CropBehaviour.CropState.Wilted) continue;
+
+                    land.ClockUpdate(timestamp);
+
+                    if (land.landStatus == LandModel.LandStatus.Watered)
+                        crop.Grow();
+                    else if (crop.cropState != CropBehaviour.CropState.Seed)
+                        crop.Wither();
+
+                    cropData[i] = crop;
+                    landData[crop.landID] = land;
+                }
             }
         }
-    }
 
-    public void Sleep()
-    {
-        UIManager.Instance.FadeOutScreen();
-        screenFadedOut = false;
-        StartCoroutine(TransitionTime());
-    }
+        public void Sleep()
+        {
+            UIManager.Instance.FadeOutScreen();
+            screenFadedOut = false;
+            StartCoroutine(TransitionTime());
+        }
 
-    private IEnumerator TransitionTime()
-    {
-        GameTimestamp timestampOfNextDay = TimeManager.Instance.GetGameTimestamp();
-        timestampOfNextDay.day += 1;
-        timestampOfNextDay.hour = 6;
-        timestampOfNextDay.minute = 0;
+        private IEnumerator TransitionTime()
+        {
+            GameTimestamp timestampOfNextDay = TimeManager.Instance.GetGameTimestamp();
+            timestampOfNextDay.day += 1;
+            timestampOfNextDay.hour = 6;
+            timestampOfNextDay.minute = 0;
 
-        while (!screenFadedOut)
-            yield return new WaitForSeconds(1f);
+            while (!screenFadedOut)
+                yield return new WaitForSeconds(1f);
 
-        TimeManager.Instance.SkipTime(timestampOfNextDay);
-        SaveManager.Save(ExportSaveState());
-        screenFadedOut = false;
-        UIManager.Instance.ResetFadeDefaults();
-    }
+            TimeManager.Instance.SkipTime(timestampOfNextDay);
+            SaveManager.Save(ExportSaveState());
+            screenFadedOut = false;
+            UIManager.Instance.ResetFadeDefaults();
+        }
 
-    public void OnFadeOutComplete() => screenFadedOut = true;
+        public void OnFadeOutComplete() => screenFadedOut = true;
 
-    public GameSaveState ExportSaveState()
-    {
-        FarmSaveState farmSaveState = FarmSaveState.Export();
-        InventorySaveState inventorySaveState = InventorySaveState.Export();
-        PlayerSaveState playerSaveState = PlayerSaveState.Export();
-        GameTimestamp timestamp = TimeManager.Instance.GetGameTimestamp();
-        RelationshipSaveState relationshipSaveState = RelationshipSaveState.Export();
+        public GameSaveState ExportSaveState()
+        {
+            FarmSaveState farmSaveState = FarmSaveState.Export();
+            InventorySaveState inventorySaveState = InventorySaveState.Export();
+            PlayerSaveState playerSaveState = PlayerSaveState.Export();
+            GameTimestamp timestamp = TimeManager.Instance.GetGameTimestamp();
+            RelationshipSaveState relationshipSaveState = RelationshipSaveState.Export();
 
-        return new GameSaveState(farmSaveState, inventorySaveState, timestamp, playerSaveState, relationshipSaveState);
-    }
+            return new GameSaveState(farmSaveState, inventorySaveState, timestamp, playerSaveState, relationshipSaveState);
+        }
 
-    public void LoadSave()
-    {
-        GameSaveState save = SaveManager.Load();
-        TimeManager.Instance.LoadTime(save.timestamp);
-        save.inventorySaveState.LoadData();
-        save.farmSaveState.LoadData();
-        PlayerModel playerModel = UnityEngine.Object.FindAnyObjectByType<PlayerView>().PlayerModel;
-        save.playerSaveState.LoadData(playerModel);
-        save.relationshipSaveState.LoadData();
+        public void LoadSave()
+        {
+            GameSaveState save = SaveManager.Load();
+            TimeManager.Instance.LoadTime(save.timestamp);
+            save.inventorySaveState.LoadData();
+            save.farmSaveState.LoadData();
+            PlayerModel playerModel = UnityEngine.Object.FindAnyObjectByType<PlayerView>().PlayerModel;
+            save.playerSaveState.LoadData(playerModel);
+            save.relationshipSaveState.LoadData();
+        }
     }
 }

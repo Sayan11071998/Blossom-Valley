@@ -1,5 +1,5 @@
 ﻿using BlossomValley.BuyingSellingSystem;
-using BlossomValley.GameStrings;
+using BlossomValley.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
