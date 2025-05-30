@@ -35,7 +35,7 @@ public class UIView : MonoBehaviour
     [SerializeField] public NamingPrompt namingPrompt;
 
     [Header("Player Stats")]
-    [SerializeField] public Text moneyText;
+    [SerializeField] public TextMeshProUGUI moneyText;
 
     [Header("Shop")]
     [SerializeField] public ShopListingManager shopListingManager;
