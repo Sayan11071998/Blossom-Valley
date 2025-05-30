@@ -1,3 +1,5 @@
+using BlossomValley.InventorySystem;
+
 namespace BlossomValley.CropSystem
 {
     public class HarvestableState : ICropState

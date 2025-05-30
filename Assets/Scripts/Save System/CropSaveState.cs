@@ -1,4 +1,5 @@
 ﻿using BlossomValley.CropSystem;
+using BlossomValley.InventorySystem;
 
 [System.Serializable]
 public struct CropSaveState

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BlossomValley.CropSystem;
+using BlossomValley.InventorySystem;
 
 [RequireComponent(typeof(ObstacleGenerator))]
 public class LandManager : MonoBehaviour

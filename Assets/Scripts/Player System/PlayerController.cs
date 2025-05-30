@@ -1,4 +1,5 @@
 using UnityEngine;
+using BlossomValley.InventorySystem;
 
 public class PlayerController
 {

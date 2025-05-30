@@ -1,4 +1,5 @@
 ﻿using UnityEngine.EventSystems;
+using BlossomValley.InventorySystem;
 
 public class HandInventorySlot : InventorySlot
 {

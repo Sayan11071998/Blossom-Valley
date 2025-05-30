@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using BlossomValley.InventorySystem;
+
+[System.Serializable]
 public class InventorySaveState
 {
     public ItemSlotSaveData[] toolSlots;

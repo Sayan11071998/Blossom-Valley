@@ -1,4 +1,5 @@
 using UnityEngine;
+using BlossomValley.InventorySystem;
 
 namespace BlossomValley.CropSystem
 {

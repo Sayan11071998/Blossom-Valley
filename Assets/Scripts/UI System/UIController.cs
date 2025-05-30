@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BlossomValley.AnimalSystem;
 using BlossomValley.CharacterSystem;
+using BlossomValley.InventorySystem;
 
 public class UIController
 {

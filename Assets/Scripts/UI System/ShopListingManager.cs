@@ -3,6 +3,7 @@ using BlossomValley.GameStrings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using BlossomValley.InventorySystem;
 
 public class ShopListingManager : ListingManager<ItemData>
 {

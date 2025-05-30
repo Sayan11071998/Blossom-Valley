@@ -1,4 +1,6 @@
-﻿namespace BlossomValley.CropSystem
+﻿using BlossomValley.InventorySystem;
+
+namespace BlossomValley.CropSystem
 {
     public class RegrowableHarvestBehaviour : InteractableObject
     {
