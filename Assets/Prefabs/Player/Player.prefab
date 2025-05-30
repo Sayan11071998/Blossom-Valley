@@ -734,6 +734,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactorTransform: {fileID: 1445652344875420793}
+  walkSpeed: 4
+  runSpeed: 8
+  gravity: 9.81
 --- !u!1 &2436895730216005657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1207,7 @@ Transform:
   m_GameObject: {fileID: 4936548048973527272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.536}
+  m_LocalPosition: {x: -0.16, y: 0.5, z: 0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

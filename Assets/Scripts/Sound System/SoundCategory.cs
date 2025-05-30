@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[System.Serializable]
-public class SoundCategory
+namespace BlossomValley.SoundSystem
 {
-    public SoundType soundType;
-    public AudioClip clip;
+    [System.Serializable]
+    public class SoundCategory
+    {
+        public SoundType soundType;
+        public AudioClip clip;
+    }
 }

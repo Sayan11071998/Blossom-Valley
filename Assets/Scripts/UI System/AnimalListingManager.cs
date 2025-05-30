@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
+using BlossomValley.AnimalSystem;
 
-public class AnimalListingManager : ListingManager<AnimalRelationshipState>
+namespace BlossomValley.UISystem
 {
-    protected override void DisplayListing(AnimalRelationshipState relationship, GameObject listingGameObject)
+    public class AnimalListingManager : ListingManager<AnimalRelationshipState>
     {
-        AnimalData animalData = AnimalStats.GetAnimalTypeFromString(relationship.animalType);
-        listingGameObject.GetComponent<NPCRelationshipListing>().Display(animalData, relationship);
+        protected override void DisplayListing(AnimalRelationshipState relationship, GameObject listingGameObject)
+        {
+            AnimalData animalData = AnimalStats.GetAnimalTypeFromString(relationship.animalType);
+            listingGameObject.GetComponent<NPCRelationshipListing>().Display(animalData, relationship);
+        }
     }
 }

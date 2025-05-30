@@ -2,45 +2,48 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SaveManager : MonoBehaviour
+namespace BlossomValley.SaveSystem
 {
-    static readonly string FILEPATH = Application.persistentDataPath + "/Save.save";
-
-    public static void Save(GameSaveState save)
+    public class SaveManager : MonoBehaviour
     {
-        //Save as JSON
-        //string json = JsonUtility.ToJson(save);
-        //File.WriteAllText(FILEPATH, json); 
+        static readonly string FILEPATH = Application.persistentDataPath + "/Save.save";
 
-        //Save as Binary file
-        using (FileStream file = File.Create(FILEPATH))
+        public static void Save(GameSaveState save)
         {
-            new BinaryFormatter().Serialize(file, save);
-        }
-    }
+            //Save as JSON
+            //string json = JsonUtility.ToJson(save);
+            //File.WriteAllText(FILEPATH, json); 
 
-    public static GameSaveState Load()
-    {
-        GameSaveState loadedSave = null;
-
-        //JSON 
-        // if (File.Exists(FILEPATH))
-        // {
-        //     string json = File.ReadAllText(FILEPATH);
-        //     loadedSave = JsonUtility.FromJson<GameSaveState>(json); 
-        // }
-
-        //Binary method
-        if (File.Exists(FILEPATH))
-        {
-            using (FileStream file = File.Open(FILEPATH, FileMode.Open))
+            //Save as Binary file
+            using (FileStream file = File.Create(FILEPATH))
             {
-                object loadedData = new BinaryFormatter().Deserialize(file);
-                loadedSave = (GameSaveState)loadedData;
+                new BinaryFormatter().Serialize(file, save);
             }
         }
-        return loadedSave;
-    }
 
-    public static bool HasSave() => File.Exists(FILEPATH);
+        public static GameSaveState Load()
+        {
+            GameSaveState loadedSave = null;
+
+            //JSON 
+            // if (File.Exists(FILEPATH))
+            // {
+            //     string json = File.ReadAllText(FILEPATH);
+            //     loadedSave = JsonUtility.FromJson<GameSaveState>(json); 
+            // }
+
+            //Binary method
+            if (File.Exists(FILEPATH))
+            {
+                using (FileStream file = File.Open(FILEPATH, FileMode.Open))
+                {
+                    object loadedData = new BinaryFormatter().Deserialize(file);
+                    loadedSave = (GameSaveState)loadedData;
+                }
+            }
+            return loadedSave;
+        }
+
+        public static bool HasSave() => File.Exists(FILEPATH);
+    }
 }

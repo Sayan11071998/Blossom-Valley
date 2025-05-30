@@ -1,90 +1,93 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
-public class GameTimestamp
+namespace BlossomValley.TimeSystem
 {
-    [SerializeField] public Season season;
-    [SerializeField] public int year;
-    [SerializeField] public int day;
-    [SerializeField] public int hour;
-    [SerializeField] public int minute;
-
-    public GameTimestamp(int yearToSet, Season seasonToSet, int dayToSet, int hourToSet, int minuteToSet)
+    [System.Serializable]
+    public class GameTimestamp
     {
-        year = yearToSet;
-        season = seasonToSet;
-        day = dayToSet;
-        hour = hourToSet;
-        minute = minuteToSet;
-    }
+        [SerializeField] public Season season;
+        [SerializeField] public int year;
+        [SerializeField] public int day;
+        [SerializeField] public int hour;
+        [SerializeField] public int minute;
 
-    public GameTimestamp(GameTimestamp timestamp)
-    {
-        year = timestamp.year;
-        season = timestamp.season;
-        day = timestamp.day;
-        hour = timestamp.hour;
-        minute = timestamp.minute;
-    }
-
-    public void UpdateClock()
-    {
-        minute++;
-
-        if (minute >= 60)
+        public GameTimestamp(int yearToSet, Season seasonToSet, int dayToSet, int hourToSet, int minuteToSet)
         {
-            minute = 0;
-            hour++;
+            year = yearToSet;
+            season = seasonToSet;
+            day = dayToSet;
+            hour = hourToSet;
+            minute = minuteToSet;
         }
 
-        if (hour >= 24)
+        public GameTimestamp(GameTimestamp timestamp)
         {
-            hour = 0;
-            day++;
+            year = timestamp.year;
+            season = timestamp.season;
+            day = timestamp.day;
+            hour = timestamp.hour;
+            minute = timestamp.minute;
         }
 
-        if (day > 30)
+        public void UpdateClock()
         {
-            day = 1;
+            minute++;
 
-            if (season == Season.Winter)
+            if (minute >= 60)
             {
-                season = Season.Spring;
-                year++;
+                minute = 0;
+                hour++;
             }
-            else
+
+            if (hour >= 24)
             {
-                season++;
+                hour = 0;
+                day++;
+            }
+
+            if (day > 30)
+            {
+                day = 1;
+
+                if (season == Season.Winter)
+                {
+                    season = Season.Spring;
+                    year++;
+                }
+                else
+                {
+                    season++;
+                }
             }
         }
-    }
 
-    public DayOfTheWeek GetDayOfTheWeek()
-    {
-        int daysPassed = YearsToDays(year) + SeasonsToDays(season) + day;
-        int dayIndex = daysPassed % 7;
-        return (DayOfTheWeek)dayIndex;
-    }
+        public DayOfTheWeek GetDayOfTheWeek()
+        {
+            int daysPassed = YearsToDays(year) + SeasonsToDays(season) + day;
+            int dayIndex = daysPassed % 7;
+            return (DayOfTheWeek)dayIndex;
+        }
 
-    public static int HoursToMinutes(int hour) => hour * 60;
+        public static int HoursToMinutes(int hour) => hour * 60;
 
-    public static int DaysToHours(int days) => days * 24;
+        public static int DaysToHours(int days) => days * 24;
 
-    public static int SeasonsToDays(Season season)
-    {
-        int seasonIndex = (int)season;
-        return seasonIndex * 30;
-    }
+        public static int SeasonsToDays(Season season)
+        {
+            int seasonIndex = (int)season;
+            return seasonIndex * 30;
+        }
 
-    public static int YearsToDays(int years) => years * 4 * 30;
+        public static int YearsToDays(int years) => years * 4 * 30;
 
-    public static int TimestampInMinutes(GameTimestamp timestamp) => HoursToMinutes(DaysToHours(YearsToDays(timestamp.year)) + DaysToHours(SeasonsToDays(timestamp.season)) + DaysToHours(timestamp.day) + timestamp.hour) + timestamp.minute;
+        public static int TimestampInMinutes(GameTimestamp timestamp) => HoursToMinutes(DaysToHours(YearsToDays(timestamp.year)) + DaysToHours(SeasonsToDays(timestamp.season)) + DaysToHours(timestamp.day) + timestamp.hour) + timestamp.minute;
 
-    public static int CompareTimestamps(GameTimestamp timestamp1, GameTimestamp timestamp2)
-    {
-        int timestamp1Hours = DaysToHours(YearsToDays(timestamp1.year)) + DaysToHours(SeasonsToDays(timestamp1.season)) + DaysToHours(timestamp1.day) + timestamp1.hour;
-        int timestamp2Hours = DaysToHours(YearsToDays(timestamp2.year)) + DaysToHours(SeasonsToDays(timestamp2.season)) + DaysToHours(timestamp2.day) + timestamp2.hour;
-        int difference = timestamp2Hours - timestamp1Hours;
-        return Mathf.Abs(difference);
+        public static int CompareTimestamps(GameTimestamp timestamp1, GameTimestamp timestamp2)
+        {
+            int timestamp1Hours = DaysToHours(YearsToDays(timestamp1.year)) + DaysToHours(SeasonsToDays(timestamp1.season)) + DaysToHours(timestamp1.day) + timestamp1.hour;
+            int timestamp2Hours = DaysToHours(YearsToDays(timestamp2.year)) + DaysToHours(SeasonsToDays(timestamp2.season)) + DaysToHours(timestamp2.day) + timestamp2.hour;
+            int difference = timestamp2Hours - timestamp1Hours;
+            return Mathf.Abs(difference);
+        }
     }
 }

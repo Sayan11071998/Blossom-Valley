@@ -1,62 +1,68 @@
 ﻿using System.Collections.Generic;
-using BlossomValley.GameStrings;
+using BlossomValley.Utilities;
+using BlossomValley.InventorySystem;
+using BlossomValley.PlayerSystem;
+using BlossomValley.UISystem;
 
-public class ShippingBin : InteractableObject
+namespace BlossomValley.BuyingSellingSystem
 {
-    public static int hourToShip = 18;
-    public static List<ItemSlotData> itemsToShip = new List<ItemSlotData>();
-
-    public override void Pickup()
+    public class ShippingBin : InteractableObject
     {
-        ItemSlotData handSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
+        public static int hourToShip = 18;
+        public static List<ItemSlotData> itemsToShip = new List<ItemSlotData>();
 
-        if (handSlot == null || handSlot.itemData == null || handSlot.quantity <= 0) return;
-
-        if (handSlot.quantity > 1)
+        public override void Pickup()
         {
-            string message = string.Format(GameString.ShipPrompt, handSlot.itemData.name);
-            UIManager.Instance.TriggerQuantityPrompt(message, handSlot.quantity, PlaceItemsInShippingBin);
+            ItemSlotData handSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
+
+            if (handSlot == null || handSlot.itemData == null || handSlot.quantity <= 0) return;
+
+            if (handSlot.quantity > 1)
+            {
+                string message = string.Format(GameString.ShipPrompt, handSlot.itemData.name);
+                UIManager.Instance.TriggerQuantityPrompt(message, handSlot.quantity, PlaceItemsInShippingBin);
+            }
+            else
+            {
+                string message = string.Format(GameString.SellPrompt, handSlot.itemData.name);
+                UIManager.Instance.TriggerYesNoPrompt(message, () => PlaceItemsInShippingBin(1));
+            }
         }
-        else
+
+        private void PlaceItemsInShippingBin(int quantityToShip)
         {
-            string message = string.Format(GameString.SellPrompt, handSlot.itemData.name);
-            UIManager.Instance.TriggerYesNoPrompt(message, () => PlaceItemsInShippingBin(1));
+            ItemSlotData handSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
+
+            if (handSlot == null || handSlot.itemData == null || handSlot.quantity < quantityToShip) return;
+
+            ItemSlotData itemsToAdd = new ItemSlotData(handSlot.itemData, quantityToShip);
+            itemsToShip.Add(itemsToAdd);
+            handSlot.quantity -= quantityToShip;
+
+            if (handSlot.quantity <= 0)
+                handSlot.Empty();
+
+            InventoryManager.Instance.RenderHand();
         }
-    }
 
-    private void PlaceItemsInShippingBin(int quantityToShip)
-    {
-        ItemSlotData handSlot = InventoryManager.Instance.GetEquippedSlot(InventorySlot.InventoryType.Item);
+        public static void ShipItems()
+        {
+            int moneyToReceive = TallyItems(itemsToShip);
 
-        if (handSlot == null || handSlot.itemData == null || handSlot.quantity < quantityToShip) return;
+            PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
+            playerModel.Earn(moneyToReceive);
 
-        ItemSlotData itemsToAdd = new ItemSlotData(handSlot.itemData, quantityToShip);
-        itemsToShip.Add(itemsToAdd);
-        handSlot.quantity -= quantityToShip;
+            itemsToShip.Clear();
+        }
 
-        if (handSlot.quantity <= 0)
-            handSlot.Empty();
+        private static int TallyItems(List<ItemSlotData> items)
+        {
+            int total = 0;
 
-        InventoryManager.Instance.RenderHand();
-    }
+            foreach (ItemSlotData item in items)
+                total += item.quantity * item.itemData.cost;
 
-    public static void ShipItems()
-    {
-        int moneyToReceive = TallyItems(itemsToShip);
-
-        PlayerModel playerModel = FindAnyObjectByType<PlayerView>().PlayerModel;
-        playerModel.Earn(moneyToReceive);
-
-        itemsToShip.Clear();
-    }
-
-    private static int TallyItems(List<ItemSlotData> items)
-    {
-        int total = 0;
-
-        foreach (ItemSlotData item in items)
-            total += item.quantity * item.itemData.cost;
-
-        return total;
+            return total;
+        }
     }
 }

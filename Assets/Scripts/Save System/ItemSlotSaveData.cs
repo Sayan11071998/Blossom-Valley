@@ -1,19 +1,24 @@
-﻿[System.Serializable]
-public class ItemSlotSaveData
+﻿using BlossomValley.InventorySystem;
+
+namespace BlossomValley.SaveSystem
 {
-    public string itemID;
-    public int quantity;
-
-    public ItemSlotSaveData(ItemSlotData data)
+    [System.Serializable]
+    public class ItemSlotSaveData
     {
-        if (data.IsEmpty())
-        {
-            itemID = null;
-            quantity = 0;
-            return;
-        }
+        public string itemID;
+        public int quantity;
 
-        itemID = data.itemData.name;
-        quantity = data.quantity;
+        public ItemSlotSaveData(ItemSlotData data)
+        {
+            if (data.IsEmpty())
+            {
+                itemID = null;
+                quantity = 0;
+                return;
+            }
+
+            itemID = data.itemData.name;
+            quantity = data.quantity;
+        }
     }
 }

@@ -1,75 +1,81 @@
 using UnityEngine;
+using BlossomValley.InventorySystem;
+using BlossomValley.LandSystem;
+using BlossomValley.UISystem;
 
-public class PlayerController
+namespace BlossomValley.PlayerSystem
 {
-    private PlayerModel playerModel;
-    private PlayerView playerView;
-
-    private LandView selectedLand;
-    private InteractableObject selectedInteractable;
-
-    public PlayerModel PlayerModel => playerModel;
-
-    public PlayerController(PlayerModel modelToSet, PlayerView viewToSet)
+    public class PlayerController
     {
-        playerModel = modelToSet;
-        playerView = viewToSet;
-    }
+        private PlayerModel playerModel;
+        private PlayerView playerView;
 
-    public void HandleMovement(float horizontal, float vertical, bool isSprinting)
-    {
-        Vector3 dir = new Vector3(horizontal, 0f, vertical).normalized;
-        float speed = isSprinting ? playerModel.RunSpeed : playerModel.WalkSpeed;
-        Vector3 velocity = speed * Time.deltaTime * dir;
+        private LandView selectedLand;
+        private InteractableObject selectedInteractable;
 
-        if (playerView.IsGrounded())
-            velocity.y = 0;
+        public PlayerModel PlayerModel => playerModel;
 
-        velocity.y -= Time.deltaTime * playerModel.Gravity;
-        playerView.Move(velocity, dir, isSprinting);
-    }
-
-    public void SelectLand(LandView land)
-    {
-        if (selectedLand != null)
-            selectedLand.Select(false);
-
-        selectedLand = land;
-
-        if (land != null)
-            land.Select(true);
-    }
-
-    public void SelectInteractable(InteractableObject interactable) => selectedInteractable = interactable;
-
-    public void Deselect()
-    {
-        if (selectedLand != null)
+        public PlayerController(PlayerModel modelToSet, PlayerView viewToSet)
         {
-            selectedLand.Select(false);
-            selectedLand = null;
+            playerModel = modelToSet;
+            playerView = viewToSet;
         }
 
-        selectedInteractable = null;
-    }
+        public void HandleMovement(float horizontal, float vertical, bool isSprinting)
+        {
+            Vector3 dir = new Vector3(horizontal, 0f, vertical).normalized;
+            float speed = isSprinting ? playerModel.RunSpeed : playerModel.WalkSpeed;
+            Vector3 velocity = speed * Time.deltaTime * dir;
 
-    public void Interact()
-    {
-        if (InventoryManager.Instance.SlotEquipped(InventorySlot.InventoryType.Item)) return;
+            if (playerView.IsGrounded())
+                velocity.y = 0;
 
-        if (selectedLand != null)
-            selectedLand.Interact();
-    }
+            velocity.y -= Time.deltaTime * playerModel.Gravity;
+            playerView.Move(velocity, dir, isSprinting);
+        }
 
-    public void ItemInteract()
-    {
-        if (selectedInteractable != null)
-            selectedInteractable.Pickup();
-    }
+        public void SelectLand(LandView land)
+        {
+            if (selectedLand != null)
+                selectedLand.Select(false);
 
-    public void ItemKeep()
-    {
-        if (InventoryManager.Instance.SlotEquipped(InventorySlot.InventoryType.Item))
-            InventoryManager.Instance.HandToInventory(InventorySlot.InventoryType.Item);
+            selectedLand = land;
+
+            if (land != null)
+                land.Select(true);
+        }
+
+        public void SelectInteractable(InteractableObject interactable) => selectedInteractable = interactable;
+
+        public void Deselect()
+        {
+            if (selectedLand != null)
+            {
+                selectedLand.Select(false);
+                selectedLand = null;
+            }
+
+            selectedInteractable = null;
+        }
+
+        public void Interact()
+        {
+            if (InventoryManager.Instance.SlotEquipped(InventorySlot.InventoryType.Item)) return;
+
+            if (selectedLand != null)
+                selectedLand.Interact();
+        }
+
+        public void ItemInteract()
+        {
+            if (selectedInteractable != null)
+                selectedInteractable.Pickup();
+        }
+
+        public void ItemKeep()
+        {
+            if (InventoryManager.Instance.SlotEquipped(InventorySlot.InventoryType.Item))
+                InventoryManager.Instance.HandToInventory(InventorySlot.InventoryType.Item);
+        }
     }
 }

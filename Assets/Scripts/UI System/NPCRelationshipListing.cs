@@ -1,40 +1,45 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using BlossomValley.AnimalSystem;
+using BlossomValley.CharacterSystem;
 
-public class NPCRelationshipListing : MonoBehaviour
+namespace BlossomValley.UISystem
 {
-    [Header("Sprites")]
-    [SerializeField] private Sprite emptyHeart;
-    [SerializeField] private Sprite fullHeart;
-
-    [Header("UI Elements")]
-    [SerializeField] private Image portraitImage;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private Image[] hearts;
-
-    public void Display(CharacterScriptableObject characterData, NPCRelationshipState relationship)
+    public class NPCRelationshipListing : MonoBehaviour
     {
-        portraitImage.sprite = characterData.portrait;
-        nameText.text = relationship.name;
+        [Header("Sprites")]
+        [SerializeField] private Sprite emptyHeart;
+        [SerializeField] private Sprite fullHeart;
 
-        DisplayHearts(relationship.Hearts());
-    }
+        [Header("UI Elements")]
+        [SerializeField] private Image portraitImage;
+        [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private Image[] hearts;
 
-    public void Display(AnimalData animalData, AnimalRelationshipState relationship)
-    {
-        portraitImage.sprite = animalData.portrait;
-        nameText.text = relationship.name;
+        public void Display(CharacterScriptableObject characterData, NPCRelationshipState relationship)
+        {
+            portraitImage.sprite = characterData.portrait;
+            nameText.text = relationship.name;
 
-        DisplayHearts(relationship.Hearts());
-    }
+            DisplayHearts(relationship.Hearts());
+        }
 
-    private void DisplayHearts(float number)
-    {
-        foreach (Image heart in hearts)
-            heart.sprite = emptyHeart;
+        public void Display(AnimalData animalData, AnimalRelationshipState relationship)
+        {
+            portraitImage.sprite = animalData.portrait;
+            nameText.text = relationship.name;
 
-        for (int i = 0; i < number; i++)
-            hearts[i].sprite = fullHeart;
+            DisplayHearts(relationship.Hearts());
+        }
+
+        private void DisplayHearts(float number)
+        {
+            foreach (Image heart in hearts)
+                heart.sprite = emptyHeart;
+
+            for (int i = 0; i < number; i++)
+                hearts[i].sprite = fullHeart;
+        }
     }
 }

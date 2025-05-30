@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class ParentedAnimationEvent : MonoBehaviour
+namespace BlossomValley.Utilities
 {
-     public void NotifyAncestors(string message) => SendMessageUpwards(message);
+     public class ParentedAnimationEvent : MonoBehaviour
+     {
+          public void NotifyAncestors(string message) => SendMessageUpwards(message);
+     }
 }

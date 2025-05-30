@@ -1,4 +1,4 @@
-namespace BlossomValley.GameStrings
+namespace BlossomValley.Utilities
 {
     public static class GameString
     {
