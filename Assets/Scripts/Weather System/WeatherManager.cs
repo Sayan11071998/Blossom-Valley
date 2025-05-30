@@ -165,7 +165,10 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
     private void StopRainSound()
     {
         if (SoundManager.Instance != null)
+        {
             SoundManager.Instance.StopMusic();
+            SoundManager.Instance.PlayMusic(SoundType.BackgroundMusic);
+        }
     }
 
     private IEnumerator StopRainAfterDuration(int durationInMinutes)

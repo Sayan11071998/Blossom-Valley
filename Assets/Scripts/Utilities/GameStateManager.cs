@@ -20,7 +20,11 @@ public class GameStateManager : MonoBehaviour, ITimeTracker
 
     private void OnDestroy() => FadeEventManager.OnFadeOutComplete -= OnFadeOutComplete;
 
-    private void Start() => TimeManager.Instance.RegisterTracker(this);
+    private void Start()
+    {
+        SoundManager.Instance.PlayMusic(SoundType.BackgroundMusic);
+        TimeManager.Instance.RegisterTracker(this);
+    }
 
     public void ClockUpdate(GameTimestamp timestamp)
     {
