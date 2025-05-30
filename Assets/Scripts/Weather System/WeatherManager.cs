@@ -132,7 +132,6 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
         {
             isRaining = true;
             rainParticleSystem.Play();
-            OnRainStarted();
         }
     }
 
@@ -142,7 +141,6 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
         {
             isRaining = false;
             rainParticleSystem.Stop();
-            OnRainStopped();
         }
     }
 
@@ -160,17 +158,7 @@ public class WeatherManager : MonoBehaviour, ITimeTracker
         }
     }
 
-    public void ForceStartRain() => StartRain();
-    public void ForceStopRain() => StopRain();
     public bool IsCurrentlyRaining() => isRaining;
-
-    private void OnRainStarted()
-    {
-    }
-
-    private void OnRainStopped()
-    {
-    }
 
     public void SetRainSchedule(int startHour, int startMinute, int endHour, int endMinute)
     {
