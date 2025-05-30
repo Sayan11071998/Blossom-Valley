@@ -1,5 +1,6 @@
 ﻿using BlossomValley.GameStrings;
 using UnityEngine;
+using BlossomValley.DialogueSystem;
 
 namespace BlossomValley.AnimalSystem
 {

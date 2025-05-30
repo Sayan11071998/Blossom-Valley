@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BlossomValley.DialogueSystem;
 using UnityEngine;
 
 namespace BlossomValley.CharacterSystem

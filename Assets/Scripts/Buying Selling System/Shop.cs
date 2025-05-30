@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using BlossomValley.DialogueSystem;
 
 namespace BlossomValley.BuyingSellingSystem
 {

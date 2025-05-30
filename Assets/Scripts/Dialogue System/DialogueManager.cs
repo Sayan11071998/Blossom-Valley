@@ -4,100 +4,103 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DialogueManager : MonoBehaviour
+namespace BlossomValley.DialogueSystem
 {
-    public static DialogueManager Instance { get; private set; }
-
-    [Header("Dialogue Components")]
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TextMeshProUGUI speakerText;
-    [SerializeField] private TextMeshProUGUI dialogueText;
-
-    private Queue<DialogueLine> dialogueQueue;
-    private Action onDialogueEnd = null;
-
-    private bool isTyping = false;
-
-    private void Awake()
+    public class DialogueManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-            Destroy(this);
-        else
-            Instance = this;
-    }
+        public static DialogueManager Instance { get; private set; }
 
-    public void StartDialogue(List<DialogueLine> dialogueLinesToQueue)
-    {
-        dialogueQueue = new Queue<DialogueLine>(dialogueLinesToQueue);
-        UpdateDialogue();
-    }
+        [Header("Dialogue Components")]
+        [SerializeField] private GameObject dialoguePanel;
+        [SerializeField] private TextMeshProUGUI speakerText;
+        [SerializeField] private TextMeshProUGUI dialogueText;
 
-    public void StartDialogue(List<DialogueLine> dialogueLinesToQueue, Action onDialogueEnd)
-    {
-        StartDialogue(dialogueLinesToQueue);
-        this.onDialogueEnd = onDialogueEnd;
-    }
+        private Queue<DialogueLine> dialogueQueue;
+        private Action onDialogueEnd = null;
 
-    public void UpdateDialogue()
-    {
-        if (isTyping)
+        private bool isTyping = false;
+
+        private void Awake()
         {
-            isTyping = false;
-            return;
+            if (Instance != null && Instance != this)
+                Destroy(this);
+            else
+                Instance = this;
         }
 
-        dialogueText.text = string.Empty;
-
-        if (dialogueQueue.Count == 0)
+        public void StartDialogue(List<DialogueLine> dialogueLinesToQueue)
         {
-            EndDialogue();
-            return;
+            dialogueQueue = new Queue<DialogueLine>(dialogueLinesToQueue);
+            UpdateDialogue();
         }
 
-        DialogueLine line = dialogueQueue.Dequeue();
-        Talk(line.speaker, line.message);
-    }
-
-    public void EndDialogue()
-    {
-        dialoguePanel.SetActive(false);
-        onDialogueEnd?.Invoke();
-        onDialogueEnd = null;
-    }
-
-    public void Talk(string speaker, string message)
-    {
-        dialoguePanel.SetActive(true);
-        speakerText.text = speaker;
-        speakerText.transform.parent.gameObject.SetActive(speaker != "");
-        StartCoroutine(TypeText(message));
-    }
-
-    IEnumerator TypeText(string textToType)
-    {
-        isTyping = true;
-
-        char[] charsToType = textToType.ToCharArray();
-        for (int i = 0; i < charsToType.Length; i++)
+        public void StartDialogue(List<DialogueLine> dialogueLinesToQueue, Action onDialogueEnd)
         {
-            dialogueText.text += charsToType[i];
-            yield return new WaitForEndOfFrame();
+            StartDialogue(dialogueLinesToQueue);
+            this.onDialogueEnd = onDialogueEnd;
+        }
 
-            if (!isTyping)
+        public void UpdateDialogue()
+        {
+            if (isTyping)
             {
-                dialogueText.text = textToType;
-                break;
+                isTyping = false;
+                return;
             }
+
+            dialogueText.text = string.Empty;
+
+            if (dialogueQueue.Count == 0)
+            {
+                EndDialogue();
+                return;
+            }
+
+            DialogueLine line = dialogueQueue.Dequeue();
+            Talk(line.speaker, line.message);
         }
 
-        isTyping = false;
-    }
+        public void EndDialogue()
+        {
+            dialoguePanel.SetActive(false);
+            onDialogueEnd?.Invoke();
+            onDialogueEnd = null;
+        }
 
-    public static List<DialogueLine> CreateSimpleMessage(string message)
-    {
-        DialogueLine messageDialogueLine = new DialogueLine("", message);
-        List<DialogueLine> listToReturn = new List<DialogueLine>();
-        listToReturn.Add(messageDialogueLine);
-        return listToReturn;
+        public void Talk(string speaker, string message)
+        {
+            dialoguePanel.SetActive(true);
+            speakerText.text = speaker;
+            speakerText.transform.parent.gameObject.SetActive(speaker != "");
+            StartCoroutine(TypeText(message));
+        }
+
+        IEnumerator TypeText(string textToType)
+        {
+            isTyping = true;
+
+            char[] charsToType = textToType.ToCharArray();
+            for (int i = 0; i < charsToType.Length; i++)
+            {
+                dialogueText.text += charsToType[i];
+                yield return new WaitForEndOfFrame();
+
+                if (!isTyping)
+                {
+                    dialogueText.text = textToType;
+                    break;
+                }
+            }
+
+            isTyping = false;
+        }
+
+        public static List<DialogueLine> CreateSimpleMessage(string message)
+        {
+            DialogueLine messageDialogueLine = new DialogueLine("", message);
+            List<DialogueLine> listToReturn = new List<DialogueLine>();
+            listToReturn.Add(messageDialogueLine);
+            return listToReturn;
+        }
     }
 }
