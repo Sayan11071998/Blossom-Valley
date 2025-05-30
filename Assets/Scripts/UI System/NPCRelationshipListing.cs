@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class NPCRelationshipListing : MonoBehaviour
@@ -9,7 +10,7 @@ public class NPCRelationshipListing : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private Image portraitImage;
-    [SerializeField] private Text nameText;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private Image[] hearts;
 
     public void Display(CharacterScriptableObject characterData, NPCRelationshipState relationship)
