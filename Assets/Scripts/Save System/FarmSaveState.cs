@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BlossomValley.IncubationSystem;
+using BlossomValley.LandSystem;
 
 [System.Serializable]
 public class FarmSaveState

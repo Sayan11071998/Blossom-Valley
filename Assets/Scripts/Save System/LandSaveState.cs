@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using BlossomValley.LandSystem;
+
+[System.Serializable]
 public struct LandSaveState
 {
     public LandModel.LandStatus landStatus;
