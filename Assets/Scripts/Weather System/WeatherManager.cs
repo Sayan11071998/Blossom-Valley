@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using BlossomValley.SoundSystem;
 
 public class WeatherManager : MonoBehaviour, ITimeTracker
 {

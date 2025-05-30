@@ -1,64 +1,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+namespace BlossomValley.SoundSystem
 {
-    public static SoundManager Instance { get; private set; }
-
-    [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource sfxSource;
-    [SerializeField] private List<SoundCategory> soundCategories;
-
-    private void Awake()
+    public class SoundManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-            Destroy(this);
-        else
-            Instance = this;
-    }
+        public static SoundManager Instance { get; private set; }
 
-    public void PlayMusic(SoundType soundType)
-    {
-        AudioClip clip = GetClip(soundType);
-        if (clip != null)
+        [SerializeField] private AudioSource musicSource;
+        [SerializeField] private AudioSource sfxSource;
+        [SerializeField] private List<SoundCategory> soundCategories;
+
+        private void Awake()
         {
-            musicSource.clip = clip;
-            musicSource.loop = true;
-            musicSource.Play();
+            if (Instance != null && Instance != this)
+                Destroy(this);
+            else
+                Instance = this;
         }
-    }
 
-    public void PlaySFX(SoundType soundType)
-    {
-        AudioClip clip = GetClip(soundType);
-        if (clip != null)
+        public void PlayMusic(SoundType soundType)
         {
-            sfxSource.PlayOneShot(clip);
+            AudioClip clip = GetClip(soundType);
+            if (clip != null)
+            {
+                musicSource.clip = clip;
+                musicSource.loop = true;
+                musicSource.Play();
+            }
         }
-    }
 
-    public void StopMusic()
-    {
-        musicSource.Stop();
-    }
-
-    private AudioClip GetClip(SoundType soundType)
-    {
-        SoundCategory category = GetSoundCategory(soundType);
-        if (category != null && category.clip != null)
+        public void PlaySFX(SoundType soundType)
         {
-            return category.clip;
+            AudioClip clip = GetClip(soundType);
+            if (clip != null)
+            {
+                sfxSource.PlayOneShot(clip);
+            }
         }
-        return null;
-    }
 
-    private SoundCategory GetSoundCategory(SoundType soundType)
-    {
-        foreach (SoundCategory category in soundCategories)
+        public void StopMusic()
         {
-            if (category.soundType == soundType)
-                return category;
+            musicSource.Stop();
         }
-        return null;
+
+        private AudioClip GetClip(SoundType soundType)
+        {
+            SoundCategory category = GetSoundCategory(soundType);
+            if (category != null && category.clip != null)
+            {
+                return category.clip;
+            }
+            return null;
+        }
+
+        private SoundCategory GetSoundCategory(SoundType soundType)
+        {
+            foreach (SoundCategory category in soundCategories)
+            {
+                if (category.soundType == soundType)
+                    return category;
+            }
+            return null;
+        }
     }
 }

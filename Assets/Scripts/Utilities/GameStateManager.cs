@@ -10,6 +10,7 @@ using BlossomValley.LandSystem;
 using BlossomValley.PlayerSystem;
 using BlossomValley.SaveSystem;
 using BlossomValley.SceneTransitionSystem;
+using BlossomValley.SoundSystem;
 
 public class GameStateManager : MonoBehaviour, ITimeTracker
 {

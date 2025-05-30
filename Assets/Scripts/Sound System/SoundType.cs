@@ -1,10 +1,13 @@
-public enum SoundType
+namespace BlossomValley.SoundSystem
 {
-    BackgroundMusic,
-    AxeSwing,
-    PickaxeSwing,
-    ShovelSwing,
-    HoeSwing,
-    WateringCan,
-    Raining
+    public enum SoundType
+    {
+        BackgroundMusic,
+        AxeSwing,
+        PickaxeSwing,
+        ShovelSwing,
+        HoeSwing,
+        WateringCan,
+        Raining
+    }
 }
