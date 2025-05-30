@@ -1,14 +1,15 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class YesNoPrompt : MonoBehaviour
 {
-    [SerializeField] private Text promptText;
-    [SerializeField] private Text quantityText;
+    [SerializeField] private GameObject quantityControls;
+    [SerializeField] private TextMeshProUGUI quantityText;
+    [SerializeField] private TextMeshProUGUI promptText;
     [SerializeField] private Button plusButton;
     [SerializeField] private Button minusButton;
-    [SerializeField] private GameObject quantityControls;
 
     private Action onYesSelected = null;
     private Action<int> onYesSelectedWithQuantity = null;
