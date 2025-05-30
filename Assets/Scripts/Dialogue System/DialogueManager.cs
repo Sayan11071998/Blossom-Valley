@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,8 +10,8 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue Components")]
     [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private Text speakerText;
-    [SerializeField] private Text dialogueText;
+    [SerializeField] private TextMeshProUGUI speakerText;
+    [SerializeField] private TextMeshProUGUI dialogueText;
 
     private Queue<DialogueLine> dialogueQueue;
     private Action onDialogueEnd = null;
