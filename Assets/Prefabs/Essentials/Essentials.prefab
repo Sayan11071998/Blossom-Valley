@@ -5973,6 +5973,7 @@ GameObject:
   - component: {fileID: 722042198375827311}
   - component: {fileID: 5453764427447712582}
   - component: {fileID: 3683205796595805483}
+  - component: {fileID: 2754388676227977139}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -6170,6 +6171,30 @@ MonoBehaviour:
   shopListingManager: {fileID: 3510466779697730982}
   relationshipListingManager: {fileID: 1171188386237178667}
   animalRelationshipListingManager: {fileID: 2414124365579753146}
+--- !u!114 &2754388676227977139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7066737237370393318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e82f9ffc46310d24a912bef23d2ba1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rainParticleSystem: {fileID: 6079134604984494120}
+  isRaining: 0
+  rainStartHour: 14
+  rainStartMinute: 0
+  rainEndHour: 16
+  rainEndMinute: 0
+  springRainChance: 0.7
+  summerRainChance: 0.4
+  fallRainChance: 0.8
+  winterRainChance: 0.3
+  enableRandomRain: 1
+  randomRainCheckInterval: 60
 --- !u!1 &7066737237667664583
 GameObject:
   m_ObjectHideFlags: 0
@@ -7199,6 +7224,7 @@ Transform:
   - {fileID: 7066737237370393316}
   - {fileID: 7066737238543366418}
   - {fileID: 7066737239052532980}
+  - {fileID: 905831810138799253}
   - {fileID: 897453634797877301}
   - {fileID: 7066737239050260283}
   m_Father: {fileID: 0}
@@ -11667,6 +11693,86 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7566676008625367078, guid: 0f07ba9edc3821b4f88c3e0e72c6628c,
     type: 3}
   m_PrefabInstance: {fileID: 5574356551349134736}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6378622434123929229
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7066737238844265836}
+    m_Modifications:
+    - target: {fileID: 2600671804406516826, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_Name
+      value: Rain VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63bbd08e36b4eec438a8258c8ce95355, type: 3}
+--- !u!4 &905831810138799253 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6059384896409381400, guid: 63bbd08e36b4eec438a8258c8ce95355,
+    type: 3}
+  m_PrefabInstance: {fileID: 6378622434123929229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6079134604984494120 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 925498485588491941, guid: 63bbd08e36b4eec438a8258c8ce95355,
+    type: 3}
+  m_PrefabInstance: {fileID: 6378622434123929229}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6581822789031348071
 PrefabInstance:
