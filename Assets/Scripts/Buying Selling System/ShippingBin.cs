@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BlossomValley.GameStrings;
 using BlossomValley.InventorySystem;
+using BlossomValley.PlayerSystem;
 
 namespace BlossomValley.BuyingSellingSystem
 {

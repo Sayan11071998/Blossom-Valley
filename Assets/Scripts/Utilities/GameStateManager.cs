@@ -7,6 +7,7 @@ using BlossomValley.BuyingSellingSystem;
 using BlossomValley.CharacterSystem;
 using BlossomValley.CropSystem;
 using BlossomValley.LandSystem;
+using BlossomValley.PlayerSystem;
 
 public class GameStateManager : MonoBehaviour, ITimeTracker
 {

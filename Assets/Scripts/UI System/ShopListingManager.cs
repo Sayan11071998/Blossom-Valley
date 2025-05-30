@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using BlossomValley.InventorySystem;
+using BlossomValley.PlayerSystem;
 
 public class ShopListingManager : ListingManager<ItemData>
 {

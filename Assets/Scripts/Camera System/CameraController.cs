@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using BlossomValley.PlayerSystem;
 
 namespace BlossomValley.CameraSystem
 {

@@ -3,6 +3,7 @@ using UnityEngine;
 using BlossomValley.AnimalSystem;
 using BlossomValley.CharacterSystem;
 using BlossomValley.InventorySystem;
+using BlossomValley.PlayerSystem;
 
 public class UIController
 {
