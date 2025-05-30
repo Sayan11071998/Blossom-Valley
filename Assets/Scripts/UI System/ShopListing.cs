@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ShopListing : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private Image itemThumbnail;
-    [SerializeField] private Text nameText;
-    [SerializeField] private Text costText;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI costText;
 
     private ItemData itemData;
 

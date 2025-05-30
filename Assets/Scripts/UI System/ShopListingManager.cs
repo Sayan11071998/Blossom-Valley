@@ -1,4 +1,5 @@
 ﻿using BlossomValley.GameStrings;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +7,9 @@ public class ShopListingManager : ListingManager<ItemData>
 {
     [Header("Confirmation Screen")]
     [SerializeField] private GameObject confirmationScreen;
-    [SerializeField] private Text confirmationPrompt;
-    [SerializeField] private Text quantityText;
-    [SerializeField] private Text costCalculationText;
+    [SerializeField] private TextMeshProUGUI confirmationPrompt;
+    [SerializeField] private TextMeshProUGUI quantityText;
+    [SerializeField] private TextMeshProUGUI costCalculationText;
     [SerializeField] private Button purchaseButton;
 
     private ItemData itemToBuy;
