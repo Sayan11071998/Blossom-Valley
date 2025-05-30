@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using BlossomValley.GameStrings;
 using BlossomValley.DialogueSystem;
 using BlossomValley.InventorySystem;
+using BlossomValley.UISystem;
 
 namespace BlossomValley.CharacterSystem
 {

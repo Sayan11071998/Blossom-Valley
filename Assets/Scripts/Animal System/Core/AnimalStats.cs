@@ -2,6 +2,7 @@
 using System.Linq;
 using BlossomValley.GameStrings;
 using UnityEngine;
+using BlossomValley.UISystem;
 
 namespace BlossomValley.AnimalSystem
 {

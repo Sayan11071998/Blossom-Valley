@@ -5,25 +5,28 @@ using UnityEngine.UI;
 using BlossomValley.InventorySystem;
 using BlossomValley.PlayerSystem;
 
-public class ShopListing : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+namespace BlossomValley.UISystem
 {
-    [SerializeField] private Image itemThumbnail;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI costText;
-
-    private ItemData itemData;
-
-    public void Display(ItemData itemData)
+    public class ShopListing : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        this.itemData = itemData;
-        itemThumbnail.sprite = itemData.thumbnail;
-        nameText.text = itemData.name;
-        costText.text = itemData.cost + PlayerModel.CURRENCY;
+        [SerializeField] private Image itemThumbnail;
+        [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private TextMeshProUGUI costText;
+
+        private ItemData itemData;
+
+        public void Display(ItemData itemData)
+        {
+            this.itemData = itemData;
+            itemThumbnail.sprite = itemData.thumbnail;
+            nameText.text = itemData.name;
+            costText.text = itemData.cost + PlayerModel.CURRENCY;
+        }
+
+        public void OnPointerClick(PointerEventData eventData) => UIManager.Instance.shopListingManager.OpenConfirmationScreen(itemData);
+
+        public void OnPointerEnter(PointerEventData eventData) => UIManager.Instance.DisplayItemInfo(itemData);
+
+        public void OnPointerExit(PointerEventData eventData) => UIManager.Instance.DisplayItemInfo(null);
     }
-
-    public void OnPointerClick(PointerEventData eventData) => UIManager.Instance.shopListingManager.OpenConfirmationScreen(itemData);
-
-    public void OnPointerEnter(PointerEventData eventData) => UIManager.Instance.DisplayItemInfo(itemData);
-
-    public void OnPointerExit(PointerEventData eventData) => UIManager.Instance.DisplayItemInfo(null);
 }

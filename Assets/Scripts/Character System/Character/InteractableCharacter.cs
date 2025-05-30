@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using BlossomValley.InventorySystem;
+using BlossomValley.UISystem;
 
 namespace BlossomValley.CharacterSystem
 {

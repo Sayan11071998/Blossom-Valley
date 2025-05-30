@@ -3,6 +3,7 @@ using UnityEngine;
 using BlossomValley.DialogueSystem;
 using BlossomValley.InventorySystem;
 using BlossomValley.PlayerSystem;
+using BlossomValley.UISystem;
 
 namespace BlossomValley.BuyingSellingSystem
 {

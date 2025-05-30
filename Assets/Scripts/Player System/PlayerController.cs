@@ -1,6 +1,7 @@
 using UnityEngine;
 using BlossomValley.InventorySystem;
 using BlossomValley.LandSystem;
+using BlossomValley.UISystem;
 
 namespace BlossomValley.PlayerSystem
 {

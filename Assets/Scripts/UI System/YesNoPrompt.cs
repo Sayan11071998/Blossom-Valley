@@ -3,88 +3,91 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class YesNoPrompt : MonoBehaviour
+namespace BlossomValley.UISystem
 {
-    [SerializeField] private GameObject quantityControls;
-    [SerializeField] private TextMeshProUGUI quantityText;
-    [SerializeField] private TextMeshProUGUI promptText;
-    [SerializeField] private Button plusButton;
-    [SerializeField] private Button minusButton;
-
-    private Action onYesSelected = null;
-    private Action<int> onYesSelectedWithQuantity = null;
-
-    private int currentQuantity = 1;
-    private int maxQuantity = 1;
-
-    private void Start()
+    public class YesNoPrompt : MonoBehaviour
     {
-        plusButton.onClick.AddListener(IncreaseQuantity);
-        minusButton.onClick.AddListener(DecreaseQuantity);
-    }
+        [SerializeField] private GameObject quantityControls;
+        [SerializeField] private TextMeshProUGUI quantityText;
+        [SerializeField] private TextMeshProUGUI promptText;
+        [SerializeField] private Button plusButton;
+        [SerializeField] private Button minusButton;
 
-    public void CreatePrompt(string message, Action onYesSelectedAction)
-    {
-        onYesSelected = onYesSelectedAction;
-        onYesSelectedWithQuantity = null;
+        private Action onYesSelected = null;
+        private Action<int> onYesSelectedWithQuantity = null;
 
-        promptText.text = message;
-        quantityControls.SetActive(false);
-        gameObject.SetActive(true);
-    }
+        private int currentQuantity = 1;
+        private int maxQuantity = 1;
 
-    public void CreateQuantityPrompt(string message, int maxQuantityValue, Action<int> onYesSelectedWithQuantityValue)
-    {
-        onYesSelected = null;
-        onYesSelectedWithQuantity = onYesSelectedWithQuantityValue;
-        maxQuantity = maxQuantityValue;
-        currentQuantity = 1;
-
-        promptText.text = message;
-        UpdateQuantityDisplay();
-        quantityControls.SetActive(true);
-        gameObject.SetActive(true);
-    }
-
-    private void IncreaseQuantity()
-    {
-        if (currentQuantity < maxQuantity)
+        private void Start()
         {
-            currentQuantity++;
+            plusButton.onClick.AddListener(IncreaseQuantity);
+            minusButton.onClick.AddListener(DecreaseQuantity);
+        }
+
+        public void CreatePrompt(string message, Action onYesSelectedAction)
+        {
+            onYesSelected = onYesSelectedAction;
+            onYesSelectedWithQuantity = null;
+
+            promptText.text = message;
+            quantityControls.SetActive(false);
+            gameObject.SetActive(true);
+        }
+
+        public void CreateQuantityPrompt(string message, int maxQuantityValue, Action<int> onYesSelectedWithQuantityValue)
+        {
+            onYesSelected = null;
+            onYesSelectedWithQuantity = onYesSelectedWithQuantityValue;
+            maxQuantity = maxQuantityValue;
+            currentQuantity = 1;
+
+            promptText.text = message;
             UpdateQuantityDisplay();
+            quantityControls.SetActive(true);
+            gameObject.SetActive(true);
         }
-    }
 
-    private void DecreaseQuantity()
-    {
-        if (currentQuantity > 1)
+        private void IncreaseQuantity()
         {
-            currentQuantity--;
-            UpdateQuantityDisplay();
+            if (currentQuantity < maxQuantity)
+            {
+                currentQuantity++;
+                UpdateQuantityDisplay();
+            }
         }
-    }
 
-    private void UpdateQuantityDisplay()
-    {
-        quantityText.text = currentQuantity.ToString();
-        minusButton.interactable = currentQuantity > 1;
-        plusButton.interactable = currentQuantity < maxQuantity;
-    }
-
-    public void Answer(bool yes)
-    {
-        if (yes)
+        private void DecreaseQuantity()
         {
-            if (onYesSelected != null)
-                onYesSelected();
-            else if (onYesSelectedWithQuantity != null)
-                onYesSelectedWithQuantity(currentQuantity);
+            if (currentQuantity > 1)
+            {
+                currentQuantity--;
+                UpdateQuantityDisplay();
+            }
         }
 
-        onYesSelected = null;
-        onYesSelectedWithQuantity = null;
-        currentQuantity = 1;
-        maxQuantity = 1;
-        gameObject.SetActive(false);
+        private void UpdateQuantityDisplay()
+        {
+            quantityText.text = currentQuantity.ToString();
+            minusButton.interactable = currentQuantity > 1;
+            plusButton.interactable = currentQuantity < maxQuantity;
+        }
+
+        public void Answer(bool yes)
+        {
+            if (yes)
+            {
+                if (onYesSelected != null)
+                    onYesSelected();
+                else if (onYesSelectedWithQuantity != null)
+                    onYesSelectedWithQuantity(currentQuantity);
+            }
+
+            onYesSelected = null;
+            onYesSelectedWithQuantity = null;
+            currentQuantity = 1;
+            maxQuantity = 1;
+            gameObject.SetActive(false);
+        }
     }
 }

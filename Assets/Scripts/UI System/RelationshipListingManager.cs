@@ -3,24 +3,27 @@ using UnityEngine;
 using System.Linq;
 using BlossomValley.CharacterSystem;
 
-public class RelationshipListingManager : ListingManager<NPCRelationshipState>
+namespace BlossomValley.UISystem
 {
-    private List<CharacterScriptableObject> characters;
-
-    protected override void DisplayListing(NPCRelationshipState relationship, GameObject listingGameObject)
+    public class RelationshipListingManager : ListingManager<NPCRelationshipState>
     {
-        if (characters == null)
-            LoadAllCharacters();
+        private List<CharacterScriptableObject> characters;
 
-        CharacterScriptableObject characterData = GetCharacterDataFromString(relationship.name);
-        listingGameObject.GetComponent<NPCRelationshipListing>().Display(characterData, relationship);
-    }
+        protected override void DisplayListing(NPCRelationshipState relationship, GameObject listingGameObject)
+        {
+            if (characters == null)
+                LoadAllCharacters();
 
-    public CharacterScriptableObject GetCharacterDataFromString(string name) => characters.Find(i => i.name == name);
+            CharacterScriptableObject characterData = GetCharacterDataFromString(relationship.name);
+            listingGameObject.GetComponent<NPCRelationshipListing>().Display(characterData, relationship);
+        }
 
-    private void LoadAllCharacters()
-    {
-        CharacterScriptableObject[] characterDatabase = Resources.LoadAll<CharacterScriptableObject>("Characters");
-        characters = characterDatabase.ToList();
+        public CharacterScriptableObject GetCharacterDataFromString(string name) => characters.Find(i => i.name == name);
+
+        private void LoadAllCharacters()
+        {
+            CharacterScriptableObject[] characterDatabase = Resources.LoadAll<CharacterScriptableObject>("Characters");
+            characters = characterDatabase.ToList();
+        }
     }
 }

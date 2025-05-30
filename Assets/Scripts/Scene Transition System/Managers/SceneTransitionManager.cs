@@ -3,6 +3,7 @@ using System.Collections;
 using BlossomValley.PlayerSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using BlossomValley.UISystem;
 
 namespace BlossomValley.SceneTransitionSystem
 {

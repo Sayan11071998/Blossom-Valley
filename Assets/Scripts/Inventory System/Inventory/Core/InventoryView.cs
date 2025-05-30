@@ -1,4 +1,5 @@
 using UnityEngine;
+using BlossomValley.UISystem;
 
 namespace BlossomValley.InventorySystem
 {

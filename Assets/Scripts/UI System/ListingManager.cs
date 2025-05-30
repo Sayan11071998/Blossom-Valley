@@ -1,25 +1,28 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ListingManager<T> : MonoBehaviour
+namespace BlossomValley.UISystem
 {
-    public GameObject listingEntryPrefab;
-    public Transform listingGrid;
-
-    public void Render(List<T> listingItems)
+    public abstract class ListingManager<T> : MonoBehaviour
     {
-        if (listingGrid.childCount > 0)
+        public GameObject listingEntryPrefab;
+        public Transform listingGrid;
+
+        public void Render(List<T> listingItems)
         {
-            foreach (Transform child in listingGrid)
-                Destroy(child.gameObject);
+            if (listingGrid.childCount > 0)
+            {
+                foreach (Transform child in listingGrid)
+                    Destroy(child.gameObject);
+            }
+
+            foreach (T listingItem in listingItems)
+            {
+                GameObject listingGameObject = Instantiate(listingEntryPrefab, listingGrid);
+                DisplayListing(listingItem, listingGameObject);
+            }
         }
 
-        foreach (T listingItem in listingItems)
-        {
-            GameObject listingGameObject = Instantiate(listingEntryPrefab, listingGrid);
-            DisplayListing(listingItem, listingGameObject);
-        }
+        protected abstract void DisplayListing(T listingItem, GameObject listingGameObject);
     }
-
-    protected abstract void DisplayListing(T listingItem, GameObject listingGameObject);
 }

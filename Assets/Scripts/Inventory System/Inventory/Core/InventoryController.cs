@@ -1,3 +1,5 @@
+using BlossomValley.UISystem;
+
 namespace BlossomValley.InventorySystem
 {
     public class InventoryController
