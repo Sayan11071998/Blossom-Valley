@@ -121,6 +121,12 @@ public class LandController : ITimeTracker
 
     public void ClockUpdate(GameTimestamp timestamp)
     {
+        if (WeatherManager.Instance != null && WeatherManager.Instance.IsCurrentlyRaining())
+        {
+            if (landModel.landStatus == LandModel.LandStatus.Farmland && landModel.obstacleStatus == LandModel.FarmObstacleStatus.None)
+                SwitchLandStatus(LandModel.LandStatus.Watered);
+        }
+
         if (landModel.landStatus == LandModel.LandStatus.Watered)
         {
             int hoursElapsed = GameTimestamp.CompareTimestamps(landModel.timeWatered, timestamp);
@@ -128,7 +134,7 @@ public class LandController : ITimeTracker
             if (landModel.hasCrop)
                 landView.GrowCrop();
 
-            if (hoursElapsed > 24)
+            if (hoursElapsed > 24 && !(WeatherManager.Instance != null && WeatherManager.Instance.IsCurrentlyRaining()))
                 SwitchLandStatus(LandModel.LandStatus.Farmland);
         }
 
