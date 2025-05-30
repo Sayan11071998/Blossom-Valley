@@ -1,4 +1,5 @@
 ﻿using System;
+using BlossomValley.SaveSystem;
 
 namespace BlossomValley.InventorySystem
 {

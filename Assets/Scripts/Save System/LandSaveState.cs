@@ -1,27 +1,30 @@
 ﻿using BlossomValley.LandSystem;
 
-[System.Serializable]
-public struct LandSaveState
+namespace BlossomValley.SaveSystem
 {
-    public LandModel.LandStatus landStatus;
-    public GameTimestamp lastWatered;
-    public LandModel.FarmObstacleStatus obstacleStatus;
-
-    public LandSaveState(LandModel.LandStatus landStatusToSave, GameTimestamp lastWateredToSave, LandModel.FarmObstacleStatus obstacleStatusToSave)
+    [System.Serializable]
+    public struct LandSaveState
     {
-        landStatus = landStatusToSave;
-        lastWatered = lastWateredToSave;
-        obstacleStatus = obstacleStatusToSave;
-    }
+        public LandModel.LandStatus landStatus;
+        public GameTimestamp lastWatered;
+        public LandModel.FarmObstacleStatus obstacleStatus;
 
-    public void ClockUpdate(GameTimestamp timestamp)
-    {
-        if (landStatus == LandModel.LandStatus.Watered)
+        public LandSaveState(LandModel.LandStatus landStatusToSave, GameTimestamp lastWateredToSave, LandModel.FarmObstacleStatus obstacleStatusToSave)
         {
-            int hoursElapsed = GameTimestamp.CompareTimestamps(lastWatered, timestamp);
+            landStatus = landStatusToSave;
+            lastWatered = lastWateredToSave;
+            obstacleStatus = obstacleStatusToSave;
+        }
 
-            if (hoursElapsed > 24)
-                landStatus = LandModel.LandStatus.Farmland;
+        public void ClockUpdate(GameTimestamp timestamp)
+        {
+            if (landStatus == LandModel.LandStatus.Watered)
+            {
+                int hoursElapsed = GameTimestamp.CompareTimestamps(lastWatered, timestamp);
+
+                if (hoursElapsed > 24)
+                    landStatus = LandModel.LandStatus.Farmland;
+            }
         }
     }
 }

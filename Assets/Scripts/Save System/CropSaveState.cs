@@ -1,47 +1,50 @@
 ﻿using BlossomValley.CropSystem;
 using BlossomValley.InventorySystem;
 
-[System.Serializable]
-public struct CropSaveState
+namespace BlossomValley.SaveSystem
 {
-    public int landID;
-    public string seedToGrow;
-    public CropBehaviour.CropState cropState;
-    public int growth;
-    public int health;
-
-    public CropSaveState(int landIDData, string seedToGrowData, CropBehaviour.CropState cropStateData, int growthData, int healthData)
+    [System.Serializable]
+    public struct CropSaveState
     {
-        landID = landIDData;
-        seedToGrow = seedToGrowData;
-        cropState = cropStateData;
-        growth = growthData;
-        health = healthData;
-    }
+        public int landID;
+        public string seedToGrow;
+        public CropBehaviour.CropState cropState;
+        public int growth;
+        public int health;
 
-    public void Grow()
-    {
-        growth++;
+        public CropSaveState(int landIDData, string seedToGrowData, CropBehaviour.CropState cropStateData, int growthData, int healthData)
+        {
+            landID = landIDData;
+            seedToGrow = seedToGrowData;
+            cropState = cropStateData;
+            growth = growthData;
+            health = healthData;
+        }
 
-        SeedData seedInfo = (SeedData)InventoryManager.Instance.GetItemFromString(seedToGrow);
-        int maxGrowth = GameTimestamp.HoursToMinutes(GameTimestamp.DaysToHours(seedInfo.daysToGrow));
-        int maxHealth = GameTimestamp.HoursToMinutes(48);
+        public void Grow()
+        {
+            growth++;
 
-        if (health < maxHealth)
-            health++;
+            SeedData seedInfo = (SeedData)InventoryManager.Instance.GetItemFromString(seedToGrow);
+            int maxGrowth = GameTimestamp.HoursToMinutes(GameTimestamp.DaysToHours(seedInfo.daysToGrow));
+            int maxHealth = GameTimestamp.HoursToMinutes(48);
 
-        if (growth >= maxGrowth / 2 && cropState == CropBehaviour.CropState.Seed)
-            cropState = CropBehaviour.CropState.Seedling;
+            if (health < maxHealth)
+                health++;
 
-        if (growth >= maxGrowth && cropState == CropBehaviour.CropState.Seedling)
-            cropState = CropBehaviour.CropState.Harvestable;
-    }
+            if (growth >= maxGrowth / 2 && cropState == CropBehaviour.CropState.Seed)
+                cropState = CropBehaviour.CropState.Seedling;
 
-    public void Wither()
-    {
-        health--;
+            if (growth >= maxGrowth && cropState == CropBehaviour.CropState.Seedling)
+                cropState = CropBehaviour.CropState.Harvestable;
+        }
 
-        if (health <= 0 && cropState != CropBehaviour.CropState.Seed)
-            cropState = CropBehaviour.CropState.Wilted;
+        public void Wither()
+        {
+            health--;
+
+            if (health <= 0 && cropState != CropBehaviour.CropState.Seed)
+                cropState = CropBehaviour.CropState.Wilted;
+        }
     }
 }

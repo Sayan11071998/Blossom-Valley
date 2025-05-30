@@ -2,31 +2,34 @@
 using BlossomValley.IncubationSystem;
 using BlossomValley.LandSystem;
 
-[System.Serializable]
-public class FarmSaveState
+namespace BlossomValley.SaveSystem
 {
-    public List<LandSaveState> landData;
-    public List<CropSaveState> cropData;
-    public List<EggIncubationSaveState> eggsIncubating;
-
-    public FarmSaveState(List<LandSaveState> landDataValue, List<CropSaveState> cropDataValue, List<EggIncubationSaveState> eggsIncubatingValue)
+    [System.Serializable]
+    public class FarmSaveState
     {
-        landData = landDataValue;
-        cropData = cropDataValue;
-        eggsIncubating = eggsIncubatingValue;
-    }
+        public List<LandSaveState> landData;
+        public List<CropSaveState> cropData;
+        public List<EggIncubationSaveState> eggsIncubating;
 
-    public static FarmSaveState Export()
-    {
-        List<LandSaveState> landData = LandManager.farmData.Item1;
-        List<CropSaveState> cropData = LandManager.farmData.Item2;
-        List<EggIncubationSaveState> eggsIncubating = IncubationManager.eggsIncubating;
-        return new FarmSaveState(landData, cropData, eggsIncubating);
-    }
+        public FarmSaveState(List<LandSaveState> landDataValue, List<CropSaveState> cropDataValue, List<EggIncubationSaveState> eggsIncubatingValue)
+        {
+            landData = landDataValue;
+            cropData = cropDataValue;
+            eggsIncubating = eggsIncubatingValue;
+        }
 
-    public void LoadData()
-    {
-        LandManager.farmData = new System.Tuple<List<LandSaveState>, List<CropSaveState>>(landData, cropData);
-        IncubationManager.eggsIncubating = eggsIncubating;
+        public static FarmSaveState Export()
+        {
+            List<LandSaveState> landData = LandManager.farmData.Item1;
+            List<CropSaveState> cropData = LandManager.farmData.Item2;
+            List<EggIncubationSaveState> eggsIncubating = IncubationManager.eggsIncubating;
+            return new FarmSaveState(landData, cropData, eggsIncubating);
+        }
+
+        public void LoadData()
+        {
+            LandManager.farmData = new System.Tuple<List<LandSaveState>, List<CropSaveState>>(landData, cropData);
+            IncubationManager.eggsIncubating = eggsIncubating;
+        }
     }
 }
