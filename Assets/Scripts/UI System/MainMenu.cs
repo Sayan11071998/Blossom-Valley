@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using BlossomValley.AnimalSystem;
 using BlossomValley.IncubationSystem;
+using BlossomValley.CharacterSystem;
 
 public class MainMenu : MonoBehaviour
 {

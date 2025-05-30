@@ -4,6 +4,7 @@ using UnityEngine;
 using BlossomValley.AnimalSystem;
 using BlossomValley.IncubationSystem;
 using BlossomValley.BuyingSellingSystem;
+using BlossomValley.CharacterSystem;
 
 public class GameStateManager : MonoBehaviour, ITimeTracker
 {

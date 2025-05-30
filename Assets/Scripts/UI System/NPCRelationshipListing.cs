@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using BlossomValley.AnimalSystem;
+using BlossomValley.CharacterSystem;
 
 public class NPCRelationshipListing : MonoBehaviour
 {

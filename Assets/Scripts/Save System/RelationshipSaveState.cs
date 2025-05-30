@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BlossomValley.AnimalSystem;
+using BlossomValley.CharacterSystem;
 
 [System.Serializable]
 public class RelationshipSaveState
