@@ -1,9 +1,9 @@
 public enum SoundType
 {
     BackgroundMusic,
-    ButtonClick,
-    ItemPickup,
-    CoinCollect,
-    Purchase,
-    AnimalSound
+    AxeSwing,
+    PickaxeSwing,
+    ShovelSwing,
+    HoeSwing,
+    WateringCan
 }

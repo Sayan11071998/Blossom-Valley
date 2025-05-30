@@ -6372,7 +6372,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 275654097689097991}
   sfxSource: {fileID: 6822103139064015640}
-  soundCategories: []
+  soundCategories:
+  - soundType: 1
+    clip: {fileID: 8300000, guid: 1b8af4524b965f942b32716adf7bd937, type: 3}
+  - soundType: 2
+    clip: {fileID: 8300000, guid: f49d5cc2e2232e348b7570957750f3b7, type: 3}
+  - soundType: 3
+    clip: {fileID: 8300000, guid: d28a55e9dd7b45a4aa006949c69c1188, type: 3}
+  - soundType: 4
+    clip: {fileID: 8300000, guid: 747181b8f2bfb5b4a9efc0fb5c57eabf, type: 3}
+  - soundType: 5
+    clip: {fileID: 8300000, guid: 8dd754dffe7f24548b7c4d57811a0b98, type: 3}
 --- !u!1 &7066737237667664583
 GameObject:
   m_ObjectHideFlags: 0

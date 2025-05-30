@@ -17,9 +17,9 @@ public class SoundManager : MonoBehaviour
             Instance = this;
     }
 
-    public void PlayMusic(SoundType soundType, int clipIndex = 0)
+    public void PlayMusic(SoundType soundType)
     {
-        AudioClip clip = GetClip(soundType, clipIndex);
+        AudioClip clip = GetClip(soundType);
         if (clip != null)
         {
             musicSource.clip = clip;
@@ -28,22 +28,12 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(SoundType soundType, int clipIndex = 0)
+    public void PlaySFX(SoundType soundType)
     {
-        AudioClip clip = GetClip(soundType, clipIndex);
+        AudioClip clip = GetClip(soundType);
         if (clip != null)
         {
             sfxSource.PlayOneShot(clip);
-        }
-    }
-
-    public void PlayRandomSFX(SoundType soundType)
-    {
-        SoundCategory category = GetSoundCategory(soundType);
-        if (category != null && category.clips.Count > 0)
-        {
-            int randomIndex = Random.Range(0, category.clips.Count);
-            sfxSource.PlayOneShot(category.clips[randomIndex]);
         }
     }
 
@@ -52,12 +42,12 @@ public class SoundManager : MonoBehaviour
         musicSource.Stop();
     }
 
-    private AudioClip GetClip(SoundType soundType, int clipIndex)
+    private AudioClip GetClip(SoundType soundType)
     {
         SoundCategory category = GetSoundCategory(soundType);
-        if (category != null && clipIndex < category.clips.Count)
+        if (category != null && category.clip != null)
         {
-            return category.clips[clipIndex];
+            return category.clip;
         }
         return null;
     }
