@@ -1,4 +1,7 @@
-﻿public interface ITimeTracker
+﻿namespace BlossomValley.TimeSystem
 {
-    public void ClockUpdate(GameTimestamp timestamp);
+    public interface ITimeTracker
+    {
+        public void ClockUpdate(GameTimestamp timestamp);
+    }
 }

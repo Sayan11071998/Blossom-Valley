@@ -1,4 +1,6 @@
-﻿namespace BlossomValley.SaveSystem
+﻿using BlossomValley.TimeSystem;
+
+namespace BlossomValley.SaveSystem
 {
     [System.Serializable]
     public class GameSaveState

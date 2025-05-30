@@ -4,6 +4,7 @@ using BlossomValley.AnimalSystem;
 using BlossomValley.CharacterSystem;
 using BlossomValley.InventorySystem;
 using BlossomValley.PlayerSystem;
+using BlossomValley.TimeSystem;
 
 public class UIController
 {

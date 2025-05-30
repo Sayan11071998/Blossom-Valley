@@ -2,6 +2,7 @@
 using BlossomValley.DialogueSystem;
 using UnityEngine;
 using BlossomValley.InventorySystem;
+using BlossomValley.TimeSystem;
 
 namespace BlossomValley.CharacterSystem
 {

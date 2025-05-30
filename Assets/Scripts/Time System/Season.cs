@@ -1,7 +1,10 @@
-public enum Season
+namespace BlossomValley.TimeSystem
 {
-    Spring,
-    Summer,
-    Fall,
-    Winter
+    public enum Season
+    {
+        Spring,
+        Summer,
+        Fall,
+        Winter
+    }
 }

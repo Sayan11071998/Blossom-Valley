@@ -1,10 +1,13 @@
-public enum DayOfTheWeek
+namespace BlossomValley.TimeSystem
 {
-    Saturday,
-    Sunday,
-    Monday,
-    Tuesday,
-    Wednesday,
-    Thursday,
-    Friday
+    public enum DayOfTheWeek
+    {
+        Saturday,
+        Sunday,
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday
+    }
 }
