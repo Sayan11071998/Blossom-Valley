@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.IO;
+using BlossomValley.AnimalSystem;
+using BlossomValley.IncubationSystem;
 
 public class MainMenu : MonoBehaviour
 {

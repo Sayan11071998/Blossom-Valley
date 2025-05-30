@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BlossomValley.AnimalSystem;
 
 [System.Serializable]
 public class RelationshipSaveState

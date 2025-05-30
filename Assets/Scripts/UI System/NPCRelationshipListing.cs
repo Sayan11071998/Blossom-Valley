@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using BlossomValley.AnimalSystem;
 
 public class NPCRelationshipListing : MonoBehaviour
 {

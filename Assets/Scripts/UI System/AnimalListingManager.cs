@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using BlossomValley.AnimalSystem;
 
 public class AnimalListingManager : ListingManager<AnimalRelationshipState>
 {

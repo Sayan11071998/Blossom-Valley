@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BlossomValley.AnimalSystem;
+using BlossomValley.IncubationSystem;
 
 public class GameStateManager : MonoBehaviour, ITimeTracker
 {
