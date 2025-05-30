@@ -23,8 +23,8 @@ public class UIView : MonoBehaviour
 
     [Header("Item info box")]
     [SerializeField] public GameObject itemInfoBox;
-    [SerializeField] public Text itemNameText;
-    [SerializeField] public Text itemDescriptionText;
+    [SerializeField] public TextMeshProUGUI itemNameText;
+    [SerializeField] public TextMeshProUGUI itemDescriptionText;
 
     [Header("Screen Transitions")]
     [SerializeField] public GameObject fadeIn;
