@@ -5703,6 +5703,9 @@ MonoBehaviour:
   - {fileID: 6307108612941388451}
   - {fileID: 6965688034692043285}
   calendarHeader: {fileID: 467544823804482099}
+  allCharacters:
+  - {fileID: 11400000, guid: 6895767ffb23e1148a3483eaede408eb, type: 2}
+  - {fileID: 11400000, guid: 487452c243c016c46acc9a0f77b8f8eb, type: 2}
 --- !u!1 &4714632949752402087
 GameObject:
   m_ObjectHideFlags: 0
