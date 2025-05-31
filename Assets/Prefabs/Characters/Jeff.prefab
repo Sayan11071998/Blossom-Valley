@@ -1183,7 +1183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactText: Talk
-  offset: 1.5
+  offsetY: 3
+  offsetZ: 0
   item: {fileID: 0}
   onInteract:
     m_PersistentCalls:
