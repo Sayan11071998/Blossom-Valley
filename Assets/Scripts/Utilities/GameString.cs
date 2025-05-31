@@ -32,6 +32,7 @@ namespace BlossomValley.Utilities
         public const string MultiplyString = "x";
         public const string InsufficientFunds = "You do not have enough money to buy this item.";
         public const string CostCalculation = "{0}$ > {1}$";
+        public const string WantToSleepPrompt = "Do you want to sleep?";
         #endregion
 
         #region NPC Dialogue Prompts
