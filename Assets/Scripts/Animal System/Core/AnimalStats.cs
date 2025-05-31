@@ -19,7 +19,6 @@ namespace BlossomValley.AnimalSystem
             {
                 animalRelationships.Add(new AnimalRelationshipState(inputString, animalType));
             });
-
         }
 
         public static void LoadStats(List<AnimalRelationshipState> relationshipsToLoad)
