@@ -74,12 +74,12 @@ namespace BlossomValley.UISystem
 
         public void ToggleRelationshipPanel() => uiController.ToggleRelationshipPanel();
 
-        public void InteractPrompt(Transform item, string message, float offset)
+        public void InteractPrompt(Transform item, string message, float offsetY, float offsetZ)
         {
             if (!interactBubble.gameObject.activeInHierarchy)
                 interactBubble.gameObject.SetActive(true);
 
-            interactBubble.transform.position = item.transform.position + new Vector3(0, offset, 0);
+            interactBubble.transform.position = item.transform.position + new Vector3(0, offsetY, offsetZ);
             interactBubble.Display(message);
         }
 

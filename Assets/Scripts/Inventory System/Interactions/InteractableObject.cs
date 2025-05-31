@@ -7,7 +7,8 @@ namespace BlossomValley.InventorySystem
     public class InteractableObject : MonoBehaviour
     {
         [SerializeField] protected string interactText = "Interact";
-        [SerializeField] protected float offset = 1.5f;
+        [SerializeField] protected float offsetY = 1.5f;
+        [SerializeField] protected float offsetZ = 0f;
 
         public ItemData item;
         public UnityEvent onInteract = new UnityEvent();
@@ -21,7 +22,7 @@ namespace BlossomValley.InventorySystem
             Destroy(gameObject);
         }
 
-        public virtual void OnHover() => UIManager.Instance.InteractPrompt(transform, interactText, offset);
+        public virtual void OnHover() => UIManager.Instance.InteractPrompt(transform, interactText, offsetY, offsetZ);
 
         public virtual void OnMoveAway() => UIManager.Instance.DeactivateInteractPrompt();
     }
