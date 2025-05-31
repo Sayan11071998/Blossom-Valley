@@ -1182,6 +1182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6109bad1035b03d41bcf0c306deaf046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactText: Talk
+  offset: 1.5
   item: {fileID: 0}
   onInteract:
     m_PersistentCalls:
