@@ -5,6 +5,7 @@ using BlossomValley.CharacterSystem;
 using BlossomValley.InventorySystem;
 using BlossomValley.PlayerSystem;
 using BlossomValley.TimeSystem;
+using BlossomValley.Utilities;
 
 namespace BlossomValley.UISystem
 {
@@ -146,10 +147,10 @@ namespace BlossomValley.UISystem
         {
             int hours = timestamp.hour;
             int minutes = timestamp.minute;
-            string prefix = "AM ";
+            string prefix = GameString.AM; ;
             if (hours > 12)
             {
-                prefix = "PM ";
+                prefix = GameString.PM;
                 hours = hours - 12;
             }
             uiView.timeText.text = prefix + hours + ":" + minutes.ToString("00");
