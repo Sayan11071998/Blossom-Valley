@@ -49,7 +49,7 @@ namespace BlossomValley.IncubationSystem
                         manager.SpawnChickenNearIncubator(egg.incubatorID);
                     else
                     {
-                        AnimalData chickenData = AnimalStats.GetAnimalTypeFromString("Chicken");
+                        AnimalData chickenData = AnimalStats.GetAnimalTypeFromString(GameString.Chicken);
                         AnimalStats.StartAnimalCreation(chickenData);
                     }
                 }
@@ -63,7 +63,7 @@ namespace BlossomValley.IncubationSystem
                 Incubator incubator = incubators[incubatorID];
                 Vector3 incubatorPosition = incubator.transform.position;
 
-                AnimalData chickenData = AnimalStats.GetAnimalTypeFromString("Chicken");
+                AnimalData chickenData = AnimalStats.GetAnimalTypeFromString(GameString.Chicken);
 
                 string prompt = string.Format(GameString.AnimalNamingPrompt, chickenData.name);
                 UIManager.Instance.TriggerNamingPrompt(prompt, (inputString) =>

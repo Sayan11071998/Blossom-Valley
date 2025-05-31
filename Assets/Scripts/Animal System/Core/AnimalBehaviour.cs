@@ -1,5 +1,5 @@
-﻿using BlossomValley.Utilities;
-using UnityEngine;
+﻿using UnityEngine;
+using BlossomValley.Utilities;
 using BlossomValley.DialogueSystem;
 using BlossomValley.InventorySystem;
 using BlossomValley.UISystem;

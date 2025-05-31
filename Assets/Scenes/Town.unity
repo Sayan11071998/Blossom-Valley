@@ -2550,6 +2550,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084ee939f49c9c94cb3995f44dc829c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactText: Interact
+  offsetY: 1.5
+  offsetZ: 0
   item: {fileID: 11400000, guid: f9d2fa745dbb6df49a3b497f82890c1c, type: 2}
   onInteract:
     m_PersistentCalls:
@@ -5140,22 +5143,32 @@ PrefabInstance:
     - target: {fileID: 4436760016072262991, guid: 0a0ad57d056ea154089214ddefc65872,
         type: 3}
       propertyPath: m_Size.x
-      value: 0.80409384
+      value: 1.0420048
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436760016072262991, guid: 0a0ad57d056ea154089214ddefc65872,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.8207529
       objectReference: {fileID: 0}
     - target: {fileID: 4436760016072262991, guid: 0a0ad57d056ea154089214ddefc65872,
         type: 3}
       propertyPath: m_Size.z
-      value: 0.64427406
+      value: 0.5067647
       objectReference: {fileID: 0}
     - target: {fileID: 4436760016072262991, guid: 0a0ad57d056ea154089214ddefc65872,
         type: 3}
       propertyPath: m_Center.x
-      value: -0.09795322
+      value: 0.02100242
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436760016072262991, guid: 0a0ad57d056ea154089214ddefc65872,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.08962353
       objectReference: {fileID: 0}
     - target: {fileID: 4436760016072262991, guid: 0a0ad57d056ea154089214ddefc65872,
         type: 3}
       propertyPath: m_Center.z
-      value: -0.17786312
+      value: 0.05371154
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

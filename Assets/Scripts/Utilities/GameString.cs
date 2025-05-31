@@ -6,6 +6,7 @@ namespace BlossomValley.Utilities
         public const string Player = "Player";
         public const string Land = "Land";
         public const string Item = "Item";
+        public const string Chicken = "Chicken";
         #endregion
 
         #region Player
@@ -31,6 +32,9 @@ namespace BlossomValley.Utilities
         public const string MultiplyString = "x";
         public const string InsufficientFunds = "You do not have enough money to buy this item.";
         public const string CostCalculation = "{0}$ > {1}$";
+        public const string WantToSleepPrompt = "Do you want to sleep?";
+        public const string AM = "AM";
+        public const string PM = "PM";
         #endregion
 
         #region NPC Dialogue Prompts
@@ -44,6 +48,11 @@ namespace BlossomValley.Utilities
         public const string MoodHappy = "really happy today!";
         public const string MoodNeutral = "fine.";
         public const string MoodSad = "sad.";
+        #endregion
+
+        #region Calendar
+        public const string OrdinaryDay = "Just an ordinary day";
+        public const string CalendarHeader = "Year {0} {1}";
         #endregion
     }
 }

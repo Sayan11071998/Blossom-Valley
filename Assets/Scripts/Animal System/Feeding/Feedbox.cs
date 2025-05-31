@@ -6,8 +6,8 @@ namespace BlossomValley.AnimalSystem
 {
     public class Feedbox : InteractableObject
     {
-        public int id;
-        public GameObject displayFeed;
+        [SerializeField] public int id;
+        [SerializeField] private GameObject displayFeed;
 
         private bool containsFeed;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BlossomValley.Utilities;
 using UnityEngine;
+using BlossomValley.Utilities;
 using BlossomValley.UISystem;
 
 namespace BlossomValley.AnimalSystem
@@ -19,7 +19,6 @@ namespace BlossomValley.AnimalSystem
             {
                 animalRelationships.Add(new AnimalRelationshipState(inputString, animalType));
             });
-
         }
 
         public static void LoadStats(List<AnimalRelationshipState> relationshipsToLoad)

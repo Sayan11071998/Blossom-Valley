@@ -104,7 +104,8 @@ namespace BlossomValley.PlayerSystem
 
         public void Move(Vector3 velocity, Vector3 direction, bool isSprinting)
         {
-            controller.Move(velocity);
+            if (controller.enabled)
+                controller.Move(velocity);
 
             if (direction.magnitude >= 0.1f)
                 transform.rotation = Quaternion.LookRotation(direction);
