@@ -17,19 +17,12 @@ namespace BlossomValley.InventorySystem
             onInteract?.Invoke();
             InventoryManager.Instance.EquipHandSlot(item);
             InventoryManager.Instance.RenderHand();
-
-            // Deactivate prompt before destroying
             UIManager.Instance.DeactivateInteractPrompt();
             Destroy(gameObject);
         }
-        public virtual void OnHover()
-        {
-            UIManager.Instance.InteractPrompt(transform, interactText, offset);
-        }
 
-        public virtual void OnMoveAway()
-        {
-            UIManager.Instance.DeactivateInteractPrompt();
-        }
+        public virtual void OnHover() => UIManager.Instance.InteractPrompt(transform, interactText, offset);
+
+        public virtual void OnMoveAway() => UIManager.Instance.DeactivateInteractPrompt();
     }
 }

@@ -76,11 +76,8 @@ namespace BlossomValley.UISystem
 
         public void InteractPrompt(Transform item, string message, float offset)
         {
-            // Only activate if not already active to avoid redundant calls
             if (!interactBubble.gameObject.activeInHierarchy)
-            {
                 interactBubble.gameObject.SetActive(true);
-            }
 
             interactBubble.transform.position = item.transform.position + new Vector3(0, offset, 0);
             interactBubble.Display(message);
@@ -88,11 +85,8 @@ namespace BlossomValley.UISystem
 
         public void DeactivateInteractPrompt()
         {
-            // Only deactivate if currently active
             if (interactBubble.gameObject.activeInHierarchy)
-            {
                 interactBubble.gameObject.SetActive(false);
-            }
         }
     }
 }
