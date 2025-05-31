@@ -45,5 +45,10 @@ namespace BlossomValley.Utilities
         public const string MoodNeutral = "fine.";
         public const string MoodSad = "sad.";
         #endregion
+
+        #region Calendar
+        public const string OrdinaryDay = "Just an ordinary day";
+        public const string CalendarHeader = "Year {0} {1}";
+        #endregion
     }
 }

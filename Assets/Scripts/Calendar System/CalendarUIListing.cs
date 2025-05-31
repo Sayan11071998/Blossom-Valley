@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using BlossomValley.TimeSystem;
 using BlossomValley.CharacterSystem;
+using BlossomValley.Utilities;
 
 namespace BlossomValley.CalendarSystem
 {
@@ -19,7 +20,8 @@ namespace BlossomValley.CalendarSystem
         public void RenderCalendar(GameTimestamp timestamp)
         {
             this.timestamp = timestamp;
-            calendarHeader.text = "Year " + timestamp.year + " " + timestamp.season.ToString();
+            calendarHeader.text = string.Format(GameString.CalendarHeader, timestamp.year, timestamp.season.ToString());
+
 
             GameTimestamp seasonsTime = new GameTimestamp(timestamp.year, timestamp.season, 1, 0, 0);
             DayOfTheWeek firstDayOfSeason = seasonsTime.GetDayOfTheWeek();

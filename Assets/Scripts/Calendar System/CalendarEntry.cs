@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using BlossomValley.TimeSystem;
+using BlossomValley.Utilities;
 
 namespace BlossomValley.CalendarSystem
 {
@@ -65,7 +66,7 @@ namespace BlossomValley.CalendarSystem
             }
         }
 
-        public void Display(int date, DayOfTheWeek day) => Display(date, day, null, "Just an ordinary day");
+        public void Display(int date, DayOfTheWeek day) => Display(date, day, null, GameString.OrdinaryDay);
 
         public void EmptyEntry()
         {
