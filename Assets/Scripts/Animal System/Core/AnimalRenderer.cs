@@ -1,6 +1,6 @@
-﻿using BlossomValley.Utilities;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
+using BlossomValley.Utilities;
 
 namespace BlossomValley.AnimalSystem
 {

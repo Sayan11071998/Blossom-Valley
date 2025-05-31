@@ -1,5 +1,5 @@
-﻿using BlossomValley.CharacterSystem;
-using UnityEngine;
+﻿using UnityEngine;
+using BlossomValley.CharacterSystem;
 
 namespace BlossomValley.AnimalSystem
 {
