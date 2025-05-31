@@ -69,26 +69,19 @@ namespace BlossomValley.CharacterSystem
             return (today.day == birthday.day) && (today.season == birthday.season);
         }
 
-        // Method to find whose birthday it is on a given date
         public static CharacterScriptableObject WhoseBirthday(GameTimestamp timestamp)
         {
-            // Use FindObjectsByType to get all InteractableCharacter objects (returns array)
             InteractableCharacter[] allCharacters = Object.FindObjectsByType<InteractableCharacter>(FindObjectsSortMode.None);
 
             foreach (InteractableCharacter character in allCharacters)
             {
-                // Access the character data through public property
                 CharacterScriptableObject characterData = character.CharacterData;
 
-                if (characterData != null &&
-                    characterData.birthday.day == timestamp.day &&
-                    characterData.birthday.season == timestamp.season)
-                {
+                if (characterData != null && characterData.birthday.day == timestamp.day && characterData.birthday.season == timestamp.season)
                     return characterData;
-                }
             }
 
-            return null; // No birthday today
+            return null;
         }
     }
 }

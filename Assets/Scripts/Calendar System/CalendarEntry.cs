@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,31 +6,28 @@ using BlossomValley.TimeSystem;
 [RequireComponent(typeof(Image))]
 public class CalendarEntry : MonoBehaviour
 {
-    //The date
-    [SerializeField]
-    TextMeshProUGUI dateText;
-    [SerializeField]
-    Image icon;
-    //The colour of the entry
-    Image entry;
-    //The colours of the day
-    [SerializeField]
-    Color weekday, sat, sun, today;
-    public Season season; 
-    string eventDescription;
-    
-    // Start is called before the first frame update
+    [SerializeField] private TextMeshProUGUI dateText;
+    [SerializeField] private Image icon;
+    [SerializeField] private Color weekday;
+    [SerializeField] private Color sat;
+    [SerializeField] private Color sun;
+    [SerializeField] private Color today;
+
+    public Season season;
+
+    private Image entry;
+    private string eventDescription;
+
     void OnEnable()
     {
         icon.gameObject.SetActive(false);
         entry = GetComponent<Image>();
     }
 
-    //For days with special events
     public void Display(int date, DayOfTheWeek day, Sprite eventSprite, string eventDescription)
     {
         dateText.text = date.ToString();
-        Color colorToSet = weekday; 
+        Color colorToSet = weekday;
         switch (day)
         {
             case DayOfTheWeek.Saturday:
@@ -40,41 +35,35 @@ public class CalendarEntry : MonoBehaviour
                 break;
             case DayOfTheWeek.Sunday:
                 colorToSet = sun;
-                break; 
+                break;
             default:
                 colorToSet = weekday;
-                break; 
+                break;
         }
-        //Check if it's today
-        GameTimestamp today = TimeManager.Instance.GetGameTimestamp(); 
-        if(date == today.day && today.season == season)
-        {
-            colorToSet = this.today; 
-        }
+
+        GameTimestamp today = TimeManager.Instance.GetGameTimestamp();
+        if (date == today.day && today.season == season)
+            colorToSet = this.today;
 
         entry.color = colorToSet;
 
-        if(eventSprite != null)
+        if (eventSprite != null)
         {
             icon.gameObject.SetActive(true);
-            icon.sprite = eventSprite; 
-        } else
+            icon.sprite = eventSprite;
+        }
+        else
         {
             icon.gameObject.SetActive(false);
         }
+
         this.eventDescription = eventDescription;
     }
 
-    //For normal days
-    public void Display(int date, DayOfTheWeek day)
-    {
-        Display(date, day, null, "Just an ordinary day");
-    }
-
-    //For null entries
+    public void Display(int date, DayOfTheWeek day) => Display(date, day, null, "Just an ordinary day");
     public void EmptyEntry()
     {
-        entry.color = Color.clear; 
+        entry.color = Color.clear;
         dateText.text = "";
         icon.gameObject.SetActive(false);
     }

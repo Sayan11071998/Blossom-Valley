@@ -11,15 +11,14 @@ namespace BlossomValley.UISystem
 
         public enum Tab { Inventory, Relationships, Animals }
 
+        [SerializeField] private CalendarUIListing _calendar;
+
         private UIView uiView;
         private UIController uiController;
 
-        // Add calendar reference
-        [SerializeField] private CalendarUIListing _calendar;
-        public CalendarUIListing calendar => _calendar;
-
         public Tab selectedTab => uiView.selectedTab;
         public ShopListingManager shopListingManager => uiView.shopListingManager;
+        public CalendarUIListing calendar => _calendar;
 
         private void Awake()
         {
