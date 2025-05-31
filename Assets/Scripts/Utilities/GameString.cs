@@ -6,6 +6,7 @@ namespace BlossomValley.Utilities
         public const string Player = "Player";
         public const string Land = "Land";
         public const string Item = "Item";
+        public const string Chicken = "Chicken";
         #endregion
 
         #region Player
