@@ -10,6 +10,9 @@ namespace BlossomValley.UISystem
         [SerializeField] public GameObject menuScreen;
         [SerializeField] public UIManager.Tab selectedTab;
 
+        [Header("Calendar")]
+        [SerializeField] public CalendarUIListing calendar;
+
         [Header("Status Bar")]
         [SerializeField] public Image toolEquipSlot;
         [SerializeField] public TextMeshProUGUI toolQuantityText;
