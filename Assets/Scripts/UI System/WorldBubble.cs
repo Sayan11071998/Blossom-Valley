@@ -1,23 +1,17 @@
 ﻿using System.Collections;
-using BlossomValley.CameraSystem;
 using UnityEngine;
 
 namespace BlossomValley.UISystem
 {
-    public class WorldBubble : MonoBehaviour
+    public class WorldBubble : WorldUI
     {
 
         [SerializeField] private Animator speechAnimator;
-
-        private Transform cameraPos;
 
         public enum Emote
         {
             Happy, BadMood, Heart, Thinking, Sad
         }
-
-
-        private void Start() => cameraPos = FindAnyObjectByType<CameraController>().transform;
 
         public void Display(Emote mood)
         {
@@ -45,7 +39,5 @@ namespace BlossomValley.UISystem
         }
 
         private void OnDisable() => ResetAnimator();
-
-        private void Update() => transform.rotation = cameraPos.rotation;
     }
 }

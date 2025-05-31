@@ -70,20 +70,24 @@ namespace BlossomValley.PlayerSystem
                 {
                     LandView land = other.GetComponent<LandView>();
                     playerController.SelectLand(land);
+                    UIManager.Instance.DeactivateInteractPrompt();
                 }
                 else if (other.CompareTag(GameString.Item))
                 {
                     InteractableObject interactable = other.GetComponent<InteractableObject>();
                     playerController.SelectInteractable(interactable);
+                    interactable.OnHover();
                 }
                 else
                 {
                     playerController.Deselect();
+                    UIManager.Instance.DeactivateInteractPrompt();
                 }
             }
             else
             {
                 playerController.Deselect();
+                UIManager.Instance.DeactivateInteractPrompt();
             }
         }
 
