@@ -14,6 +14,10 @@ namespace BlossomValley.UISystem
         private UIView uiView;
         private UIController uiController;
 
+        // Add calendar reference
+        [SerializeField] private CalendarUIListing _calendar;
+        public CalendarUIListing calendar => _calendar;
+
         public Tab selectedTab => uiView.selectedTab;
         public ShopListingManager shopListingManager => uiView.shopListingManager;
 
