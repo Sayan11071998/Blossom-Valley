@@ -3,75 +3,78 @@ using UnityEngine.UI;
 using TMPro;
 using BlossomValley.TimeSystem;
 
-[RequireComponent(typeof(Image))]
-public class CalendarEntry : MonoBehaviour
+namespace BlossomValley.CalendarSystem
 {
-    [SerializeField] private TextMeshProUGUI dateText;
-    [SerializeField] private Image icon;
-    [SerializeField] private Color weekday;
-    [SerializeField] private Color sat;
-    [SerializeField] private Color sun;
-    [SerializeField] private Color today;
-
-    public Season season;
-
-    private Image entry;
-
-    void Awake()
+    [RequireComponent(typeof(Image))]
+    public class CalendarEntry : MonoBehaviour
     {
-        entry = GetComponent<Image>();
-    }
+        [SerializeField] private TextMeshProUGUI dateText;
+        [SerializeField] private Image icon;
+        [SerializeField] private Color weekday;
+        [SerializeField] private Color sat;
+        [SerializeField] private Color sun;
+        [SerializeField] private Color today;
 
-    public void Display(int date, DayOfTheWeek day, Sprite eventSprite, string eventDescription)
-    {
-        if (dateText != null)
-            dateText.text = date.ToString();
+        public Season season;
 
-        Color colorToSet = weekday;
+        private Image entry;
 
-        switch (day)
+        void Awake()
         {
-            case DayOfTheWeek.Saturday:
-                colorToSet = sat;
-                break;
-            case DayOfTheWeek.Sunday:
-                colorToSet = sun;
-                break;
-            default:
-                colorToSet = weekday;
-                break;
+            entry = GetComponent<Image>();
         }
 
-        GameTimestamp today = TimeManager.Instance.GetGameTimestamp();
-        if (date == today.day && today.season == season)
-            colorToSet = this.today;
-
-        if (entry != null)
-            entry.color = colorToSet;
-
-        if (icon != null)
+        public void Display(int date, DayOfTheWeek day, Sprite eventSprite, string eventDescription)
         {
-            if (eventSprite != null)
+            if (dateText != null)
+                dateText.text = date.ToString();
+
+            Color colorToSet = weekday;
+
+            switch (day)
             {
-                icon.gameObject.SetActive(true);
-                icon.sprite = eventSprite;
+                case DayOfTheWeek.Saturday:
+                    colorToSet = sat;
+                    break;
+                case DayOfTheWeek.Sunday:
+                    colorToSet = sun;
+                    break;
+                default:
+                    colorToSet = weekday;
+                    break;
             }
-            else
+
+            GameTimestamp today = TimeManager.Instance.GetGameTimestamp();
+            if (date == today.day && today.season == season)
+                colorToSet = this.today;
+
+            if (entry != null)
+                entry.color = colorToSet;
+
+            if (icon != null)
             {
+                if (eventSprite != null)
+                {
+                    icon.gameObject.SetActive(true);
+                    icon.sprite = eventSprite;
+                }
+                else
+                {
+                    icon.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        public void Display(int date, DayOfTheWeek day) => Display(date, day, null, "Just an ordinary day");
+
+        public void EmptyEntry()
+        {
+            if (entry != null)
+                entry.color = Color.clear;
+            if (dateText != null)
+                dateText.text = "";
+            if (icon != null)
                 icon.gameObject.SetActive(false);
-            }
         }
-    }
-
-    public void Display(int date, DayOfTheWeek day) => Display(date, day, null, "Just an ordinary day");
-
-    public void EmptyEntry()
-    {
-        if (entry != null)
-            entry.color = Color.clear;
-        if (dateText != null)
-            dateText.text = "";
-        if (icon != null)
-            icon.gameObject.SetActive(false);
     }
 }
