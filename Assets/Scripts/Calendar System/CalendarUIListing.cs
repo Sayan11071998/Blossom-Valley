@@ -24,10 +24,7 @@ namespace BlossomValley.CalendarSystem
             GameTimestamp seasonsTime = new GameTimestamp(timestamp.year, timestamp.season, 1, 0, 0);
             DayOfTheWeek firstDayOfSeason = seasonsTime.GetDayOfTheWeek();
 
-            int dayOfWeek = ((int)firstDayOfSeason + 1) % 7;
-            if (dayOfWeek == 0) dayOfWeek = 6;
-            else dayOfWeek -= 1;
-
+            int dayOfWeek = (int)firstDayOfSeason;
             int entryIndex = 0;
 
             for (int i = 0; i < dayOfWeek; i++, entryIndex++)
