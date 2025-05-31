@@ -716,16 +716,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Calendar
       objectReference: {fileID: 0}
-    - target: {fileID: 6265473988433061935, guid: e20f3e5dae63c4941b5ff7e648f0264b,
-        type: 3}
-      propertyPath: offset
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6265473988433061935, guid: e20f3e5dae63c4941b5ff7e648f0264b,
-        type: 3}
-      propertyPath: offsetZ
-      value: -0.8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
