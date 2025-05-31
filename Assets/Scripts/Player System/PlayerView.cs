@@ -70,20 +70,27 @@ namespace BlossomValley.PlayerSystem
                 {
                     LandView land = other.GetComponent<LandView>();
                     playerController.SelectLand(land);
+                    // Deactivate interact prompt when selecting land (not an interactable)
+                    UIManager.Instance.DeactivateInteractPrompt();
                 }
                 else if (other.CompareTag(GameString.Item))
                 {
                     InteractableObject interactable = other.GetComponent<InteractableObject>();
                     playerController.SelectInteractable(interactable);
+                    interactable.OnHover(); // This will activate the interact prompt
                 }
                 else
                 {
                     playerController.Deselect();
+                    // Deactivate interact prompt when not over any interactable
+                    UIManager.Instance.DeactivateInteractPrompt();
                 }
             }
             else
             {
                 playerController.Deselect();
+                // Deactivate interact prompt when raycast hits nothing
+                UIManager.Instance.DeactivateInteractPrompt();
             }
         }
 

@@ -4942,13 +4942,14 @@ GameObject:
   - component: {fileID: 5928951666137196209}
   - component: {fileID: 8577253744745984073}
   - component: {fileID: 5126043915837906803}
+  - component: {fileID: 2582529335610039162}
   m_Layer: 5
   m_Name: Interact Bubble Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &319108746347437563
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5032,6 +5033,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2582529335610039162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3460316474568679537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1835a5540bbe7f74c962e6730f05bbcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageText: {fileID: 5073189253556315213}
 --- !u!1 &3558466523718194139
 GameObject:
   m_ObjectHideFlags: 0
@@ -8490,6 +8504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022ccb95c621d8743b199d97cda34983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactBubble: {fileID: 2582529335610039162}
 --- !u!114 &7066737237370393322
 MonoBehaviour:
   m_ObjectHideFlags: 0

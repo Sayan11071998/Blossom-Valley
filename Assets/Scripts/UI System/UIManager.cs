@@ -12,6 +12,8 @@ namespace BlossomValley.UISystem
 
         public enum Tab { Inventory, Relationships, Animals }
 
+        [SerializeField] private InteractBubble interactBubble;
+
         private UIView uiView;
         private UIController uiController;
 
@@ -37,6 +39,7 @@ namespace BlossomValley.UISystem
             uiController.RenderPlayerStats();
             uiController.DisplayItemInfo(null);
             TimeManager.Instance.RegisterTracker(this);
+            DeactivateInteractPrompt();
         }
 
         public void TriggerNamingPrompt(string message, System.Action<string> onConfirmCallback) => uiController.TriggerNamingPrompt(message, onConfirmCallback);
@@ -70,5 +73,26 @@ namespace BlossomValley.UISystem
         public void OpenShop(List<ItemData> shopItems) => uiController.OpenShop(shopItems);
 
         public void ToggleRelationshipPanel() => uiController.ToggleRelationshipPanel();
+
+        public void InteractPrompt(Transform item, string message, float offset)
+        {
+            // Only activate if not already active to avoid redundant calls
+            if (!interactBubble.gameObject.activeInHierarchy)
+            {
+                interactBubble.gameObject.SetActive(true);
+            }
+
+            interactBubble.transform.position = item.transform.position + new Vector3(0, offset, 0);
+            interactBubble.Display(message);
+        }
+
+        public void DeactivateInteractPrompt()
+        {
+            // Only deactivate if currently active
+            if (interactBubble.gameObject.activeInHierarchy)
+            {
+                interactBubble.gameObject.SetActive(false);
+            }
+        }
     }
 }
