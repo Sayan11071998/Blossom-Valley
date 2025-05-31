@@ -1,6 +1,7 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using BlossomValley.CalendarSystem;
 
 namespace BlossomValley.UISystem
 {
@@ -9,6 +10,9 @@ namespace BlossomValley.UISystem
         [Header("Screen Management")]
         [SerializeField] public GameObject menuScreen;
         [SerializeField] public UIManager.Tab selectedTab;
+
+        [Header("Calendar")]
+        [SerializeField] public CalendarUIListing calendar;
 
         [Header("Status Bar")]
         [SerializeField] public Image toolEquipSlot;

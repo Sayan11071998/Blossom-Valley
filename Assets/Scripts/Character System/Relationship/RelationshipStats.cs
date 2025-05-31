@@ -68,5 +68,20 @@ namespace BlossomValley.CharacterSystem
             GameTimestamp today = TimeManager.Instance.GetGameTimestamp();
             return (today.day == birthday.day) && (today.season == birthday.season);
         }
+
+        public static CharacterScriptableObject WhoseBirthday(GameTimestamp timestamp)
+        {
+            InteractableCharacter[] allCharacters = Object.FindObjectsByType<InteractableCharacter>(FindObjectsSortMode.None);
+
+            foreach (InteractableCharacter character in allCharacters)
+            {
+                CharacterScriptableObject characterData = character.CharacterData;
+
+                if (characterData != null && characterData.birthday.day == timestamp.day && characterData.birthday.season == timestamp.season)
+                    return characterData;
+            }
+
+            return null;
+        }
     }
 }

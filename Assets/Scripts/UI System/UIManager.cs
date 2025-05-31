@@ -2,6 +2,7 @@
 using UnityEngine;
 using BlossomValley.InventorySystem;
 using BlossomValley.TimeSystem;
+using BlossomValley.CalendarSystem;
 
 namespace BlossomValley.UISystem
 {
@@ -16,6 +17,7 @@ namespace BlossomValley.UISystem
 
         public Tab selectedTab => uiView.selectedTab;
         public ShopListingManager shopListingManager => uiView.shopListingManager;
+        public CalendarUIListing calendar => uiView.calendar;
 
         private void Awake()
         {

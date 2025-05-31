@@ -14,6 +14,8 @@ namespace BlossomValley.CharacterSystem
         private DefaultDialogueStrategy defaultStrategy;
         private GiftDialogueStrategy giftStrategy;
 
+        public CharacterScriptableObject CharacterData => characterData;
+
         private void Start()
         {
             relationship = RelationshipStats.GetRelationship(characterData);
