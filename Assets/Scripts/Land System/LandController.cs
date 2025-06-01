@@ -4,6 +4,7 @@ using BlossomValley.SoundSystem;
 using BlossomValley.TimeSystem;
 using BlossomValley.UISystem;
 using BlossomValley.WeatherSystem;
+using UnityEngine;
 
 namespace BlossomValley.LandSystem
 {
@@ -97,16 +98,7 @@ namespace BlossomValley.LandSystem
 
                 case EquipmentData.ToolType.Shovel:
                     SoundManager.Instance.PlaySFX(SoundType.ShovelSwing);
-
-                    if (landModel.hasCrop)
-                    {
-                        landView.RemoveCrop();
-                        landModel.SetCropState(false);
-                    }
-                    else if (landModel.CanRemoveObstacle(LandModel.FarmObstacleStatus.Weeds))
-                    {
-                        SetObstacleStatus(LandModel.FarmObstacleStatus.None);
-                    }
+                    HandleShovelInteraction();
                     break;
 
                 case EquipmentData.ToolType.Axe:
@@ -121,6 +113,29 @@ namespace BlossomValley.LandSystem
                         SetObstacleStatus(LandModel.FarmObstacleStatus.None);
                     break;
             }
+        }
+
+        private void HandleShovelInteraction()
+        {
+            CropBehaviour cropOnLand = landView.GetComponentInChildren<CropBehaviour>();
+
+            if (cropOnLand != null)
+            {
+                landView.RemoveCrop();
+                landModel.SetCropState(false);
+                LandManager.Instance.OnLandStateChange(landModel.id, landModel.landStatus, landModel.timeWatered, landModel.obstacleStatus);
+                return;
+            }
+
+            if (landModel.hasCrop)
+            {
+                landModel.SetCropState(false);
+                LandManager.Instance.OnLandStateChange(landModel.id, landModel.landStatus, landModel.timeWatered, landModel.obstacleStatus);
+                return;
+            }
+
+            if (landModel.CanRemoveObstacle(LandModel.FarmObstacleStatus.Weeds))
+                SetObstacleStatus(LandModel.FarmObstacleStatus.None);
         }
 
         private void HandleSeedInteraction(SeedData seedTool)
