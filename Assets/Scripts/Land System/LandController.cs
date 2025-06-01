@@ -118,33 +118,24 @@ namespace BlossomValley.LandSystem
         private void HandleShovelInteraction()
         {
             CropBehaviour cropOnLand = landView.GetComponentInChildren<CropBehaviour>();
-            
+
             if (cropOnLand != null)
             {
-                Debug.Log($"Shovel: Found crop on land {landModel.id}, removing it. Crop state: {cropOnLand.cropState}");
                 landView.RemoveCrop();
                 landModel.SetCropState(false);
                 LandManager.Instance.OnLandStateChange(landModel.id, landModel.landStatus, landModel.timeWatered, landModel.obstacleStatus);
                 return;
             }
-            
+
             if (landModel.hasCrop)
             {
-                Debug.LogWarning($"Shovel: Land {landModel.id} has hasCrop=true but no crop GameObject found. Fixing desync.");
                 landModel.SetCropState(false);
                 LandManager.Instance.OnLandStateChange(landModel.id, landModel.landStatus, landModel.timeWatered, landModel.obstacleStatus);
                 return;
             }
-            
+
             if (landModel.CanRemoveObstacle(LandModel.FarmObstacleStatus.Weeds))
-            {
-                Debug.Log($"Shovel: Removing weeds from land {landModel.id}");
                 SetObstacleStatus(LandModel.FarmObstacleStatus.None);
-            }
-            else
-            {
-                Debug.Log($"Shovel: Nothing to remove on land {landModel.id}. HasCrop: {landModel.hasCrop}, Obstacle: {landModel.obstacleStatus}");
-            }
         }
 
         private void HandleSeedInteraction(SeedData seedTool)
