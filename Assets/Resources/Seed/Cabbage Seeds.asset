@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Cabbage Seeds
   m_EditorClassIdentifier: 
   description: Seeds to grow cabbages
-  thumbnail: {fileID: -5839387938066880692, guid: 01531636b360a184ebafe28cd155ef35,
-    type: 3}
+  thumbnail: {fileID: 886423002, guid: 040be57890032874eb5605985a0d2b29, type: 3}
   gameModel: {fileID: 0}
   cost: 200
   daysToGrow: 3
