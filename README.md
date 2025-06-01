@@ -294,7 +294,6 @@ Building Blossom Valley has been a labor of love—combining relaxing farming lo
 There’s always room to evolve—perhaps add fishing, cooking, advanced livestock genetics, or multiplayer co-op. Feedback and collaboration are welcome—let’s cultivate Blossom Valley together and watch our communities flourish! 🌸
 
 [![Watch the video](https://img.youtube.com/vi/AS5MBmQLmX4/maxresdefault.jpg)](https://youtu.be/AS5MBmQLmX4)
-
 ### [Gameplay Video](https://youtu.be/AS5MBmQLmX4)
 
 ![Image](https://github.com/user-attachments/assets/e4484a17-2a1a-4560-be55-1a2057832b94)
