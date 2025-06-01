@@ -48,14 +48,7 @@ namespace BlossomValley.LandSystem
             }
         }
 
-        private void OnDestroy()
-        {
-            farmData = new Tuple<List<LandSaveState>, List<CropSaveState>>(landData, cropData);
-            cropData.ForEach((CropSaveState crop) =>
-            {
-                Debug.Log(crop.seedToGrow);
-            });
-        }
+        private void OnDestroy() => farmData = new Tuple<List<LandSaveState>, List<CropSaveState>>(landData, cropData);
 
         private void RegisterLandPlots()
         {
@@ -103,7 +96,6 @@ namespace BlossomValley.LandSystem
             {
                 LandView landToPlant = landPlots[cropSave.landID];
                 CropBehaviour cropToPlant = landToPlant.SpawnCrop();
-                Debug.Log(cropToPlant.gameObject);
                 SeedData seedToGrow = (SeedData)InventoryManager.Instance.GetItemFromString(cropSave.seedToGrow);
                 cropToPlant.LoadCrop(cropSave.landID, seedToGrow, cropSave.cropState, cropSave.growth, cropSave.health);
             }

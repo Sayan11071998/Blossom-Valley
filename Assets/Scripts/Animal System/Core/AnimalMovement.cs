@@ -13,6 +13,7 @@ namespace BlossomValley.AnimalSystem
         private NavMeshAgent agent;
         private float cooldownTimer;
         private Vector3 centerPoint;
+        private Bounds roomBounds;
 
         private void Start()
         {
@@ -35,6 +36,8 @@ namespace BlossomValley.AnimalSystem
             useSpawnPointAsCenter = true;
         }
 
+        public void SetRoomBounds(Bounds bounds) => roomBounds = bounds;
+
         private void Wander()
         {
             if (cooldownTimer > 0)
@@ -47,18 +50,37 @@ namespace BlossomValley.AnimalSystem
 
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                Vector3 randomDirection = Random.insideUnitSphere * wanderRadius;
+                Vector3 targetPos = GetValidWanderPosition();
 
+                if (targetPos != Vector3.zero)
+                {
+                    agent.SetDestination(targetPos);
+                    cooldownTimer = cooldownTime;
+                }
+            }
+        }
+
+        private Vector3 GetValidWanderPosition()
+        {
+            int maxAttempts = 10;
+
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                Vector3 randomDirection = Random.insideUnitSphere * wanderRadius;
                 Vector3 wanderCenter = useSpawnPointAsCenter ? centerPoint : transform.position;
                 randomDirection += wanderCenter;
 
                 NavMeshHit hit;
-                NavMesh.SamplePosition(randomDirection, out hit, wanderRadius, NavMesh.AllAreas);
+                if (NavMesh.SamplePosition(randomDirection, out hit, wanderRadius, NavMesh.AllAreas))
+                {
+                    Vector3 potentialTarget = hit.position;
 
-                Vector3 targetPos = hit.position;
-                agent.SetDestination(targetPos);
-                cooldownTimer = cooldownTime;
+                    if (roomBounds.size == Vector3.zero || roomBounds.Contains(potentialTarget))
+                        return potentialTarget;
+                }
             }
+
+            return Vector3.zero;
         }
     }
 }

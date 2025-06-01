@@ -28,6 +28,11 @@ namespace BlossomValley.AnimalSystem
 
                     AnimalBehaviour animal = Instantiate(animalType.animalObject, spawnPt, randomRotation);
                     animal.LoadRelationship(animalRelation);
+
+                    AnimalMovement movement = animal.GetComponent<AnimalMovement>();
+
+                    if (movement != null)
+                        movement.SetRoomBounds(bounds);
                 }
             }
         }
