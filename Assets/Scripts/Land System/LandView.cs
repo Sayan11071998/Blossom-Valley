@@ -114,6 +114,13 @@ namespace BlossomValley.LandSystem
                 cropPlanted.RemoveCrop();
                 cropPlanted = null;
             }
+
+            CropBehaviour[] remainingCrops = GetComponentsInChildren<CropBehaviour>();
+            foreach (CropBehaviour crop in remainingCrops)
+            {
+                if (crop != null)
+                    crop.RemoveCrop();
+            }
         }
 
         public void GrowCrop()
@@ -137,9 +144,6 @@ namespace BlossomValley.LandSystem
         public GameTimestamp TimeWatered => controller?.TimeWatered ?? new GameTimestamp(0, Season.Spring, 1, 0, 0);
         public bool HasCrop => controller?.HasCrop ?? false;
 
-        private void OnDestroy()
-        {
-            controller?.Dispose();
-        }
+        private void OnDestroy() => controller?.Dispose();
     }
 }
