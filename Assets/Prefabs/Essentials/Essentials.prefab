@@ -8463,25 +8463,25 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 15e2cfe31657fbc4d90ea40ceb0cceb3, type: 2}
     quantity: 1
   - itemData: {fileID: 11400000, guid: f9d2fa745dbb6df49a3b497f82890c1c, type: 2}
-    quantity: 5
+    quantity: 10
   - itemData: {fileID: 11400000, guid: ad5bbed7903bbd549a8dd1de912c3ea3, type: 2}
-    quantity: 5
-  - itemData: {fileID: 11400000, guid: 28fb2d0841b606b43a643e0c9bd9bf57, type: 2}
-    quantity: 50
+    quantity: 10
+  - itemData: {fileID: 0}
+    quantity: 0
   equippedToolSlot:
     itemData: {fileID: 0}
     quantity: 0
   itemSlots:
   - itemData: {fileID: 11400000, guid: 7c5d10f9731296d4f995bc32cb72b1fe, type: 2}
-    quantity: 5
+    quantity: 10
   - itemData: {fileID: 11400000, guid: 6abe74226a59b9944aa054d8f314b29a, type: 2}
-    quantity: 5
+    quantity: 10
   - itemData: {fileID: 11400000, guid: 98eb918a7759b0d4fa2f2eb75bc79fcb, type: 2}
-    quantity: 5
+    quantity: 10
   - itemData: {fileID: 11400000, guid: cf9fc427e8129774bb161e27e8675c8e, type: 2}
-    quantity: 5
-  - itemData: {fileID: 0}
-    quantity: 0
+    quantity: 10
+  - itemData: {fileID: 11400000, guid: 28fb2d0841b606b43a643e0c9bd9bf57, type: 2}
+    quantity: 50
   - itemData: {fileID: 0}
     quantity: 0
   - itemData: {fileID: 0}

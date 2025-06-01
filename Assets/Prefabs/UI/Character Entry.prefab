@@ -979,8 +979,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7566676008625367078}
   - component: {fileID: 2973122329987777244}
-  - component: {fileID: 1459939705300572379}
   - component: {fileID: 7395173831188534316}
+  - component: {fileID: 1459939705300572379}
   m_Layer: 0
   m_Name: Character Entry
   m_TagString: Untagged
@@ -1018,35 +1018,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7745787540117570371}
   m_CullTransparentMesh: 0
---- !u!114 &1459939705300572379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7745787540117570371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01be5848c2af7ae48b47eb5946f7c0d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyHeart: {fileID: -1570706341672696080, guid: 0cbc27f63fd87e94e91c6a947a97c043,
-    type: 3}
-  fullHeart: {fileID: 6843057265549551641, guid: 0cbc27f63fd87e94e91c6a947a97c043,
-    type: 3}
-  portraitImage: {fileID: 4133365530523325871}
-  nameText: {fileID: 6514818646512375514}
-  hearts:
-  - {fileID: 5652132693133650804}
-  - {fileID: 731653600151984745}
-  - {fileID: 2204526296190157568}
-  - {fileID: 2901463676627952535}
-  - {fileID: 4115072562087496033}
-  - {fileID: 565195114961247959}
-  - {fileID: 3875721358405750171}
-  - {fileID: 10381342781791692}
-  - {fileID: 5689703867516008310}
-  - {fileID: 1045899865981214230}
 --- !u!114 &7395173831188534316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,6 +1048,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1459939705300572379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7745787540117570371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01be5848c2af7ae48b47eb5946f7c0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptyHeart: {fileID: -1570706341672696080, guid: 0cbc27f63fd87e94e91c6a947a97c043,
+    type: 3}
+  fullHeart: {fileID: 6843057265549551641, guid: 0cbc27f63fd87e94e91c6a947a97c043,
+    type: 3}
+  portraitImage: {fileID: 4133365530523325871}
+  nameText: {fileID: 6514818646512375514}
+  hearts:
+  - {fileID: 5652132693133650804}
+  - {fileID: 731653600151984745}
+  - {fileID: 2204526296190157568}
+  - {fileID: 2901463676627952535}
+  - {fileID: 4115072562087496033}
+  - {fileID: 565195114961247959}
+  - {fileID: 3875721358405750171}
+  - {fileID: 10381342781791692}
+  - {fileID: 5689703867516008310}
+  - {fileID: 1045899865981214230}
 --- !u!1 &9098456863819314112
 GameObject:
   m_ObjectHideFlags: 0

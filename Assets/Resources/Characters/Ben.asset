@@ -15,9 +15,9 @@ MonoBehaviour:
   portrait: {fileID: 6396991915197283624, guid: c4f6b59ad21af474fa6e242d1aee1583,
     type: 3}
   birthday:
+    season: 3
     year: 0
-    season: 0
-    day: 5
+    day: 13
     hour: 0
     minute: 0
   likes:
@@ -37,10 +37,10 @@ MonoBehaviour:
     message: Have a nice day!
   likedGiftDialogue:
   - speaker: Ben
-    message: I really like this, thanks!
+    message: Wpw! I really like this, thanks!
   dislikedGiftDialogue:
   - speaker: Ben
-    message: 'This isn''t quite what I like. '
+    message: This isn't quite what I like. Thank you though.
   neutralGiftDialogue:
   - speaker: Ben
     message: For me? Don't mind if I do!
