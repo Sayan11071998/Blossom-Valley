@@ -37,7 +37,7 @@ namespace BlossomValley.PlayerSystem
             HandleMovementInput();
             HandleInteractionInput();
             HandleRaycastSelection();
-            HandleCheatShortcuts(); // For testing, remove later
+            // HandleCheatShortcuts(); // For testing, remove later
         }
 
         private void HandleMovementInput()
@@ -91,16 +91,16 @@ namespace BlossomValley.PlayerSystem
             }
         }
 
-        // Delete Before Final Build
-        private void HandleCheatShortcuts()
-        {
-            if (Input.GetKey(KeyCode.RightBracket))
-                TimeManager.Instance.Tick();
+        // // Delete Before Final Build
+        // private void HandleCheatShortcuts()
+        // {
+        //     if (Input.GetKey(KeyCode.RightBracket))
+        //         TimeManager.Instance.Tick();
 
-            if (Input.GetKeyDown(KeyCode.R))
-                UIManager.Instance.ToggleRelationshipPanel();
-        }
-        //
+        //     if (Input.GetKeyDown(KeyCode.R))
+        //         UIManager.Instance.ToggleRelationshipPanel();
+        // }
+        // //
 
         public void Move(Vector3 velocity, Vector3 direction, bool isSprinting)
         {
