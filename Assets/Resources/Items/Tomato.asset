@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Tomato
   m_EditorClassIdentifier: 
   description: Technically a fruit
-  thumbnail: {fileID: 8515852673137835333, guid: f949b641c023682449ac83cf35d5142e,
-    type: 3}
+  thumbnail: {fileID: 1702477020, guid: 7ceaf21ee6c523d4281e37ceac4f2193, type: 3}
   gameModel: {fileID: 1512752944282187300, guid: 6ee913c07e56fe743a6392d04c18a26a,
     type: 3}
-  cost: 150
+  cost: 60

@@ -15,14 +15,15 @@ MonoBehaviour:
   portrait: {fileID: 6160822650818915116, guid: c4f6b59ad21af474fa6e242d1aee1583,
     type: 3}
   birthday:
-    year: 0
     season: 0
+    year: 0
     day: 6
     hour: 0
     minute: 0
   likes:
   - {fileID: 11400000, guid: 7c5d10f9731296d4f995bc32cb72b1fe, type: 2}
-  dislikes: []
+  dislikes:
+  - {fileID: 11400000, guid: cf9fc427e8129774bb161e27e8675c8e, type: 2}
   onFirstMeet:
   - speaker: Jeff
     message: Are you the new farmer?

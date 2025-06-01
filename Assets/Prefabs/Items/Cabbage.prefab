@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8554979865546078707}
   - component: {fileID: 8554979865542687187}
   - component: {fileID: 8554979865543785235}
-  - component: {fileID: 784992686637038434}
   - component: {fileID: 8378838730965783952}
+  - component: {fileID: 784992686637038434}
   m_Layer: 8
   m_Name: Cabbage
   m_TagString: Item
@@ -88,24 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &784992686637038434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8554979865545778643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878a31137e54e4c4483d34ffb8731348, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactText: Plow
-  offset: 1.5
-  item: {fileID: 11400000, guid: 7c5d10f9731296d4f995bc32cb72b1fe, type: 2}
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!64 &8378838730965783952
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -128,3 +110,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0f50786d35eebcf44805f9d5fb326c11, type: 3}
+--- !u!114 &784992686637038434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8554979865545778643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878a31137e54e4c4483d34ffb8731348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactText: Plow
+  offsetY: 1.5
+  offsetZ: 0
+  item: {fileID: 11400000, guid: 7c5d10f9731296d4f995bc32cb72b1fe, type: 2}
+  onInteract:
+    m_PersistentCalls:
+      m_Calls: []

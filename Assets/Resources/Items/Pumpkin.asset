@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Pumpkin
   m_EditorClassIdentifier: 
   description: A pumpkin
-  thumbnail: {fileID: -9060249988324837321, guid: f949b641c023682449ac83cf35d5142e,
-    type: 3}
+  thumbnail: {fileID: 1374905901, guid: 553651d7288eb7c47a80d4dae37ad236, type: 3}
   gameModel: {fileID: 1000012003911730, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
-  cost: 600
+  cost: 70
