@@ -293,6 +293,13 @@ Building Blossom Valley has been a labor of love—combining relaxing farming lo
 
 There’s always room to evolve—perhaps add fishing, cooking, advanced livestock genetics, or multiplayer co-op. Feedback and collaboration are welcome—let’s cultivate Blossom Valley together and watch our communities flourish! 🌸
 
+---
+
+## Play Link
+- https://sayannandi.itch.io/blossom-valley
+
+---
+
 [![Watch the video](https://img.youtube.com/vi/AS5MBmQLmX4/maxresdefault.jpg)](https://youtu.be/AS5MBmQLmX4)
 ### [Watch the Gameplay Video here](https://youtu.be/AS5MBmQLmX4)
 
