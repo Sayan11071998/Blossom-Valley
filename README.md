@@ -134,21 +134,15 @@ sequenceDiagram
 The WeatherManager subscribes to TimeManager and runs two systems: scheduled rain (14:00-16:00 with seasonal probability) and random rain events. The problem was making rain affect crops even when the player wasn't on the farm scene.
 
 I solved this by having WeatherManager set a boolean `isRaining` flag that GameStateManager checks during `UpdateFarmState()`. If raining, it directly modifies the saved `LandSaveState` structs to switch from Farmland to Watered status:
+
 ```csharp
-for (int i = 0; i < farmData.Count; i++)
-{
-    LandSaveState land = farmData[i];
-    if (land.status == LandStatus.Farmland)
-    {
-        land.status = LandStatus.Watered;
-        farmData[i] = land;
-    }
+if (WeatherManager.Instance.IsCurrentlyRaining()) {
+    if (land.landStatus == LandModel.LandStatus.Farmland)
+        land.landStatus = LandModel.LandStatus.Watered;
 }
 ```
 
 The seasonal probabilities (Spring: 100%, Summer: 40%, Fall: 80%, Winter: 30%) affect both scheduled and random rain. For random events, I check every 60 in-game minutes and roll against `seasonalChance * 0.1f` to avoid constant rain.
-
-![Animal System](animal.png)
 
 ### Economy: Shop and Time-Delayed Shipping
 
@@ -172,11 +166,11 @@ The tricky part was crops growing while the player is in other locations. When `
 
 ## Technical Challenges
 
-**Event-Driven UI Updates:** Initially, changing money triggered a full UI re-render. I added `MoneyChanged` event to PlayerModel that only updates the money text. Similarly, LandModel fires `OnLandStatusChanged` which LandView subscribes to for material swaps.
+- **Event-Driven UI Updates:** Initially, changing money triggered a full UI re-render. I added `MoneyChanged` event to PlayerModel that only updates the money text. Similarly, LandModel fires `OnLandStatusChanged` which LandView subscribes to for material swaps.
 
-**Cross-Scene Animal Spawning:** Incubators hatch eggs after 3 in-game days. If hatching occurs while the player is in another scene, IncubationManager stores the incubator ID and spawns the chicken on the next scene load. I used `IncubationManager.eggsIncubating` (a static list) that persists across scenes, checking `timeToIncubate` each clock tick and removing entries when <= 0.
+- **Cross-Scene Animal Spawning:** Incubators hatch eggs after 3 in-game days. If hatching occurs while the player is in another scene, IncubationManager stores the incubator ID and spawns the chicken on the next scene load. I used `IncubationManager.eggsIncubating` (a static list) that persists across scenes, checking `timeToIncubate` each clock tick and removing entries when <= 0.
 
-**Time-Based Withering:** Crops needed to wither if not watered within 24 hours. I stored `GameTimestamp lastWatered` in LandModel and used `GameTimestamp.CompareTimestamps()` to calculate elapsed hours. If > 24 hours and not raining, land switches from Watered to Farmland and crops call `Wither()`.
+- **Time-Based Withering:** Crops needed to wither if not watered within 24 hours. I stored `GameTimestamp lastWatered` in LandModel and used `GameTimestamp.CompareTimestamps()` to calculate elapsed hours. If > 24 hours and not raining, land switches from Watered to Farmland and crops call `Wither()`.
 
 ---
 
