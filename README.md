@@ -93,72 +93,60 @@ flowchart TD
 
     - The CropContext holds all shared data (`growth`, `health`, `maxGrowth`) and mediates state transitions. This kept state classes stateless - they operate on context data rather than storing their own. When loading saves, I instantiate the correct state using `CropStateFactory.CreateState(stateType)` and directly set growth/health values before calling `EnterState()`.
 
-### Strategy Pattern for NPC Dialogue
+* ### Strategy Pattern for NPC Dialogue
+    - NPCs have two dialogue flows: default conversation and gift-giving. Instead of branching logic in InteractableCharacter, I used the Strategy pattern with `IDialogueStrategy`. The DialogueContext switches between `DefaultDialogueStrategy` and `GiftDialogueStrategy` based on whether the player is holding an item.
+    - GiftDialogueStrategy is complex - it checks `FirstMeeting()` to reject gifts, evaluates `GetReactionToGift()` against the character's likes/dislikes lists, and multiplies friendship points by 8x if `IsBirthday()` returns true. I chained actions using `System.Action` delegates to stack the gift consumption and character rotation reset callbacks.
 
-NPCs have two dialogue flows: default conversation and gift-giving. Instead of branching logic in InteractableCharacter, I used the Strategy pattern with `IDialogueStrategy`. The DialogueContext switches between `DefaultDialogueStrategy` and `GiftDialogueStrategy` based on whether the player is holding an item.
+* ### Animal Husbandry with Mood System
+    - Animals have both friendship and mood values. Mood (0-255) decays by 100 daily if not fed, while friendship changes based on interaction. The challenge was tracking which animals were fed when multiple animals of the same type exist.
+    - I created AnimalFeedManager with a `Dictionary<AnimalData, bool[]>` where each feedbox has an ID. When the player feeds a box, it finds the first eligible animal of that type where `giftGivenToday == false` and sets it true. On day reset, all feedboxes clear and mood/friendship update based on whether flags were set. ChickenBehaviour checks these conditions in `LayEgg()` - eggs only spawn if `age >= daysToMature` AND `Mood > 30` AND `!givenProduceToday`.
 
-GiftDialogueStrategy is complex - it checks `FirstMeeting()` to reject gifts, evaluates `GetReactionToGift()` against the character's likes/dislikes lists, and multiplies friendship points by 8x if `IsBirthday()` returns true. I chained actions using `System.Action` delegates to stack the gift consumption and character rotation reset callbacks.
+    ```mermaid
+    sequenceDiagram
+        participant Player
+        participant Feedbox
+        participant AnimalFeedManager
+        participant AnimalStats
+        participant Animal
+        
+        Player->>Feedbox: Interact with Food
+        Feedbox->>AnimalFeedManager: FeedAnimal(id)
+        AnimalFeedManager->>AnimalStats: GetAnimalsByType()
+        AnimalStats-->>AnimalFeedManager: List<Animals>
+        AnimalFeedManager->>Animal: Set giftGivenToday=true
+        AnimalFeedManager->>AnimalFeedManager: feedboxStatus[type][id]=true
+        
+        rect rgb(255, 255, 200)
+            Note over Player,Animal: On Day Reset
+            AnimalFeedManager->>Feedbox: Clear all feedboxes
+            AnimalStats->>Animal: Mood += 15 if fed<br/>Mood -= 100 if not fed
+        end
+    ```
 
-### Animal Husbandry with Mood System
+* ### Weather System with Time Integration
+    - The WeatherManager subscribes to TimeManager and runs two systems: scheduled rain (14:00-16:00 with seasonal probability) and random rain events. The problem was making rain affect crops even when the player wasn't on the farm scene.
+    - I solved this by having WeatherManager set a boolean `isRaining` flag that GameStateManager checks during `UpdateFarmState()`. If raining, it directly modifies the saved `LandSaveState` structs to switch from Farmland to Watered status:
 
-Animals have both friendship and mood values. Mood (0-255) decays by 100 daily if not fed, while friendship changes based on interaction. The challenge was tracking which animals were fed when multiple animals of the same type exist.
+    ```csharp
+    if (WeatherManager.Instance.IsCurrentlyRaining()) {
+        if (land.landStatus == LandModel.LandStatus.Farmland)
+            land.landStatus = LandModel.LandStatus.Watered;
+    }
+    ```
 
-I created AnimalFeedManager with a `Dictionary<AnimalData, bool[]>` where each feedbox has an ID. When the player feeds a box, it finds the first eligible animal of that type where `giftGivenToday == false` and sets it true. On day reset, all feedboxes clear and mood/friendship update based on whether flags were set. ChickenBehaviour checks these conditions in `LayEgg()` - eggs only spawn if `age >= daysToMature` AND `Mood > 30` AND `!givenProduceToday`.
+    - The seasonal probabilities (Spring: 100%, Summer: 40%, Fall: 80%, Winter: 30%) affect both scheduled and random rain. For random events, I check every 60 in-game minutes and roll against `seasonalChance * 0.1f` to avoid constant rain.
 
-```mermaid
-sequenceDiagram
-    participant Player
-    participant Feedbox
-    participant AnimalFeedManager
-    participant AnimalStats
-    participant Animal
-    
-    Player->>Feedbox: Interact with Food
-    Feedbox->>AnimalFeedManager: FeedAnimal(id)
-    AnimalFeedManager->>AnimalStats: GetAnimalsByType()
-    AnimalStats-->>AnimalFeedManager: List<Animals>
-    AnimalFeedManager->>Animal: Set giftGivenToday=true
-    AnimalFeedManager->>AnimalFeedManager: feedboxStatus[type][id]=true
-    
-    rect rgb(255, 255, 200)
-        Note over Player,Animal: On Day Reset
-        AnimalFeedManager->>Feedbox: Clear all feedboxes
-        AnimalStats->>Animal: Mood += 15 if fed<br/>Mood -= 100 if not fed
-    end
-```
+* ### Economy: Shop and Time-Delayed Shipping
+    - The Shop uses a simple purchase flow, but ShippingBin needed delayed execution. Players place items throughout the day, but sales only process at 18:00. I used a static `List<ItemSlotData>` that accumulates items across scenes.
+    - `GameStateManager.ClockUpdate()` checks if `timestamp.hour == 18 && timestamp.minute == 0`, then calls `ShippingBin.ShipItems()` which tallies item values, adds money to PlayerModel, and clears the list. The challenge was preventing duplicate sales if the time check ran multiple times - I solved this by only checking on the exact minute (`minute == 0`), ensuring it fires once per hour transition.
 
-### Weather System with Time Integration
+* ### Calendar System with Birthday Tracking
+    - The calendar renders 30 days per season with CalendarEntry components. Each entry calculates its color based on `DayOfTheWeek` and whether it matches today's date. The complex part was birthday tracking - I needed to search all CharacterScriptableObjects and display their portrait on matching dates.
+    - `CalendarUIListing.GetCharacterWithBirthday()` iterates through `allCharacters` and compares `timestamp.day` and `timestamp.season` to each character's birthday timestamp. If found, it passes the portrait sprite to `CalendarEntry.Display()`. The calendar supports navigation between seasons by constructing new `GameTimestamp` objects with incremented season values and year rollover logic.
 
-The WeatherManager subscribes to TimeManager and runs two systems: scheduled rain (14:00-16:00 with seasonal probability) and random rain events. The problem was making rain affect crops even when the player wasn't on the farm scene.
-
-I solved this by having WeatherManager set a boolean `isRaining` flag that GameStateManager checks during `UpdateFarmState()`. If raining, it directly modifies the saved `LandSaveState` structs to switch from Farmland to Watered status:
-
-```csharp
-if (WeatherManager.Instance.IsCurrentlyRaining()) {
-    if (land.landStatus == LandModel.LandStatus.Farmland)
-        land.landStatus = LandModel.LandStatus.Watered;
-}
-```
-
-The seasonal probabilities (Spring: 100%, Summer: 40%, Fall: 80%, Winter: 30%) affect both scheduled and random rain. For random events, I check every 60 in-game minutes and roll against `seasonalChance * 0.1f` to avoid constant rain.
-
-### Economy: Shop and Time-Delayed Shipping
-
-The Shop uses a simple purchase flow, but ShippingBin needed delayed execution. Players place items throughout the day, but sales only process at 18:00. I used a static `List<ItemSlotData>` that accumulates items across scenes.
-
-`GameStateManager.ClockUpdate()` checks if `timestamp.hour == 18 && timestamp.minute == 0`, then calls `ShippingBin.ShipItems()` which tallies item values, adds money to PlayerModel, and clears the list. The challenge was preventing duplicate sales if the time check ran multiple times - I solved this by only checking on the exact minute (`minute == 0`), ensuring it fires once per hour transition.
-
-### Calendar System with Birthday Tracking
-
-The calendar renders 30 days per season with CalendarEntry components. Each entry calculates its color based on `DayOfTheWeek` and whether it matches today's date. The complex part was birthday tracking - I needed to search all CharacterScriptableObjects and display their portrait on matching dates.
-
-`CalendarUIListing.GetCharacterWithBirthday()` iterates through `allCharacters` and compares `timestamp.day` and `timestamp.season` to each character's birthday timestamp. If found, it passes the portrait sprite to `CalendarEntry.Display()`. The calendar supports navigation between seasons by constructing new `GameTimestamp` objects with incremented season values and year rollover logic.
-
-### Save System with Scene Persistence
-
-The save system needed to handle data that persists even when scenes unload. I used static variables in manager classes (`LandManager.farmData`, `AnimalStats.animalRelationships`) that survive scene transitions via `DontDestroyOnLoad`.
-
-The tricky part was crops growing while the player is in other locations. When `ClockUpdate()` fires and the player isn't on the farm, GameStateManager directly modifies the saved `LandSaveState` and `CropSaveState` structs. Structs are value types, so I had to reassign them back to the lists after modification. When the player returns to the farm, `LandManager.ImportCropData()` spawns CropBehaviour instances and calls `LoadCrop()` with the saved growth/health values.
+* ### Save System with Scene Persistence
+    - The save system needed to handle data that persists even when scenes unload. I used static variables in manager classes (`LandManager.farmData`, `AnimalStats.animalRelationships`) that survive scene transitions via `DontDestroyOnLoad`.
+    - The tricky part was crops growing while the player is in other locations. When `ClockUpdate()` fires and the player isn't on the farm, GameStateManager directly modifies the saved `LandSaveState` and `CropSaveState` structs. Structs are value types, so I had to reassign them back to the lists after modification. When the player returns to the farm, `LandManager.ImportCropData()` spawns CropBehaviour instances and calls `LoadCrop()` with the saved growth/health values.
 
 ---
 
