@@ -48,7 +48,7 @@ flowchart TD
     
     GameStateManager -->|OnDayReset| RelationshipStats
     GameStateManager -->|OnDayReset| AnimalStats
-    SceneTransitionManager -->|UpdateShipping| ShippingBin
+    GameStateManager -->|UpdateShipping| ShippingBin
     SceneTransitionManager -->|Scene Load| LandManager
     
     classDef coreStyle fill:#E6E6FA,stroke:#333,stroke-width:2px
