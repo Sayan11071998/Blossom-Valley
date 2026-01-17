@@ -67,8 +67,8 @@ flowchart TD
 ## Key Technical Systems
 
 * ### State Pattern for Crop Lifecycle
- - Crops transition through four states (Seed → Seedling → Harvestable → Wilted) using a state machine. Each state implements `ICropState` with `EnterState()`, `Grow()`, and `Wither()` methods. The challenge was handling regrowable crops - when harvested, they need to reset growth timers without destroying the GameObject.
- - I solved this by having HarvestableState detach the harvestable GameObject from the crop's transform when it's not regrowable, then calling `context.RemoveCrop()` which destroys the entire crop. For regrowables, the crop stays parented and calls `context.Regrow()`, which sets `growth` to `maxGrowth - regrowTimeInMinutes` and transitions back to Seedling state.
+    - Crops transition through four states (Seed → Seedling → Harvestable → Wilted) using a state machine. Each state implements `ICropState` with `EnterState()`, `Grow()`, and `Wither()` methods. The challenge was handling regrowable crops - when harvested, they need to reset growth timers without destroying the GameObject.
+    - I solved this by having HarvestableState detach the harvestable GameObject from the crop's transform when it's not regrowable, then calling `context.RemoveCrop()` which destroys the entire crop. For regrowables, the crop stays parented and calls `context.Regrow()`, which sets `growth` to `maxGrowth - regrowTimeInMinutes` and transitions back to Seedling state.
 
     ```mermaid
     stateDiagram-v2
