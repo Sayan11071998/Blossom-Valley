@@ -66,34 +66,32 @@ flowchart TD
 
 ## Key Technical Systems
 
-### State Pattern for Crop Lifecycle
+* ### State Pattern for Crop Lifecycle
+ - Crops transition through four states (Seed → Seedling → Harvestable → Wilted) using a state machine. Each state implements `ICropState` with `EnterState()`, `Grow()`, and `Wither()` methods. The challenge was handling regrowable crops - when harvested, they need to reset growth timers without destroying the GameObject.
+ - I solved this by having HarvestableState detach the harvestable GameObject from the crop's transform when it's not regrowable, then calling `context.RemoveCrop()` which destroys the entire crop. For regrowables, the crop stays parented and calls `context.Regrow()`, which sets `growth` to `maxGrowth - regrowTimeInMinutes` and transitions back to Seedling state.
 
-Crops transition through four states (Seed → Seedling → Harvestable → Wilted) using a state machine. Each state implements `ICropState` with `EnterState()`, `Grow()`, and `Wither()` methods. The challenge was handling regrowable crops - when harvested, they need to reset growth timers without destroying the GameObject.
+    ```mermaid
+    stateDiagram-v2
+        [*] --> Seed: Plant()
+        
+        Seed --> Seedling: growth >= maxGrowth/2
+        
+        Seedling --> Harvestable: growth >= maxGrowth
+        Seedling --> Wilted: health <= 0
+        
+        Harvestable --> Seedling: Regrow()<br/>(regrowable crops)
+        Harvestable --> [*]: RemoveCrop()<br/>(normal crops)
+        
+        Wilted --> [*]: Remove with Shovel
+        
+        note right of Harvestable
+            Regrowable crops:
+            growth = maxGrowth - regrowTime
+            State persists
+        end note
+    ```
 
-I solved this by having HarvestableState detach the harvestable GameObject from the crop's transform when it's not regrowable, then calling `context.RemoveCrop()` which destroys the entire crop. For regrowables, the crop stays parented and calls `context.Regrow()`, which sets `growth` to `maxGrowth - regrowTimeInMinutes` and transitions back to Seedling state.
-
-```mermaid
-stateDiagram-v2
-    [*] --> Seed: Plant()
-    
-    Seed --> Seedling: growth >= maxGrowth/2
-    
-    Seedling --> Harvestable: growth >= maxGrowth
-    Seedling --> Wilted: health <= 0
-    
-    Harvestable --> Seedling: Regrow()<br/>(regrowable crops)
-    Harvestable --> [*]: RemoveCrop()<br/>(normal crops)
-    
-    Wilted --> [*]: Remove with Shovel
-    
-    note right of Harvestable
-        Regrowable crops:
-        growth = maxGrowth - regrowTime
-        State persists
-    end note
-```
-
-The CropContext holds all shared data (`growth`, `health`, `maxGrowth`) and mediates state transitions. This kept state classes stateless - they operate on context data rather than storing their own. When loading saves, I instantiate the correct state using `CropStateFactory.CreateState(stateType)` and directly set growth/health values before calling `EnterState()`.
+    - The CropContext holds all shared data (`growth`, `health`, `maxGrowth`) and mediates state transitions. This kept state classes stateless - they operate on context data rather than storing their own. When loading saves, I instantiate the correct state using `CropStateFactory.CreateState(stateType)` and directly set growth/health values before calling `EnterState()`.
 
 ### Strategy Pattern for NPC Dialogue
 
