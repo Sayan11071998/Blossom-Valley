@@ -107,7 +107,27 @@ Animals have both friendship and mood values. Mood (0-255) decays by 100 daily i
 
 I created AnimalFeedManager with a `Dictionary<AnimalData, bool[]>` where each feedbox has an ID. When the player feeds a box, it finds the first eligible animal of that type where `giftGivenToday == false` and sets it true. On day reset, all feedboxes clear and mood/friendship update based on whether flags were set. ChickenBehaviour checks these conditions in `LayEgg()` - eggs only spawn if `age >= daysToMature` AND `Mood > 30` AND `!givenProduceToday`.
 
-![Seed System](Seed.png)
+```mermaid
+sequenceDiagram
+    participant Player
+    participant Feedbox
+    participant AnimalFeedManager
+    participant AnimalStats
+    participant Animal
+    
+    Player->>Feedbox: Interact with Food
+    Feedbox->>AnimalFeedManager: FeedAnimal(id)
+    AnimalFeedManager->>AnimalStats: GetAnimalsByType()
+    AnimalStats-->>AnimalFeedManager: List<Animals>
+    AnimalFeedManager->>Animal: Set giftGivenToday=true
+    AnimalFeedManager->>AnimalFeedManager: feedboxStatus[type][id]=true
+    
+    rect rgb(255, 255, 200)
+        Note over Player,Animal: On Day Reset
+        AnimalFeedManager->>Feedbox: Clear all feedboxes
+        AnimalStats->>Animal: Mood += 15 if fed<br/>Mood -= 100 if not fed
+    end
+```
 
 ### Weather System with Time Integration
 
